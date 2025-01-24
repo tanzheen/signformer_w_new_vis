@@ -175,11 +175,8 @@ class SignModel(nn.Module):
         Compute non-normalized loss and number of tokens for a batch
 
         :param batch: batch to compute loss for
-        :param recognition_loss_function: Sign Language Recognition Loss Function (CTC)
         :param translation_loss_function: Sign Language Translation Loss Function (XEntropy)
-        :param recognition_loss_weight: Weight for recognition loss
         :param translation_loss_weight: Weight for translation loss
-        :return: recognition_loss: sum of losses over sequences in the batch
         :return: translation_loss: sum of losses over non-pad elements in the batch
         """
         # pylint: disable=unused-variable

@@ -18,40 +18,20 @@ from vocabulary import (
 )
 
 
-def load_data(data_cfg: dict, args) -> (Dataset, Dataset, Dataset,  Vocabulary, Field ):
+def load_data(data_cfg: dict, args) -> (Dataset, Dataset, Dataset, Vocabulary, Field):
     """
-    Load train, dev and optionally test data as specified in configuration.
-    Vocabularies are created from the training set with a limit of `voc_limit`
-    tokens and a minimum token frequency of `voc_min_freq`
-    (specified in the configuration dictionary).
-
-    The training data is filtered to include sentences up to `max_sent_length`
-    on source and target side.
-
-    If you set ``random_train_subset``, a random selection of this size is used
-    from the training set instead of the full training set.
-
-    If you set ``random_dev_subset``, a random selection of this size is used
-    from the dev development instead of the full development set.
-
-    :param data_cfg: configuration dictionary for data
-        ("data" part of configuration file)
-    :return:
-        - train_data: training dataset
-        - dev_data: development dataset
-        - test_data: test dataset if given, otherwise None
-        - gls_vocab: gloss vocabulary extracted from training data
-        - txt_vocab: spoken text vocabulary extracted from training data
+    Load train, dev and test data as specified in configuration.
     """
-    '''data paths will be in the dataset then'''
     level = data_cfg["level"]
     txt_lowercase = data_cfg["txt_lowercase"]
+    
     def tokenize_text(text):
         if level == "char":
             return list(text)
         else:
             return text.split()
-        
+    
+    # Create text field with tokenization and special tokens
     txt_field = data.Field(
         init_token=BOS_TOKEN,
         eos_token=EOS_TOKEN,
@@ -63,16 +43,16 @@ def load_data(data_cfg: dict, args) -> (Dataset, Dataset, Dataset,  Vocabulary, 
         include_lengths=True,
     )
 
+    # Load datasets
     train_data = SignTranslationDataset(
-        data_cfg['train_path'], data_cfg, args, phase = 'train'
+        data_cfg['train_path'], data_cfg, args, phase='train'
     )
- 
+    train_data.set_txt_field(txt_field)
+    # Build vocabulary from training data
     txt_max_size = data_cfg.get("txt_voc_limit", sys.maxsize)
     txt_min_freq = data_cfg.get("txt_voc_min_freq", 1)
-
     txt_vocab_file = data_cfg.get("txt_vocab", None)
-
-
+    
     txt_vocab = build_vocab(
         field="txt",
         min_freq=txt_min_freq,
@@ -80,24 +60,20 @@ def load_data(data_cfg: dict, args) -> (Dataset, Dataset, Dataset,  Vocabulary, 
         dataset=train_data,
         vocab_file=txt_vocab_file,
     )
-
-    dev_data = SignTranslationDataset(
-        data_cfg['dev_path'], data_cfg, args, phase = 'dev'
-    )
-    random_dev_subset = data_cfg.get("random_dev_subset", -1)
-    if random_dev_subset > -1:
-        # select this many development examples randomly and discard the rest
-        keep_ratio = random_dev_subset / len(dev_data)
-        keep, _ = dev_data.split(
-            split_ratio=[keep_ratio, 1 - keep_ratio], random_state=random.getstate()
-        )
-        dev_data = keep
-
-    # check if target exists
-    test_data = SignTranslationDataset(
-        data_cfg['test_path'], data_cfg, args, phase = 'test'
-    )
+    
+    # Assign vocabulary to text field
     txt_field.vocab = txt_vocab
+    
+    # Load dev and test data
+    dev_data = SignTranslationDataset(
+        data_cfg['dev_path'], data_cfg, args, phase='dev'
+    )
+    test_data = SignTranslationDataset(
+        data_cfg['test_path'], data_cfg, args, phase='test'
+    )
+    dev_data.set_txt_field(txt_field)
+    test_data.set_txt_field(txt_field)
+
     return train_data, dev_data, test_data, txt_vocab, txt_field
 
 
