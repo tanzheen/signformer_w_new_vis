@@ -189,7 +189,7 @@ class TrainManager:
             )
 
 
-        def _get_translation_params(self, train_config) -> None:
+    def _get_translation_params(self, train_config) -> None:
         self.label_smoothing = train_config.get("label_smoothing", 0.0)
         self.translation_loss_function = XentLoss(
             pad_index=self.txt_pad_index, smoothing=self.label_smoothing
