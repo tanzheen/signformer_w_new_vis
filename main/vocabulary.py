@@ -1,10 +1,9 @@
 
 # coding: utf-8
 import numpy as np
-
+import torch.utils.data.dataset as Dataset
 from collections import defaultdict, Counter
 from typing import List
-from torchtext.data import Dataset
 
 SIL_TOKEN = "<si>"
 UNK_TOKEN = "<unk>"

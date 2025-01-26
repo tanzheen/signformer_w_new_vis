@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import math
-from ..position_encoding import PositionalEncoding, CoPE
+from position_encoding import PositionalEncoding, CoPE
 import matplotlib.pyplot as plt
 import seaborn as sns
 import os
@@ -995,7 +995,7 @@ class LocalRelPosMultiHeadSelfAttention(RelPosMultiHeadSelfAttention):
             att_scores: absolute-by-relative indexed attention scores of shape
             (B, N, T, 2 * K - 1) for full context and (B, H, T, K) for causal context
         Return:
-            att_scores: absolute-by-absolute indexed attention scores of shape (B, T//K, H, K, K)
+            att_scores: absolute-by-absolute indexed attention scores of shape (B, T//K, H, K//S, K)
         References:
             Causal context:
             Music Transformer, Huang et al.

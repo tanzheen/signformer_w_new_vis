@@ -18,10 +18,9 @@ import numpy as np
 
 import torch
 from torch import nn, Tensor
-from torchtext.data import Dataset
 import yaml
-from vocabulary import GlossVocabulary, TextVocabulary
-
+from vocabulary import  TextVocabulary
+import torch.utils.data.dataset as Dataset
 
 def make_model_dir(model_dir: str, overwrite: bool = False) -> str:
     """
@@ -120,7 +119,6 @@ def log_data_info(
     train_data: Dataset,
     valid_data: Dataset,
     test_data: Dataset,
-    gls_vocab: GlossVocabulary,
     txt_vocab: TextVocabulary,
     logging_function: Callable[[str], None],
 ):

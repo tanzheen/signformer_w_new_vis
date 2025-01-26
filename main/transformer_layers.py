@@ -1,10 +1,8 @@
-
-    
 import math
 import torch
 import torch.nn as nn
 from torch import Tensor
-from .encoder_module.ResidualModule import ResidualConnectionModule
+from encoder_module.ResidualModule import ResidualConnectionModule
 from .encoder_module.MHSA_RPE import MultiHeadedSelfAttentionModule, MultiHeadedCrossAttentionModule,GlossFreeAttentionModule, \
     ContextualMultiHeadedSelfAttentionModule, ContextualMultiHeadedCrossAttentionModule, RelPosMultiHeadSelfAttention, RelativeMultiheadSelfAttentionModule
 from .encoder_module.Convolution import ConvModule, PointwiseConv1d, ConvModuleOriginal

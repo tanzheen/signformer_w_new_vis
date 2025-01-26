@@ -8,11 +8,11 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 from itertools import groupby
-from main.initialization import initialize_model
-from main.embeddings import Embeddings, SpatialEmbeddings
-from main.encoders import Encoder,  TransformerEncoder
-from main.decoders import Decoder,  TransformerDecoder
-from main.search import beam_search, greedy
+from initialization import initialize_model
+from embeddings import Embeddings, SpatialEmbeddings
+from encoders import Encoder,  TransformerEncoder
+from decoders import Decoder,  TransformerDecoder
+from search import beam_search, greedy
 from main.vocabulary import (
     TextVocabulary,
     GlossVocabulary,

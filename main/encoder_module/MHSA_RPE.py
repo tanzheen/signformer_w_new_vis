@@ -4,7 +4,7 @@ from typing import Optional
 import torch
 import math
 import torch.nn.functional as F
-from ..utils.attention_module import RelPosMultiHeadSelfAttention, Deformable
+from .utils.attention_module import RelPosMultiHeadSelfAttention, Deformable
 
 
 
