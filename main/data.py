@@ -5,6 +5,7 @@ import random
 import torch
 from torchtext import data
 from torch.utils.data.dataset import Dataset
+from torch.utils.data import DataLoader
 from torchtext.data import Field
 import socket
 from dataset import SignTranslationDataset
@@ -57,7 +58,7 @@ def load_data(data_cfg: dict, args) -> (Dataset, Dataset, Dataset, Vocabulary, F
         field="txt",
         min_freq=txt_min_freq,
         max_size=txt_max_size,
-        dataset=train_data,
+        dataset=train_data.raw_data,
         vocab_file=txt_vocab_file,
     )
     
@@ -92,51 +93,3 @@ def token_batch_size_fn(new, count):
     txt_elements = count * max_txt_in_batch
     return max(sgn_elements, gls_elements, txt_elements)
 
-
-def make_data_iter(
-    dataset: Dataset,
-    batch_size: int,
-    batch_type: str = "sentence",
-    train: bool = False,
-    shuffle: bool = False,
-) -> Iterator:
-    """
-    Returns a torchtext iterator for a torchtext dataset.
-
-    :param dataset: torchtext dataset containing sgn and optionally txt
-    :param batch_size: size of the batches the iterator prepares
-    :param batch_type: measure batch size by sentence count or by token count
-    :param train: whether it's training time, when turned off,
-        bucketing, sorting within batches and shuffling is disabled
-    :param shuffle: whether to shuffle the data before each epoch
-        (no effect if set to True for testing)
-    :return: torchtext iterator
-    """
-
-    batch_size_fn = token_batch_size_fn if batch_type == "token" else None
-
-    if train:
-        # optionally shuffle and sort during training
-        data_iter = data.BucketIterator(
-            repeat=False,
-            sort=False,
-            dataset=dataset,
-            batch_size=batch_size,
-            batch_size_fn=batch_size_fn,
-            train=True,
-            sort_within_batch=True,
-            sort_key=lambda x: len(x.sgn),
-            shuffle=shuffle,
-        )
-    else:
-        # don't sort/shuffle for validation/inference
-        data_iter = data.BucketIterator(
-            repeat=False,
-            dataset=dataset,
-            batch_size=batch_size,
-            batch_size_fn=batch_size_fn,
-            train=False,
-            sort=False,
-        )
-
-    return data_iter

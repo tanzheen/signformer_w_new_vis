@@ -3,8 +3,7 @@
 This module holds various MT evaluation metrics.
 """
 
-import sacrebleu
-import mscoco_rouge
+from external_metrics import sacrebleu, mscoco_rouge
 import numpy as np
 
 WER_COST_DEL = 3

@@ -1,9 +1,9 @@
-
 # coding: utf-8
 import numpy as np
 import torch.utils.data.dataset as Dataset
 from collections import defaultdict, Counter
 from typing import List
+from tqdm import tqdm
 
 SIL_TOKEN = "<si>"
 UNK_TOKEN = "<unk>"
@@ -146,7 +146,7 @@ def sort_and_cut(counter: Counter, limit: int):
 
 
 def build_vocab(
-    field: str, max_size: int, min_freq: int, dataset: Dataset, vocab_file: str = None
+    field: str, max_size: int, min_freq: int, dataset: dict, vocab_file: str = None
 ) -> Vocabulary:
     """
     Builds vocabulary for a torchtext `field` from given`dataset` or
@@ -161,38 +161,35 @@ def build_vocab(
     :return: Vocabulary created from either `dataset` or `vocab_file`
     """
 
-    if vocab_file is not None:
-        # load it from file
+    tokens = []
+    for i in tqdm(dataset.values(), 
+                    desc="Building vocabulary", 
+                    unit="sample",
+                    dynamic_ncols=True,  # Automatically adjust width
+                    leave=True):  # Leave the progress bar after completion
         if field == "txt":
-            vocab = TextVocabulary(file=vocab_file)
+            #print(f"tgt_sample from dataset: {i}")
+            tokens.extend(i['text'].split())
         else:
-            raise ValueError("Unknown vocabulary type")
+            raise ValueError("Unknown field type")
+    #print(f"collated tokens: {tokens}")
+    counter = Counter(tokens)
+    if min_freq > -1:
+        counter = filter_min(counter, min_freq)
+    vocab_tokens = sort_and_cut(counter, max_size)
+    assert len(vocab_tokens) <= max_size
+
+    if field == "txt":
+        vocab = TextVocabulary(tokens=vocab_tokens)
     else:
-        tokens = []
-        for i in dataset:
-            if field == "gls":
-                tokens.extend(i['text'])
-            elif field == "txt":
-                tokens.extend(i['text'])
-            else:
-                raise ValueError("Unknown field type")
+        raise ValueError("Unknown vocabulary type")
 
-        counter = Counter(tokens)
-        if min_freq > -1:
-            counter = filter_min(counter, min_freq)
-        vocab_tokens = sort_and_cut(counter, max_size)
-        assert len(vocab_tokens) <= max_size
-
-        if field == "txt":
-            vocab = TextVocabulary(tokens=vocab_tokens)
-        else:
-            raise ValueError("Unknown vocabulary type")
-
-        assert len(vocab) <= max_size + len(vocab.specials)
-        assert vocab.itos[vocab.DEFAULT_UNK_ID()] == UNK_TOKEN
+    assert len(vocab) <= max_size + len(vocab.specials)
+    assert vocab.itos[vocab.DEFAULT_UNK_ID()] == UNK_TOKEN
 
     for i, s in enumerate(vocab.specials):
         if i != vocab.DEFAULT_UNK_ID():
             assert not vocab.is_unk(s)
 
     return vocab
+

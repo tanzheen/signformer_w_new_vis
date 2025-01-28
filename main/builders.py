@@ -6,7 +6,7 @@ from typing import Callable, Optional, Generator
 
 import torch
 from torch import nn
-from .scheduler import *
+from scheduler import *
 # Learning Rate Scheduler
 from torch.optim import lr_scheduler
 

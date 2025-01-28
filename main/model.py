@@ -9,22 +9,22 @@ import torch.nn.functional as F
 
 from itertools import groupby
 from initialization import initialize_model
-from embeddings import Embeddings, SpatialEmbeddings
+from embeddings import Embeddings, SpatialEmbeddings, V_encoder
 from encoders import Encoder,  TransformerEncoder
 from decoders import Decoder,  TransformerDecoder
 from search import beam_search, greedy
-from main.vocabulary import (
+from vocabulary import (
     TextVocabulary,
-    GlossVocabulary,
     PAD_TOKEN,
     EOS_TOKEN,
     BOS_TOKEN,
 )
 
-from main.helpers import freeze_params
+from helpers import freeze_params
 from torch import Tensor
 from typing import Union
 import torch 
+
 
 class SignModel(nn.Module):
     """
@@ -35,9 +35,8 @@ class SignModel(nn.Module):
         self,
         vis_extractor: nn.Module,
         encoder: Encoder,
-        gloss_output_layer: nn.Module,
         decoder: Decoder,
-        sgn_embed: SpatialEmbeddings,
+        sgn_embed: V_encoder,
         txt_embed: Embeddings,
         txt_vocab: TextVocabulary,
         do_recognition: bool = True,
@@ -68,8 +67,6 @@ class SignModel(nn.Module):
         self.txt_bos_index = self.txt_vocab.stoi[BOS_TOKEN]
         self.txt_pad_index = self.txt_vocab.stoi[PAD_TOKEN]
         self.txt_eos_index = self.txt_vocab.stoi[EOS_TOKEN]
-
-        self.gloss_output_layer = gloss_output_layer
         self.do_recognition = do_recognition
         self.do_translation = do_translation
 
@@ -98,7 +95,10 @@ class SignModel(nn.Module):
         encoder_output, encoder_hidden = self.encode(
             sgn=sgn, sgn_mask=sgn_mask, sgn_length=sgn_lengths
         )
-
+        print("encoder_output: ", encoder_output.shape)
+        print("encoder_hidden: ", encoder_hidden.shape)
+        print("txt_mask : ", txt_mask.shape)
+        print("src_mask: ", sgn_mask.shape)
         if self.do_translation:
             unroll_steps = txt_input.size(1)
             decoder_outputs = self.decode(
@@ -127,8 +127,9 @@ class SignModel(nn.Module):
         :return: encoder outputs (output, hidden_concat)
         """
         sgn = self.vis_extractor(sgn, sgn_length)
+        print("sgn: ", sgn.shape)
         return self.encoder(
-            embed_src=self.sgn_embed(x=sgn, mask=sgn_mask),
+            embed_src=self.sgn_embed(src = sgn),
             src_length=sgn_length,
             mask=sgn_mask,
         )
@@ -180,14 +181,14 @@ class SignModel(nn.Module):
         :return: translation_loss: sum of losses over non-pad elements in the batch
         """
         # pylint: disable=unused-variable
-        src_input, tgt_batch = batch 
+
         # Do a forward pass
         decoder_outputs, gloss_probabilities = self.forward(
-            sgn=src_input['video'],
-            sgn_mask=src_input['attention_mask'],
-            sgn_lengths=src_input['src_length'],
-            txt_input=batch.txt_input,
-            txt_mask=batch.txt_mask,
+            sgn=batch['video'].cuda(),
+            sgn_mask=batch['attention_mask'].cuda(),
+            sgn_lengths=batch['src_length'].cuda(),
+            txt_input=batch['txt_input'].cuda(),
+            txt_mask=batch['txt_mask'].cuda(),
         )
 
        
@@ -227,7 +228,7 @@ class SignModel(nn.Module):
         src_input, tgt_batch = batch 
         
         encoder_output, encoder_hidden = self.encode(
-            sgn=src_input['video'], sgn_mask=src_input['attention_mask'], sgn_length=src_input['src_length']
+            sgn=src_input['video'].cuda(), sgn_mask=src_input['attention_mask'].cuda(), sgn_length=src_input['src_length'].cuda()
         )
 
 
@@ -311,7 +312,7 @@ class resnet(nn.Module):
             end = start + length
             x_batch.append(x[start:end])
             start = end
-        x = pad_sequence(x_batch,padding_value=PAD_IDX,batch_first=True)
+        x = pad_sequence(x_batch,padding_value=0,batch_first=True)
         return x
 
 
@@ -338,11 +339,10 @@ def build_model(
     vis_extractor = resnet()
 
     # Multimodal MLP for sign embeddings to match hidden size of text transforrmer
-    sgn_embed: SpatialEmbeddings = SpatialEmbeddings(
-        **cfg["encoder"]["embeddings"],
-        num_heads=cfg["encoder"]["num_heads"],
+    sgn_embed: V_encoder = V_encoder(
+        embedding_dim=cfg["encoder"]["embeddings"]["embedding_dim"],
         input_size=sgn_dim,
-        multimodal=multimodal
+        config=cfg
     )
 
     # build text encoder
@@ -378,9 +378,7 @@ def build_model(
         if cfg["decoder"].get("type", "recurrent") == "transformer":
             decoder = TransformerDecoder(
                 **cfg["decoder"],
-                encoder=encoder,
                 vocab_size=len(txt_vocab),
-                emb_size=txt_embed.embedding_dim,
                 emb_dropout=dec_emb_dropout,
                 cope=cope
             )

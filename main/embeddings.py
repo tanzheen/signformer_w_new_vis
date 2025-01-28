@@ -267,3 +267,35 @@ class SpatialEmbeddings(nn.Module):
             return x * self.scale_factor
         else:
             return x
+        
+class V_encoder(nn.Module):
+    def __init__(self,
+                 embedding_dim,
+                 input_size,
+                 config,
+                 ):
+        super(V_encoder, self).__init__()
+        
+        self.config = config
+        self.embedding_dim = embedding_dim
+        self.src_emb = nn.Linear(input_size, embedding_dim)
+        modules = []
+        modules.append(nn.BatchNorm1d(embedding_dim))
+        modules.append(nn.ReLU(inplace=True))
+        self.bn_ac = nn.Sequential(*modules)
+
+        for m in self.modules():
+            if isinstance(m, (nn.Conv1d,nn.Linear)):
+                nn.init.xavier_uniform_(m.weight, gain=nn.init.calculate_gain('relu'))
+            elif isinstance(m, nn.BatchNorm1d):
+                nn.init.constant_(m.weight, 1)
+                nn.init.constant_(m.bias, 0)
+    
+    def forward(self,
+                src: Tensor,
+                ):
+      
+        src = self.src_emb(src)
+        src = self.bn_ac(src.permute(0,2,1)).permute(0,2,1)
+
+        return src

@@ -36,15 +36,15 @@ def load_dataset_file(filename):
 
 
 class SignTranslationDataset(Dataset.Dataset):
-    def __init__(self, path, config, args, phase, training_refurbish=False):
+    def __init__(self, path, data_config, args, phase, training_refurbish=False):
         super().__init__()
-        self.config = config
+        self.config = data_config
         self.args = args
         self.training_refurbish = training_refurbish
         self.raw_data = load_dataset_file(path)
-        self.img_path = config['data']['img_path']
+        self.img_path = data_config['img_path']
         self.phase = phase
-        self.max_length = config['data']['max_length']
+        self.max_length = data_config['max_length']
         self.list = [key for key, value in self.raw_data.items()]
         
         # Setup text tokenization
@@ -150,10 +150,10 @@ class SignTranslationDataset(Dataset.Dataset):
         mask_gen = pad_sequence(mask_gen,
                                  padding_value=self.txt_field.vocab.stoi[PAD_TOKEN], 
                                  batch_first=True)
-        img_padding_mask = (mask_gen != self.txt_field.vocab.stoi[PAD_TOKEN]).long()
+        img_padding_mask = (mask_gen != self.txt_field.vocab.stoi[PAD_TOKEN]).long().unsqueeze(2)
 
         #print("mask_gen", mask_gen)
-        #print("img_padding_mask", img_padding_mask)
+        print("img_padding_mask at collating: ", img_padding_mask.shape)
 
         # Process text
         if self.txt_field is not None:
@@ -163,16 +163,22 @@ class SignTranslationDataset(Dataset.Dataset):
             tokenized_texts = [text.split() for text in tgt_batch]  # Split into words
             #print("After tokenization:", tokenized_texts)
             
+
             txt_input = [self.txt_field.process([tokens]) for tokens in tokenized_texts]  # Process pre-tokenized text
             #print("After processing:", txt_input)
+           
+            for t in txt_input:
+                print(t[0].transpose(0,1).shape)  # Inspect each tensor before padding
             
-            txt_input = pad_sequence([t.squeeze(0) for t in txt_input], 
+            txt_input = pad_sequence([t[0].transpose(0,1) for t in txt_input], 
                                    batch_first=True, 
                                    padding_value=self.txt_field.vocab.stoi[PAD_TOKEN])
+   
             
             # Create text mask
             txt_mask = (txt_input != self.txt_field.vocab.stoi[PAD_TOKEN]).long()
-            
+            print("txt_maska at collating : ", txt_mask.shape)
+
             # Prepare decoder input by shifting right
             decoder_input = self.shift_tokens_right(txt_input, 
                                                     self.txt_field.vocab.stoi[PAD_TOKEN],
@@ -180,8 +186,7 @@ class SignTranslationDataset(Dataset.Dataset):
         else:
             txt_input = None
             txt_mask = None
-        print("txt_mask", txt_mask)
-        print("txt_input", txt_input)
+  
         return {
             'video': img_batch,
             'attention_mask': img_padding_mask,

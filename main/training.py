@@ -25,7 +25,7 @@ from helpers import (
 from model import SignModel
 from prediction import validate_on_data
 from loss import XentLoss
-from data import load_data, make_data_iter
+from data import load_data
 from builders import build_optimizer, build_scheduler, build_gradient_clipper
 from prediction import test
 from metrics import wer_single
@@ -34,6 +34,7 @@ from torch import Tensor
 from torch.utils.tensorboard import SummaryWriter
 from typing import List, Dict
 import torch.utils.data.dataset as Dataset
+from torch.utils.data import DataLoader
 
 
 # pylint: disable=too-many-instance-attributes
@@ -50,28 +51,17 @@ class TrainManager:
         """
         train_config = config["training"]
 
-        # files for logging and storing
-        self.model_dir = make_model_dir(
-            train_config["model_dir"], overwrite=train_config.get("overwrite", False)
-        )
-        self.logger = make_logger(model_dir=self.model_dir)
-        self.logging_freq = train_config.get("logging_freq", 100)
-        self.valid_report_file = "{}/validations.txt".format(self.model_dir)
-        self.tb_writer = SummaryWriter(log_dir=self.model_dir + "/tensorboard/")
-
-        '''might need to change this feature_size and dataset_version'''
-        # input
-        self.feature_size = (
-            sum(config["data"]["feature_size"])
-            if isinstance(config["data"]["feature_size"], list)
-            else config["data"]["feature_size"]
-        )
+        # files for logging and storing 
         self.dataset_version = config["data"].get("version", "phoenix_2014_trans")
 
         # model
         self.model = model
         self.txt_pad_index = self.model.txt_pad_index
         self.txt_bos_index = self.model.txt_bos_index
+        self.model_dir = make_model_dir(
+            train_config["model_dir"], overwrite=train_config.get("overwrite", False)
+        )
+        self.logger = make_logger(model_dir=train_config["model_dir"])
         self._log_parameters_list()
 
         # we are defintely only doing translation
@@ -153,8 +143,6 @@ class TrainManager:
             self.model.cuda()
             if self.do_translation:
                 self.translation_loss_function.cuda()
-            if self.do_recognition:
-                self.recognition_loss_function.cuda()
 
         # initialize training statistics
         self.steps = 0
@@ -334,12 +322,12 @@ class TrainManager:
         
         epoch_no = None
         # Create dataloader
-        train_dataloader = DataLoader(train_data, batch_size=self.batch_size, shuffle=self.shuffle)
-        valid_dataloader = DataLoader(valid_data, batch_size=self.eval_batch_size, shuffle=False)
+        train_dataloader = DataLoader(train_data, batch_size=self.batch_size, shuffle=self.shuffle, collate_fn=train_data.collate_fn)
+        valid_dataloader = DataLoader(valid_data, batch_size=self.eval_batch_size, shuffle=False, collate_fn=valid_data.collate_fn)
 
         for epoch_no in range(self.epochs):
 
-            self.train_epoch(train_dataloader)
+            self.train_epoch(train_dataloader, valid_dataloader, epoch_no)
 
             
 
@@ -354,7 +342,7 @@ class TrainManager:
 
         self.tb_writer.close()  # close Tensorboard writer
 
-    def train_epoch(self, train_dataloader: DataLoader) -> None:
+    def train_epoch(self, train_dataloader: DataLoader, val_dataloader: DataLoader, epoch_no: int) -> None:
         """
         Train the model for one epoch.
 
@@ -375,7 +363,7 @@ class TrainManager:
             "translation_loss": 0.0 if self.do_translation else None,
             "processed_txt_tokens": self.total_txt_tokens if self.do_translation else 0
         }
-
+        
         # Create progress bar
         progress_bar = tqdm(
             train_dataloader,
@@ -390,7 +378,7 @@ class TrainManager:
             
             # ensure that train_batch is designed properly for extracting the features
             update = count == 0
-            recognition_loss, translation_loss = self._train_batch(batch, update=update)
+            translation_loss = self._train_batch(batch, update=update)
 
             # Update progress bar with current loss
             if self.do_translation:
@@ -452,43 +440,16 @@ class TrainManager:
                 #   Hmm... Future Cihan's problem.
                 val_res = validate_on_data(
                     model=self.model,
-                    data=valid_data,
-                    batch_size=self.eval_batch_size,
-                    use_cuda=self.use_cuda,
-                    batch_type=self.eval_batch_type,
-                    dataset_version=self.dataset_version,
-                    sgn_dim=self.feature_size,
-                    txt_pad_index=self.txt_pad_index,
-                    # Recognition Parameters
-                    do_recognition=self.do_recognition,
-                    recognition_loss_function=self.recognition_loss_function
-                    if self.do_recognition
-                    else None,
-                    recognition_loss_weight=self.recognition_loss_weight
-                    if self.do_recognition
-                    else None,
-                    recognition_beam_size=self.eval_recognition_beam_size
-                    if self.do_recognition
-                    else None,
-                    # Translation Parameters
+                    val_dataloader=val_dataloader,
                     do_translation=self.do_translation,
-                    translation_loss_function=self.translation_loss_function
-                    if self.do_translation
-                    else None,
-                    translation_max_output_length=self.translation_max_output_length
-                    if self.do_translation
-                    else None,
-                    level=self.level if self.do_translation else None,
-                    translation_loss_weight=self.translation_loss_weight
-                    if self.do_translation
-                    else None,
-                    translation_beam_size=self.eval_translation_beam_size
-                    if self.do_translation
-                    else None,
-                    translation_beam_alpha=self.eval_translation_beam_alpha
-                    if self.do_translation
-                    else None,
-                    frame_subsampling_ratio=self.frame_subsampling_ratio,
+                    translation_loss_function=self.translation_loss_function,
+                    translation_loss_weight=self.translation_loss_weight,
+                    translation_max_output_length=self.translation_max_output_length,
+                    level=self.level,
+                    translation_beam_size=self.eval_translation_beam_size,
+                    translation_beam_alpha=self.eval_translation_beam_alpha,
+                    epoch_no=epoch_no,
+                    output_path=os.path.join(self.model_dir, "predictions")
                 )
                 self.model.train()
                 self.tb_writer.add_scalar(
@@ -619,7 +580,6 @@ class TrainManager:
                     val_res["valid_ppl"] if self.do_translation else -1,
                     self.eval_metric.upper(),
                     # WER
-                    val_res["valid_scores"]["wer"] if self.do_recognition else -1,
                     val_res["valid_scores"]["wer_scores"]["del_rate"]
                     if self.do_recognition
                     else -1,
@@ -648,39 +608,10 @@ class TrainManager:
                     val_res["valid_scores"]["rouge"] if self.do_translation else -1,
                 )
 
-                self._log_examples(
-                    sequences=[s for s in valid_data.sequence],
-                    gls_references=val_res["gls_ref"]
-                    if self.do_recognition
-                    else None,
-                    gls_hypotheses=val_res["gls_hyp"]
-                    if self.do_recognition
-                    else None,
-                    txt_references=val_res["txt_ref"]
-                    if self.do_translation
-                    else None,
-                    txt_hypotheses=val_res["txt_hyp"]
-                    if self.do_translation
-                    else None,
-                )
+                
 
-                valid_seq = [s for s in valid_data.sequence]
-                # store validation set outputs and references
-                if self.do_recognition:
-                    self._store_outputs(
-                        "dev.hyp.gls", valid_seq, val_res["gls_hyp"], "gls"
-                    )
-                    self._store_outputs(
-                        "references.dev.gls", valid_seq, val_res["gls_ref"]
-                    )
 
-                if self.do_translation:
-                    self._store_outputs(
-                        "dev.hyp.txt", valid_seq, val_res["txt_hyp"], "txt"
-                    )
-                    self._store_outputs(
-                        "references.dev.txt", valid_seq, val_res["txt_ref"]
-                    )
+
 
             if self.stop:
                 break
@@ -709,7 +640,7 @@ class TrainManager:
             epoch_stats["translation_loss"] if self.do_translation else -1,
         )
     
-    def _train_batch(self,  batch , update: bool = True) -> (Tensor, Tensor):
+    def _train_batch(self,  batch , update: bool = True) -> Tensor:
         """
         Train the model on one batch: Compute the loss, make a gradient step.
 
@@ -721,18 +652,8 @@ class TrainManager:
 
         translation_loss = self.model.get_loss_for_batch(
             batch=batch,
-            recognition_loss_function=self.recognition_loss_function
-            if self.do_recognition
-            else None,
-            translation_loss_function=self.translation_loss_function
-            if self.do_translation
-            else None,
-            recognition_loss_weight=self.recognition_loss_weight
-            if self.do_recognition
-            else None,
+            translation_loss_function=self.translation_loss_function,
             translation_loss_weight=self.translation_loss_weight
-            if self.do_translation
-            else None,
         )
 
         # normalize translation loss
@@ -770,8 +691,88 @@ class TrainManager:
         if self.do_translation:
             self.total_txt_tokens += batch.num_txt_tokens
 
-        return normalized_recognition_loss, normalized_translation_loss
+        return normalized_translation_loss
+    
 
+
+def train(cfg_file: str, args: argparse.Namespace) -> None:
+    """
+    Main training function. After training, also test on test data if given.
+
+    :param cfg_file: path to configuration yaml file
+    """
+    cfg = load_config(cfg_file)
+
+    # set the random seed
+    set_seed(seed=cfg["training"].get("random_seed", 42))
+
+    train_data, dev_data, test_data, txt_vocab, txt_field = load_data(
+        data_cfg=cfg["data"], 
+        args=args
+    )
+
+    # build model and load parameters into it
+    do_translation = cfg["training"].get("translation_loss_weight", 1.0) > 0.0
+
+    model = build_model(
+        cfg=cfg["model"],
+        txt_vocab=txt_vocab,
+        sgn_dim=cfg["data"]["feature_size"],
+        do_translation=do_translation,
+    )
+
+    # for training management, e.g. early stopping and model selection
+    trainer = TrainManager(model=model, config=cfg)
+
+    # store copy of original training config in model dir
+    shutil.copy2(cfg_file, trainer.model_dir + "/config.yaml")
+
+    # log all entries of config
+    log_cfg(cfg, trainer.logger)
+
+    log_data_info(
+        train_data=train_data,
+        valid_data=dev_data,
+        test_data=test_data,
+        txt_vocab=txt_vocab,
+        logging_function=trainer.logger.info,
+    )
+
+    trainer.logger.info(str(model))
+
+    # store the vocabs
+    txt_vocab_file = "{}/txt.vocab".format(cfg["training"]["model_dir"])
+    txt_vocab.to_file(txt_vocab_file)
+
+    # train the model
+    trainer.train_and_validate(train_data=train_data, valid_data=dev_data)
+    # Delete to speed things up as we don't need training data anymore
+    del train_data, dev_data, test_data
+
+    # predict with the best model on validation and test
+    # (if test data is available)
+    ckpt = "{}/{}.ckpt".format(trainer.model_dir, trainer.best_ckpt_iteration)
+    output_name = "best.IT_{:08d}".format(trainer.best_ckpt_iteration)
+    output_path = os.path.join(trainer.model_dir, output_name)
+    logger = trainer.logger
+    del trainer
+    test(cfg_file, ckpt=ckpt, output_path=output_path, logger=logger)
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser("Joey-NMT")
+    parser.add_argument(
+        "config",
+        default="configs/default.yaml",
+        type=str,
+        help="Training configuration file (yaml).",
+    )
+    parser.add_argument(
+        "--gpu_id", type=str, default="0", help="gpu to run your job on"
+    )
+    args = parser.parse_args()
+    os.environ["CUDA_VISIBLE_DEVICES"] = args.gpu_id
+    train(cfg_file=args.config)
     
 
 

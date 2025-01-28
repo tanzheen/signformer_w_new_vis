@@ -141,23 +141,11 @@ def log_data_info(
     )
 
     logging_function(
-        "First training example:\n\t[GLS] {}\n\t[TXT] {}".format(
-            " ".join(vars(train_data[0])["gls"]), " ".join(vars(train_data[0])["txt"])
-        )
-    )
-
-    logging_function(
-        "First 10 words (gls): {}".format(
-            " ".join("(%d) %s" % (i, t) for i, t in enumerate(gls_vocab.itos[:10]))
-        )
-    )
-    logging_function(
         "First 10 words (txt): {}".format(
             " ".join("(%d) %s" % (i, t) for i, t in enumerate(txt_vocab.itos[:10]))
         )
     )
 
-    logging_function("Number of unique glosses (types): {}".format(len(gls_vocab)))
     logging_function("Number of unique words (types): {}".format(len(txt_vocab)))
 
 

@@ -69,7 +69,6 @@ class TransformerDecoder(Decoder):
                     ff_size=ff_size,
                     num_heads=num_heads,
                     dropout=dropout,
-                    emb_dropout=emb_dropout,
                     cope=cope,
                 )
                 for _ in range(num_layers)

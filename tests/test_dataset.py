@@ -78,7 +78,7 @@ class TestSignTranslationDataset(unittest.TestCase):
         # Create dataset instance
         self.dataset = SignTranslationDataset(
             path=self.dataset_path,
-            config=self.config,
+            data_config=self.config,
             args=self.args,
             phase='train'
         )

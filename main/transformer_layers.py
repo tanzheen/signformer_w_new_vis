@@ -3,13 +3,12 @@ import torch
 import torch.nn as nn
 from torch import Tensor
 from encoder_module.ResidualModule import ResidualConnectionModule
-from .encoder_module.MHSA_RPE import MultiHeadedSelfAttentionModule, MultiHeadedCrossAttentionModule,GlossFreeAttentionModule, \
+from encoder_module.MHSA_RPE import MultiHeadedSelfAttentionModule, MultiHeadedCrossAttentionModule,GlossFreeAttentionModule, \
     ContextualMultiHeadedSelfAttentionModule, ContextualMultiHeadedCrossAttentionModule, RelPosMultiHeadSelfAttention, RelativeMultiheadSelfAttentionModule
-from .encoder_module.Convolution import ConvModule, PointwiseConv1d, ConvModuleOriginal
-from .encoder_module.FeedForward import FeedForwardModule
-from .utils.attention_module import DeformableMultiHeadedAttention, ContextualMultiHeadAttention
-
-class MultiHeadedAttention(nn.Module): 
+from encoder_module.Convolution import ConvModule, PointwiseConv1d, ConvModuleOriginal
+from encoder_module.FeedForward import FeedForwardModule
+from encoder_module.attention_module import DeformableMultiHeadedAttention, ContextualMultiHeadAttention
+class MultiHeadedAttention(nn.Module):
     """
     Multi-Head Attention module from "Attention is All You Need"
 
@@ -27,7 +26,7 @@ class MultiHeadedAttention(nn.Module):
         super(MultiHeadedAttention, self).__init__()
 
         assert size % num_heads == 0
-    
+
         self.head_size = head_size = size // num_heads
         self.model_size = size
         self.num_heads = num_heads
@@ -40,38 +39,61 @@ class MultiHeadedAttention(nn.Module):
         self.softmax = nn.Softmax(dim=-1)
         self.dropout = nn.Dropout(dropout)
 
-    def forward(self, query: Tensor, key: Tensor, value: Tensor, mask: Tensor = None) -> Tensor:
+    def forward(self, q: Tensor,  k: Tensor, v: Tensor, mask: Tensor = None):
         """
-        Compute the context vector and the attention vectors.
-        :param query: query tensor
-        :param key: key tensor
-        :param value: value tensor
-        :param mask: mask tensor
-        :return: output tensor
-        """
-        batch_size = query.size(0)
+        Computes multi-headed attention.
 
-        # linear projection
-        q = self.q_layer(query).view(batch_size, -1, self.num_heads, self.head_size).transpose(1, 2)
-        k = self.k_layer(key).view(batch_size, -1, self.num_heads, self.head_size).transpose(1, 2)
-        v = self.v_layer(value).view(batch_size, -1, self.num_heads, self.head_size).transpose(1, 2)
+        :param k: keys   [B, M, D] with M being the sentence length.
+        :param v: values [B, M, D]
+        :param q: query  [B, M, D]
+        :param mask: optional mask [B, 1, M]
+        :return:
+        """
+        batch_size = k.size(0)
+        num_heads = self.num_heads
+        
+
+        # project the queries (q), keys (k), and values (v)
+        k = self.k_layer(k)
+        v = self.v_layer(v)
+        q = self.q_layer(q)
+
+        # reshape q, k, v for our computation to [batch_size, num_heads, ..]
+        k = k.view(batch_size, -1, num_heads, self.head_size).transpose(1, 2)
+        v = v.view(batch_size, -1, num_heads, self.head_size).transpose(1, 2)
+        q = q.view(batch_size, -1, num_heads, self.head_size).transpose(1, 2)
 
         # compute scores
         q = q / math.sqrt(self.head_size)
+
+        # batch x num_heads x query_len x key_len
         scores = torch.matmul(q, k.transpose(2, 3))
+        print("scores shape:", scores.shape)
+        print("mask shape (before unsqueeze):", mask.shape)
+        print("mask shape (after unsqueeze):", mask.unsqueeze(1).shape)
 
+
+        # apply the mask (if we have one)
+        # we add a dimension for the heads to it below: [B, 1, 1, M]
         if mask is not None:
-            mask = mask.unsqueeze(1).expand_as(scores)
-            scores = torch.where(mask, scores, scores.new_full([1], float("-inf")))
+            scores = scores.masked_fill(~mask.unsqueeze(1).bool(), float("-inf"))
 
-        # turn scores to probabilities
-        alphas = self.softmax(scores)
+        # apply attention dropout and compute context vectors.
+        attention = self.softmax(scores)
+        attention = self.dropout(attention)
 
-        # the context vector is the weighted sum of the values
-        context = torch.matmul(self.dropout(alphas), v)
-        context = context.transpose(1, 2).contiguous().view(batch_size, -1, self.model_size)
+        # get context vector (select values with attention) and reshape
+        # back to [B, M, D]
+        context = torch.matmul(attention, v)
+        context = (
+            context.transpose(1, 2)
+            .contiguous()
+            .view(batch_size, -1, num_heads * self.head_size)
+        )
 
-        return self.output_layer(context)
+        output = self.output_layer(context)
+
+        return output
 
 class PositionwiseFeedForward(nn.Module):
     """
@@ -247,6 +269,8 @@ class TransformerDecoderLayer(nn.Module):
 
         # source-target attention
         h1_2 = self.dec_layer_norm(h1)
+        print("memory: ", memory.shape)
+        print("h1_2: ", h1_2.shape)
         h2 = self.src_trg_att(h1_2, memory, memory, mask=src_mask)
         x = self.dropout2(h2) + h1
 

@@ -10,7 +10,7 @@ import time
 import torch.nn as nn
 
 from typing import List
-from torchtext.data import Dataset
+from torch.utils.data import DataLoader
 from loss import XentLoss
 from helpers import (
     bpe_postprocess,
@@ -20,37 +20,24 @@ from helpers import (
 )
 from metrics import bleu, chrf, rouge, wer_list
 from model import build_model, SignModel
-from batch import Batch
-from data import load_data, make_data_iter
+from data import load_data
 from vocabulary import PAD_TOKEN, SIL_TOKEN
-from phoenix_utils.phoenix_cleanup import (
-    clean_phoenix_2014,
-    clean_phoenix_2014_trans,
-)
-
+from tqdm import tqdm
 
 # pylint: disable=too-many-arguments,too-many-locals,no-member
 def validate_on_data(
+    model_dir: str,
+    steps: int,
     model: SignModel,
-    data: Dataset,
-    batch_size: int,
-    use_cuda: bool,
-    sgn_dim: int,
-    do_recognition: bool,
-    recognition_loss_function: torch.nn.Module,
-    recognition_loss_weight: int,
+    val_dataloader: DataLoader,
     do_translation: bool,
     translation_loss_function: torch.nn.Module,
     translation_loss_weight: int,
     translation_max_output_length: int,
     level: str,
-    txt_pad_index: int,
-    recognition_beam_size: int = 1,
     translation_beam_size: int = 1,
     translation_beam_alpha: int = -1,
-    batch_type: str = "sentence",
-    dataset_version: str = "phoenix_2014_trans",
-    frame_subsampling_ratio: int = None,
+    epoch_no: int = 0
 ) -> (
     float,
     float,
@@ -102,120 +89,57 @@ def validate_on_data(
         - decoded_valid: raw validation hypotheses (before post-processing),
         - valid_attention_scores: attention scores for validation hypotheses
     """
-    valid_iter = make_data_iter(
-        dataset=data,
-        batch_size=batch_size,
-        batch_type=batch_type,
-        shuffle=False,
-        train=False,
-    )
-
+    
     # disable dropout
     model.eval()
     # don't track gradients during validation
     with torch.no_grad():
-        all_gls_outputs = []
+        all_ref_texts = []
         all_txt_outputs = []
         all_attention_scores = []
-        total_recognition_loss = 0
         total_translation_loss = 0
         total_num_txt_tokens = 0
-        total_num_gls_tokens = 0
         total_num_seqs = 0
-        for valid_batch in iter(valid_iter):
-            batch = Batch(
-                is_train=False,
-                torch_batch=valid_batch,
-                txt_pad_index=txt_pad_index,
-                sgn_dim=sgn_dim,
-                use_cuda=use_cuda,
-                frame_subsampling_ratio=frame_subsampling_ratio,
-            )
-            sort_reverse_index = batch.sort_by_sgn_lengths()
 
-            batch_recognition_loss, batch_translation_loss = model.get_loss_for_batch(
-                batch=batch,
-                recognition_loss_function=recognition_loss_function
-                if do_recognition
-                else None,
-                translation_loss_function=translation_loss_function
-                if do_translation
-                else None,
-                recognition_loss_weight=recognition_loss_weight
-                if do_recognition
-                else None,
-                translation_loss_weight=translation_loss_weight
-                if do_translation
-                else None,
-            )
-            if do_recognition:
-                total_recognition_loss += batch_recognition_loss
-                total_num_gls_tokens += batch.num_gls_tokens
+        # Create progress bar
+        progress_bar = tqdm(
+            val_dataloader,
+            total=len(val_dataloader),
+            desc=f"Training epoch {epoch_no+1}",
+            unit="batch",
+            leave=True
+        )
+
+        for valid_batch in progress_bar:
+            
+            batch_translation_loss = model.get_loss_for_batch(
+                batch=valid_batch,
+                translation_loss_function=translation_loss_function,
+                translation_loss_weight=translation_loss_weight)
+    
+
             if do_translation:
                 total_translation_loss += batch_translation_loss
-                total_num_txt_tokens += batch.num_txt_tokens
-            total_num_seqs += batch.num_seqs
 
-            (
-                batch_gls_predictions,
-                batch_txt_predictions,
-                batch_attention_scores,
-            ) = model.run_batch(
-                batch=batch,
-                recognition_beam_size=recognition_beam_size if do_recognition else None,
+            batch_txt_predictions,batch_attention_scores, = model.run_batch(
+                batch=valid_batch,
                 translation_beam_size=translation_beam_size if do_translation else None,
-                translation_beam_alpha=translation_beam_alpha
-                if do_translation
-                else None,
+                translation_beam_alpha=translation_beam_alpha,
                 translation_max_output_length=translation_max_output_length
-                if do_translation
-                else None,
             )
 
-            # sort outputs back to original order
-            if do_recognition:
-                all_gls_outputs.extend(
-                    [batch_gls_predictions[sri] for sri in sort_reverse_index]
-                )
             if do_translation:
-                all_txt_outputs.extend(batch_txt_predictions[sort_reverse_index])
+                all_txt_outputs.extend(batch_txt_predictions)
+                all_ref_texts.extend(valid_batch['txt_input'])
+
             all_attention_scores.extend(
-                batch_attention_scores[sort_reverse_index]
+                batch_attention_scores
                 if batch_attention_scores is not None
                 else []
             )
 
-        if do_recognition:
-            assert len(all_gls_outputs) == len(data)
-            if (
-                recognition_loss_function is not None
-                and recognition_loss_weight != 0
-                and total_num_gls_tokens > 0
-            ):
-                valid_recognition_loss = total_recognition_loss
-            else:
-                valid_recognition_loss = -1
-            # decode back to symbols
-            decoded_gls = model.gls_vocab.arrays_to_sentences(arrays=all_gls_outputs)
-
-            # Gloss clean-up function
-            if dataset_version == "phoenix_2014_trans":
-                gls_cln_fn = clean_phoenix_2014_trans
-            elif dataset_version == "phoenix_2014":
-                gls_cln_fn = clean_phoenix_2014
-            else:
-                raise ValueError("Unknown Dataset Version: " + dataset_version)
-
-            # Construct gloss sequences for metrics
-            gls_ref = [gls_cln_fn(" ".join(t)) for t in data.gls]
-            gls_hyp = [gls_cln_fn(" ".join(t)) for t in decoded_gls]
-            assert len(gls_ref) == len(gls_hyp)
-
-            # GLS Metrics
-            gls_wer_score = wer_list(hypotheses=gls_hyp, references=gls_ref)
-
         if do_translation:
-            assert len(all_txt_outputs) == len(data)
+            assert len(all_txt_outputs) == len(all_ref_texts)
             if (
                 translation_loss_function is not None
                 and translation_loss_weight != 0
@@ -230,16 +154,20 @@ def validate_on_data(
                 valid_ppl = -1
             # decode back to symbols
             decoded_txt = model.txt_vocab.arrays_to_sentences(arrays=all_txt_outputs)
+            decoded_ref = model.txt_vocab.arrays_to_sentences(arrays=all_ref_texts)
+            
             # evaluate with metric on full dataset
             join_char = " " if level in ["word", "bpe"] else ""
             # Construct text sequences for metrics
-            txt_ref = [join_char.join(t) for t in data.txt]
+            txt_ref = [join_char.join(t) for t in decoded_ref]
             txt_hyp = [join_char.join(t) for t in decoded_txt]
             # post-process
             if level == "bpe":
                 txt_ref = [bpe_postprocess(v) for v in txt_ref]
                 txt_hyp = [bpe_postprocess(v) for v in txt_hyp]
             assert len(txt_ref) == len(txt_hyp)
+            # store_outputs(model_dir, steps, "dev.hyp.txt", valid_batch['txt_input'], txt_hyp)
+            # store_outputs(model_dir, steps, "references.dev.txt", valid_batch['txt_input'], txt_ref)
 
             # TXT Metrics
             txt_bleu = bleu(references=txt_ref, hypotheses=txt_hyp)
@@ -247,9 +175,6 @@ def validate_on_data(
             txt_rouge = rouge(references=txt_ref, hypotheses=txt_hyp)
 
         valid_scores = {}
-        if do_recognition:
-            valid_scores["wer"] = gls_wer_score["wer"]
-            valid_scores["wer_scores"] = gls_wer_score
         if do_translation:
             valid_scores["bleu"] = txt_bleu["bleu4"]
             valid_scores["bleu_scores"] = txt_bleu
@@ -260,12 +185,6 @@ def validate_on_data(
         "valid_scores": valid_scores,
         "all_attention_scores": all_attention_scores,
     }
-    if do_recognition:
-        results["valid_recognition_loss"] = valid_recognition_loss
-        results["decoded_gls"] = decoded_gls
-        results["gls_ref"] = gls_ref
-        results["gls_hyp"] = gls_hyp
-
     if do_translation:
         results["valid_translation_loss"] = valid_translation_loss
         results["valid_ppl"] = valid_ppl
@@ -275,6 +194,26 @@ def validate_on_data(
 
     return results
 
+
+# def store_outputs(model_dir: str, steps: int, tag: str, sequence_ids: List[str], hypotheses: List[str], sub_folder=None
+#     ) -> None:
+#         """
+#         Write current validation outputs to file in `self.model_dir.`
+
+#         :param hypotheses: list of strings
+#         """
+#         if sub_folder:
+#             out_folder = os.path.join(model_dir, sub_folder)
+#             if not os.path.exists(out_folder):
+#                 os.makedirs(out_folder)
+#             current_valid_output_file = "{}/{}.{}".format(out_folder, steps, tag)
+#         else:
+#             out_folder = model_dir
+#             current_valid_output_file = "{}/{}".format(out_folder, tag)
+
+#         with open(current_valid_output_file, "w", encoding="utf-8") as opened_file:
+#             for seq, hyp in zip(sequence_ids, hypotheses):
+#                 opened_file.write("{}|{}\n".format(seq, hyp))
 
 # pylint: disable-msg=logging-too-many-args
 def test(
