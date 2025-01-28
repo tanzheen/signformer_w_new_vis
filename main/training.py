@@ -61,7 +61,9 @@ class TrainManager:
         self.model_dir = make_model_dir(
             train_config["model_dir"], overwrite=train_config.get("overwrite", False)
         )
+        self.tb_writer = SummaryWriter(log_dir=self.model_dir + "/tensorboard/")
         self.logger = make_logger(model_dir=train_config["model_dir"])
+        self.logging_freq = train_config.get("logging_freq", 100)
         self._log_parameters_list()
 
         # we are defintely only doing translation
@@ -323,7 +325,7 @@ class TrainManager:
         epoch_no = None
         # Create dataloader
         train_dataloader = DataLoader(train_data, batch_size=self.batch_size, shuffle=self.shuffle, collate_fn=train_data.collate_fn)
-        valid_dataloader = DataLoader(valid_data, batch_size=self.eval_batch_size, shuffle=False, collate_fn=valid_data.collate_fn)
+        valid_dataloader = DataLoader(valid_data, batch_size=self.eval_batch_size, shuffle=False, collate_fn=valid_data.collate_fn, drop_last=True)
 
         for epoch_no in range(self.epochs):
 
@@ -416,16 +418,11 @@ class TrainManager:
                 )
 
                 if self.do_translation:
-                    elapsed_txt_tokens = (
-                        self.total_txt_tokens - processed_txt_tokens
-                    )
-                    processed_txt_tokens = self.total_txt_tokens
+    
                     log_out += "Batch Translation Loss: {:10.6f} => ".format(
                         translation_loss
                     )
-                    log_out += "Txt Tokens per Sec: {:8.0f} || ".format(
-                        elapsed_txt_tokens / elapsed
-                    )
+
                 log_out += "Lr: {:.6f}".format(self.optimizer.param_groups[0]["lr"])
                 self.logger.info(log_out)
                 start = time.time()
@@ -449,9 +446,15 @@ class TrainManager:
                     translation_beam_size=self.eval_translation_beam_size,
                     translation_beam_alpha=self.eval_translation_beam_alpha,
                     epoch_no=epoch_no,
-                    output_path=os.path.join(self.model_dir, "predictions")
+                    model_dir=self.model_dir,
+                    steps=self.steps
                 )
                 self.model.train()
+
+
+                if self.do_translation:
+                    processed_txt_tokens = self.total_txt_tokens
+                    epoch_translation_loss = 0
                 self.tb_writer.add_scalar(
                     "learning_rate",
                     self.scheduler.optimizer.param_groups[0]["lr"],
@@ -659,9 +662,9 @@ class TrainManager:
         # normalize translation loss
         if self.do_translation:
             if self.translation_normalization_mode == "batch":
-                txt_normalization_factor = batch.num_seqs
+                txt_normalization_factor = batch['txt_input'].shape[0]
             elif self.translation_normalization_mode == "tokens":
-                txt_normalization_factor = batch.num_txt_tokens
+                txt_normalization_factor = batch['txt_input'].shape[1]
             else:
                 raise NotImplementedError("Only normalize by 'batch' or 'tokens'")
 
@@ -673,23 +676,24 @@ class TrainManager:
             normalized_translation_loss = 0
 
         # compute gradients
-        normalized_translation_loss.backward()
-
-        if self.clip_grad_fun is not None:
-            # clip gradients (in-place)
-            self.clip_grad_fun(params=self.model.parameters())
-
+        # divide loss by gradient accumulation steps for normalized gradients
+        (normalized_translation_loss / 8).backward()
         if update:
-            # make gradient step
-            self.optimizer.step()
-            self.optimizer.zero_grad()
+            # make gradient step after accumulating 8 batches
+            if self.steps % 8 == 0:
+                if self.clip_grad_fun is not None:
+                    # clip gradients (in-place) before optimizer step
+                    self.clip_grad_fun(params=self.model.parameters())
+                    
+                self.optimizer.step()
+                self.optimizer.zero_grad()
 
             # increment step counter
             self.steps += 1
 
         # increment token counter
         if self.do_translation:
-            self.total_txt_tokens += batch.num_txt_tokens
+            self.total_txt_tokens += batch['txt_input'].shape[1]
 
         return normalized_translation_loss
     

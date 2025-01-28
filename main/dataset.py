@@ -150,10 +150,12 @@ class SignTranslationDataset(Dataset.Dataset):
         mask_gen = pad_sequence(mask_gen,
                                  padding_value=self.txt_field.vocab.stoi[PAD_TOKEN], 
                                  batch_first=True)
-        img_padding_mask = (mask_gen != self.txt_field.vocab.stoi[PAD_TOKEN]).long().unsqueeze(2)
+        #print ('mask_gen shape: ', mask_gen.shape)
+   
+        img_padding_mask = (mask_gen != self.txt_field.vocab.stoi[PAD_TOKEN]).long().unsqueeze(1)
 
         #print("mask_gen", mask_gen)
-        print("img_padding_mask at collating: ", img_padding_mask.shape)
+        #print("img_padding_mask at collating: ", img_padding_mask.shape)
 
         # Process text
         if self.txt_field is not None:
@@ -167,22 +169,23 @@ class SignTranslationDataset(Dataset.Dataset):
             txt_input = [self.txt_field.process([tokens]) for tokens in tokenized_texts]  # Process pre-tokenized text
             #print("After processing:", txt_input)
            
-            for t in txt_input:
-                print(t[0].transpose(0,1).shape)  # Inspect each tensor before padding
+            # for t in txt_input:
+            #     print(t[0].transpose(0,1).shape)  # Inspect each tensor before padding
             
             txt_input = pad_sequence([t[0].transpose(0,1) for t in txt_input], 
                                    batch_first=True, 
                                    padding_value=self.txt_field.vocab.stoi[PAD_TOKEN])
    
-            
+            txt_input = txt_input.transpose(1,2)           
             # Create text mask
             txt_mask = (txt_input != self.txt_field.vocab.stoi[PAD_TOKEN]).long()
-            print("txt_maska at collating : ", txt_mask.shape)
+            # print ('txt_input shape: ', txt_input.shape)
+            # print("txt_maska at collating : ", txt_mask.shape)
 
             # Prepare decoder input by shifting right
-            decoder_input = self.shift_tokens_right(txt_input, 
-                                                    self.txt_field.vocab.stoi[PAD_TOKEN],
-                                                    self.txt_field.vocab.stoi[BOS_TOKEN])
+            # decoder_input = self.shift_tokens_right(txt_input, 
+            #                                         self.txt_field.vocab.stoi[PAD_TOKEN],
+            #                                         self.txt_field.vocab.stoi[BOS_TOKEN])
         else:
             txt_input = None
             txt_mask = None
@@ -200,8 +203,8 @@ class SignTranslationDataset(Dataset.Dataset):
 
     def shift_tokens_right(self, input_ids, pad_token_id, decoder_start_token_id):
         """Shift input ids one token to the right, and wrap the last non-pad token (usually <eos>)."""
-        print("pad_token_id", pad_token_id)
-        print("decoder_start_token_id", decoder_start_token_id  )
+        # print("pad_token_id", pad_token_id)
+        # print("decoder_start_token_id", decoder_start_token_id  )
         shifted_input_ids = input_ids.new_zeros(input_ids.shape)
         shifted_input_ids[:, 1:] = input_ids[:, :-1].clone()
         shifted_input_ids[:, 0] = decoder_start_token_id

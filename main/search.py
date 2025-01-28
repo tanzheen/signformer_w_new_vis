@@ -168,7 +168,7 @@ def transformer_greedy(
 
         # pylint: disable=unused-variable
         with torch.no_grad():
-            logits, out, _, _ = decoder(
+            logits, out= decoder(
                 trg_embed=trg_embed,
                 encoder_output=encoder_output,
                 encoder_hidden=None,

@@ -68,9 +68,6 @@ class MultiHeadedAttention(nn.Module):
 
         # batch x num_heads x query_len x key_len
         scores = torch.matmul(q, k.transpose(2, 3))
-        print("scores shape:", scores.shape)
-        print("mask shape (before unsqueeze):", mask.shape)
-        print("mask shape (after unsqueeze):", mask.unsqueeze(1).shape)
 
 
         # apply the mask (if we have one)
@@ -269,8 +266,8 @@ class TransformerDecoderLayer(nn.Module):
 
         # source-target attention
         h1_2 = self.dec_layer_norm(h1)
-        print("memory: ", memory.shape)
-        print("h1_2: ", h1_2.shape)
+        #print("memory: ", memory.shape)
+        #print("h1_2: ", h1_2.shape)
         h2 = self.src_trg_att(h1_2, memory, memory, mask=src_mask)
         x = self.dropout2(h2) + h1
 
