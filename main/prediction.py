@@ -37,58 +37,7 @@ def validate_on_data(
     level: str,
     translation_beam_size: int = 1,
     translation_beam_alpha: int = -1,
-    epoch_no: int = 0
-) -> (
-    float,
-    float,
-    float,
-    List[str],
-    List[List[str]],
-    List[str],
-    List[str],
-    List[List[str]],
-    List[np.array],
-):
-    """
-    Generate translations for the given data.
-    If `loss_function` is not None and references are given,
-    also compute the loss.
-
-    :param model: model module
-    :param data: dataset for validation
-    :param batch_size: validation batch size
-    :param use_cuda: if True, use CUDA
-    :param translation_max_output_length: maximum length for generated hypotheses
-    :param level: segmentation level, one of "char", "bpe", "word"
-    :param translation_loss_function: translation loss function (XEntropy)
-    :param recognition_loss_function: recognition loss function (CTC)
-    :param recognition_loss_weight: CTC loss weight
-    :param translation_loss_weight: Translation loss weight
-    :param txt_pad_index: txt padding token index
-    :param sgn_dim: Feature dimension of sgn frames
-    :param recognition_beam_size: beam size for validation (recognition, i.e. CTC).
-        If 0 then greedy decoding (default).
-    :param translation_beam_size: beam size for validation (translation).
-        If 0 then greedy decoding (default).
-    :param translation_beam_alpha: beam search alpha for length penalty (translation),
-        disabled if set to -1 (default).
-    :param batch_type: validation batch type (sentence or token)
-    :param do_recognition: flag for predicting glosses
-    :param do_translation: flag for predicting text
-    :param dataset_version: phoenix_2014 or phoenix_2014_trans
-    :param frame_subsampling_ratio: frame subsampling ratio
-
-    :return:
-        - current_valid_score: current validation score [eval_metric],
-        - valid_loss: validation loss,
-        - valid_ppl:, validation perplexity,
-        - valid_sources: validation sources,
-        - valid_sources_raw: raw validation sources (before post-processing),
-        - valid_references: validation references,
-        - valid_hypotheses: validation_hypotheses,
-        - decoded_valid: raw validation hypotheses (before post-processing),
-        - valid_attention_scores: attention scores for validation hypotheses
-    """
+    epoch_no: int = 0):
     
     # disable dropout
     model.eval()
@@ -153,6 +102,8 @@ def validate_on_data(
                 valid_translation_loss = -1
                 valid_ppl = -1
             # decode back to symbols
+            # print(f"all_txt_outputs: {all_txt_outputs}")
+            # print(f"all_ref_texts: {all_ref_texts}")
             decoded_txt = model.txt_vocab.arrays_to_sentences(arrays=all_txt_outputs)
             decoded_ref = model.txt_vocab.arrays_to_sentences(arrays=all_ref_texts)
             

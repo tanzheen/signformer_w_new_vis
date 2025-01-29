@@ -4,7 +4,7 @@ import torch.utils.data.dataset as Dataset
 from collections import defaultdict, Counter
 from typing import List
 from tqdm import tqdm
-
+import torch 
 SIL_TOKEN = "<si>"
 UNK_TOKEN = "<unk>"
 PAD_TOKEN = "<pad>"
@@ -120,13 +120,34 @@ class TextVocabulary(Vocabulary):
         :param cut_at_eos: cut the decoded sentences at the first <eos>
         :return: list of strings (tokens)
         """
+        # Convert tensor to numpy array and flatten to 1D if needed
+        if torch.is_tensor(array):
+            array = array.cpu().numpy()
+        if len(array.shape) > 1:
+            array = array.flatten()
         sentence = []
         for i in array:
+            #print(f"arr to idx i: {i}")
             s = self.itos[i]
             if cut_at_eos and s == EOS_TOKEN:
                 break
             sentence.append(s)
         return sentence
+    
+    def arrays_to_sentences(self, arrays: np.array, cut_at_eos=True) -> List[List[str]]:
+        """
+        Convert multiple arrays containing sequences of token IDs to their
+        sentences, optionally cutting them off at the end-of-sequence token.
+
+        :param arrays: 2D array containing indices
+        :param cut_at_eos: cut the decoded sentences at the first <eos>
+        :return: list of list of strings (tokens)
+        """
+        #print(f"arrays to sentences arrays: {arrays}")
+        sentences = []
+        for array in arrays:
+            sentences.append(self.array_to_sentence(array=array, cut_at_eos=cut_at_eos))
+        return sentences
     
 
 def filter_min(counter: Counter, minimum_freq: int):

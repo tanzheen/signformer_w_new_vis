@@ -64,6 +64,7 @@ class TrainManager:
         self.tb_writer = SummaryWriter(log_dir=self.model_dir + "/tensorboard/")
         self.logger = make_logger(model_dir=train_config["model_dir"])
         self.logging_freq = train_config.get("logging_freq", 100)
+        self.valid_report_file = "{}/validations.txt".format(self.model_dir)
         self._log_parameters_list()
 
         # we are defintely only doing translation
@@ -216,7 +217,6 @@ class TrainManager:
         state = {
             "steps": self.steps,
             "total_txt_tokens": self.total_txt_tokens if self.do_translation else 0,
-            "total_gls_tokens": self.total_gls_tokens if self.do_recognition else 0,
             "best_ckpt_score": self.best_ckpt_score,
             "best_all_ckpt_scores": self.best_all_ckpt_scores,
             "best_ckpt_iteration": self.best_ckpt_iteration,
@@ -460,21 +460,7 @@ class TrainManager:
                     self.scheduler.optimizer.param_groups[0]["lr"],
                     self.steps,
                 )
-                if self.do_recognition:
-                    # Log Losses and ppl
-                    self.tb_writer.add_scalar(
-                        "valid/valid_recognition_loss",
-                        val_res["valid_recognition_loss"],
-                        self.steps,
-                    )
-                    self.tb_writer.add_scalar(
-                        "valid/wer", val_res["valid_scores"]["wer"], self.steps
-                    )
-                    self.tb_writer.add_scalars(
-                        "valid/wer_scores",
-                        val_res["valid_scores"]["wer_scores"],
-                        self.steps,
-                    )
+                
 
                 if self.do_translation:
                     self.tb_writer.add_scalar(
@@ -502,10 +488,8 @@ class TrainManager:
                         self.steps,
                     )
 
-                if self.early_stopping_metric == "recognition_loss":
-                    assert self.do_recognition
-                    ckpt_score = val_res["valid_recognition_loss"]
-                elif self.early_stopping_metric == "translation_loss":
+    
+                if self.early_stopping_metric == "translation_loss":
                     assert self.do_translation
                     ckpt_score = val_res["valid_translation_loss"]
                 elif self.early_stopping_metric in ["ppl", "perplexity"]:
@@ -543,9 +527,6 @@ class TrainManager:
                 # append to validation report
                 self._add_report(
                     valid_scores=val_res["valid_scores"],
-                    valid_recognition_loss=val_res["valid_recognition_loss"]
-                    if self.do_recognition
-                    else None,
                     valid_translation_loss=val_res["valid_translation_loss"]
                     if self.do_translation
                     else None,
@@ -571,27 +552,14 @@ class TrainManager:
                     epoch_no + 1,
                     self.steps,
                     valid_duration,
-                    self.eval_recognition_beam_size if self.do_recognition else -1,
                     self.eval_translation_beam_size if self.do_translation else -1,
                     self.eval_translation_beam_alpha if self.do_translation else -1,
-                    val_res["valid_recognition_loss"]
-                    if self.do_recognition
-                    else -1,
                     val_res["valid_translation_loss"]
                     if self.do_translation
                     else -1,
                     val_res["valid_ppl"] if self.do_translation else -1,
                     self.eval_metric.upper(),
-                    # WER
-                    val_res["valid_scores"]["wer_scores"]["del_rate"]
-                    if self.do_recognition
-                    else -1,
-                    val_res["valid_scores"]["wer_scores"]["ins_rate"]
-                    if self.do_recognition
-                    else -1,
-                    val_res["valid_scores"]["wer_scores"]["sub_rate"]
-                    if self.do_recognition
-                    else -1,
+                
                     # BLEU
                     val_res["valid_scores"]["bleu"] if self.do_translation else -1,
                     val_res["valid_scores"]["bleu_scores"]["bleu1"]
@@ -635,7 +603,6 @@ class TrainManager:
                     "Training ended since minimum lr %f was reached.",
                     self.learning_rate_min,
                 )
-
 
         self.logger.info(
             "Epoch %3d: Total Training Translation Loss %.2f ",
@@ -696,6 +663,62 @@ class TrainManager:
             self.total_txt_tokens += batch['txt_input'].shape[1]
 
         return normalized_translation_loss
+    
+    def _add_report(
+        self,
+        valid_scores: Dict,
+        valid_translation_loss: float,
+        valid_ppl: float,
+        eval_metric: str,
+        new_best: bool = False,
+    ) -> None:
+        """
+        Append a one-line report to validation logging file.
+
+        :param valid_scores: Dictionary of validation scores
+        :param valid_translation_loss: validation loss (sum over whole validation set)
+        :param valid_ppl: validation perplexity
+        :param eval_metric: evaluation metric, e.g. "bleu"
+        :param new_best: whether this is a new best model
+        """
+        current_lr = -1
+        # ignores other param groups for now
+        for param_group in self.optimizer.param_groups:
+            current_lr = param_group["lr"]
+
+        if new_best:
+            self.last_best_lr = current_lr
+
+        if current_lr < self.learning_rate_min:
+            self.stop = True
+
+        with open(self.valid_report_file, "a", encoding="utf-8") as opened_file:
+            opened_file.write(
+                "Steps: {}\t"
+                "Translation Loss: {:.5f}\t"
+                "PPL: {:.5f}\t"
+                "Eval Metric: {}\t"
+                "BLEU-4 {:.2f}\t(BLEU-1: {:.2f},\tBLEU-2: {:.2f},\tBLEU-3: {:.2f},\tBLEU-4: {:.2f})\t"
+                "CHRF {:.2f}\t"
+                "ROUGE {:.2f}\t"
+                "LR: {:.8f}\t{}\n".format(
+                    self.steps,
+                    valid_translation_loss if self.do_translation else -1,
+                    valid_ppl if self.do_translation else -1,
+                    eval_metric,
+                    # BLEU
+                    valid_scores["bleu"] if self.do_translation else -1,
+                    valid_scores["bleu_scores"]["bleu1"] if self.do_translation else -1,
+                    valid_scores["bleu_scores"]["bleu2"] if self.do_translation else -1,
+                    valid_scores["bleu_scores"]["bleu3"] if self.do_translation else -1,
+                    valid_scores["bleu_scores"]["bleu4"] if self.do_translation else -1,
+                    # Other
+                    valid_scores["chrf"] if self.do_translation else -1,
+                    valid_scores["rouge"] if self.do_translation else -1,
+                    current_lr,
+                    "*" if new_best else "",
+                )
+            )
     
 
 
@@ -761,6 +784,8 @@ def train(cfg_file: str, args: argparse.Namespace) -> None:
     logger = trainer.logger
     del trainer
     test(cfg_file, ckpt=ckpt, output_path=output_path, logger=logger)
+
+    
 
 
 if __name__ == "__main__":
