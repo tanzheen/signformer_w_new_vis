@@ -1,7 +1,5 @@
 # coding: utf-8
-import tensorflow as tf
 from torchvision.models import resnet18
-tf.config.set_visible_devices([], "GPU")
 from torch.nn.utils.rnn import pad_sequence
 import numpy as np
 import torch.nn as nn

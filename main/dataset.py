@@ -2,7 +2,6 @@ import os
 import cv2
 import numpy as np
 import torch.utils.data.dataset as Dataset
-from torchtext.data import Field, RawField
 from typing import List, Tuple
 import pickle
 import gzip

@@ -38,7 +38,7 @@ if __name__ == "__main__":
     main()
 
 '''
-To train: python main.py train configs/sign.yaml
+To train: python main.py train configs/sign_volta.yaml
 python -m main train [CONFIG PATH]
 
 To test: python main.py test configs/sign.yaml --ckpt checkpoints/best.IT_00000000.ckpt --output_path outputs/test.txt

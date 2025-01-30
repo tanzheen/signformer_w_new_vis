@@ -4,7 +4,7 @@ import os
 import tempfile
 import gzip
 import pickle
-from torchtext.data import Field
+from main.data import Field
 from PIL import Image
 import numpy as np
 
