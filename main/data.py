@@ -88,7 +88,7 @@ class Field:
         """Convert text tokens to indices"""
         if self.vocab is None:
             raise RuntimeError("Vocab not set for Field")
-            
+        print(f"arr: {arr}")
         # Ensure each token is a string before lookup
         nums = [[self.vocab.stoi.get(str(x) if not isinstance(x, str) else x, 
                 self.vocab.stoi[self.unk_token]) for x in ex] for ex in arr]
@@ -121,7 +121,7 @@ def load_data(data_cfg: dict, args) -> (Dataset, Dataset, Dataset, Vocabulary, F
         unk_token=UNK_TOKEN,
         batch_first=True,
         lower=txt_lowercase,
-        include_lengths=True,
+        include_lengths=False
     )
 
     # Load datasets

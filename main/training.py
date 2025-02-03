@@ -449,6 +449,14 @@ class TrainManager:
                     model_dir=self.model_dir,
                     steps=self.steps
                 )
+
+                # save the validation results 
+                self._save_validation_results(
+                    txt_ref=val_res["txt_ref"],
+                    txt_hyp=val_res["txt_hyp"]
+                )
+
+                
                 self.model.train()
 
 
@@ -579,6 +587,7 @@ class TrainManager:
                     val_res["valid_scores"]["rouge"] if self.do_translation else -1,
                 )
 
+        
                 
 
 
@@ -664,6 +673,34 @@ class TrainManager:
 
         return normalized_translation_loss
     
+
+    def _save_validation_results(self, txt_ref: list, txt_hyp: list) -> None:
+        """
+        Save the text references and text hypotheses to two separate files.
+        Each line will contain one sentence.
+        
+        Args:
+            txt_ref (List[str]): List of reference sentences.
+            txt_hyp (List[str]): List of hypothesis sentences.
+        """
+        # Define output file paths
+        ref_file = os.path.join(self.model_dir, f"txt_references_{self.steps}.txt")
+        hyp_file = os.path.join(self.model_dir, f"txt_hypotheses_{self.steps}.txt")
+        
+        # Write the reference sentences, one per line
+        with open(ref_file, "w", encoding="utf-8") as rf:
+            for ref in txt_ref:
+                rf.write(f"{ref}\n")
+        
+        # Write the hypothesis sentences, one per line
+        with open(hyp_file, "w", encoding="utf-8") as hf:
+            for hyp in txt_hyp:
+                hf.write(f"{hyp}\n")
+        
+        self.logger.info("Saved %d text references to %s and %d text hypotheses to %s", 
+                         len(txt_ref), ref_file, len(txt_hyp), hyp_file)
+        
+
     def _add_report(
         self,
         valid_scores: Dict,

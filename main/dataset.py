@@ -166,12 +166,12 @@ class SignTranslationDataset(Dataset.Dataset):
             
 
             txt_input = [self.txt_field.process([tokens]) for tokens in tokenized_texts]  # Process pre-tokenized text
-            #print("After processing:", txt_input)
+            print("After processing:", txt_input)
            
             # for t in txt_input:
             #     print(t[0].transpose(0,1).shape)  # Inspect each tensor before padding
             
-            txt_input = pad_sequence([t[0].transpose(0,1) for t in txt_input], 
+            txt_input = pad_sequence([t.transpose(0,1) for t in txt_input], 
                                    batch_first=True, 
                                    padding_value=self.txt_field.vocab.stoi[PAD_TOKEN])
    

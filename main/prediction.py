@@ -80,6 +80,7 @@ def validate_on_data(
             if do_translation:
                 all_txt_outputs.extend(batch_txt_predictions)
                 all_ref_texts.extend(valid_batch['txt_input'])
+                print(f"valid_batch['txt_input']: {valid_batch['txt_input']}")
 
             all_attention_scores.extend(
                 batch_attention_scores
