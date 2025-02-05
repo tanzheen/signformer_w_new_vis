@@ -1,0 +1,1 @@
+Steps: 5	Translation Loss: -1.00000	PPL: -1.00000	Eval Metric: bleu	BLEU-4 0.00	(BLEU-1: 0.80,	BLEU-2: 0.00,	BLEU-3: 0.00,	BLEU-4: 0.00)	CHRF 13.89	ROUGE 1.00	LR: 0.00040000	*

@@ -72,28 +72,25 @@ def transformer_greedy(
     batch_size = src_mask.size(0)
     
     # Debug prints for input validation
-    print("Using transformer greedy decoding")
-    print(f"Initial shapes:")
-    print(f"src_mask: {src_mask.shape}")
-    print(f"encoder_output: {encoder_output.shape}")
-    print(f"bos_index: {bos_index}, eos_index: {eos_index}")
+    #print("Using transformer greedy decoding")
+    #print(f"Initial shapes:")
+    #print(f"src_mask: {src_mask.shape}")
+    #print(f"encoder_output: {encoder_output.shape}")
+    #print(f"bos_index: {bos_index}, eos_index: {eos_index}")
 
     # start with BOS-symbol for each sentence in the batch
     ys = encoder_output.new_full([batch_size, 1], bos_index, dtype=torch.long)
-    print(f"Initial ys shape: {ys.shape}")
+    #print(f"Initial ys shape: {ys.shape}")
 
-    # Modified: Create a proper subsequent mask for transformer
-    trg_mask = torch.triu(
-        torch.ones((1, 1, 1), device=src_mask.device) * float('-inf'),
-        diagonal=1
-    )
+    # a subsequent mask is intersected with this in decoder forward pass
+    trg_mask = src_mask.new_ones([1, 1, 1])
     finished = src_mask.new_zeros((batch_size)).byte()
 
     for step in range(max_output_length):
         trg_embed = embed(ys)  # embed the previous tokens
-        print(f"Step {step}:")
-        print(f"Current sequence: {ys}")
-        print(f"Embedded shape: {trg_embed.shape}")
+        ##print(f"Step {step}:")
+        #print(f"Current sequence: {ys}")
+        #print(f"Embedded shape: {trg_embed.shape}")
 
         with torch.no_grad():
             # Add temperature to encourage diversity
@@ -107,52 +104,32 @@ def transformer_greedy(
                 hidden=None,
                 trg_mask=trg_mask,
             )
-            
-            # Debug prints for generation
-            print(f"Logits shape: {logits.shape}")
-            logits = logits[:, -1]  # Get last token logits
-            print(f"Last token logits shape: {logits.shape}")
-            
-            # Add temperature scaling
-            logits = logits / temperature
-            
-            # Print probability distribution
-            probs = torch.softmax(logits, dim=-1)
-            top_probs, top_indices = torch.topk(probs, k=5, dim=-1)
-            print("Top 5 tokens and their probabilities:")
-            print(f"Indices: {top_indices[0]}")
-            print(f"Probabilities: {top_probs[0]}")
-            
+            #print(f"Logits shape: {logits.shape}")
+            logits = logits[:, -1]
+            #print(f"Last token Logits shape: {logits.shape}")
+
+       
             _, next_word = torch.max(logits, dim=1)
-            print(f"Next word indices: {next_word}")
-            
+            #print(f"Next word indices: {next_word}")
             next_word = next_word.data
             ys = torch.cat([ys, next_word.unsqueeze(-1)], dim=1)
+
 
         # check if previous symbol was <eos>
         is_eos = torch.eq(next_word, eos_index)
         finished += is_eos
-        print(f"EOS found: {is_eos.sum().item()}/{batch_size}")
+        #print(f"EOS found: {is_eos.sum().item()}/{batch_size}")
         
         # Modified: Add early stopping condition
         if (finished >= 1).sum() == batch_size or step == max_output_length - 1:
-            print("All sequences finished!")
+            #print("All sequences finished!")
             break
 
     ys = ys[:, 1:]  # remove BOS-symbol
-    print(f"Final output shape: {ys.shape}")
-    print(f"Final sequences:\n{ys}")
+    #print(f"Final output shape: {ys.shape}")
+    #print(f"Final sequences:\n{ys}")
     
-    # Add vocabulary lookup for debugging
-    if hasattr(decoder, 'output_layer') and hasattr(decoder.output_layer, 'vocab'):
-        vocab = decoder.output_layer.vocab
-        decoded_sequences = []
-        for seq in ys:
-            tokens = [vocab.itos[idx.item()] for idx in seq]
-            decoded_sequences.append(' '.join(tokens))
-        print("Decoded sequences:")
-        for seq in decoded_sequences:
-            print(seq)
+
     
     return ys.detach().cpu().numpy(), None
 
@@ -195,10 +172,10 @@ def beam_search(
         - stacked_attention_scores: attention scores (3d array)
     """
     # Add debug prints
-    print(f"Starting beam search with beam size {size}")
-    print(f"Encoder output shape: {encoder_output.shape}")
-    print(f"Source mask shape: {src_mask.shape}")
-    print(f"Indices - BOS: {bos_index}, EOS: {eos_index}, PAD: {pad_index}")
+    #print(f"Starting beam search with beam size {size}")
+    #print(f"Encoder output shape: {encoder_output.shape}")
+    #print(f"Source mask shape: {src_mask.shape}")
+    #print(f"Indices - BOS: {bos_index}, EOS: {eos_index}, PAD: {pad_index}")
     
     assert size > 0, "Beam size must be >0."
     assert n_best <= size, "Can only return {} best hypotheses.".format(size)
@@ -227,9 +204,9 @@ def beam_search(
     topk_log_probs = torch.zeros(batch_size, size, device=encoder_output.device)
     topk_log_probs[:, 1:] = float("-inf")  # Only first beam starts with prob 1
 
-    # Debug print initial state
-    print(f"Initial sequence shape: {alive_seq.shape}")
-    print(f"Initial log probs shape: {topk_log_probs.shape}")
+    # Debug #print initial state
+    #print(f"Initial sequence shape: {alive_seq.shape}")
+    #print(f"Initial log probs shape: {topk_log_probs.shape}")
 
     hypotheses = [[] for _ in range(batch_size)]
     results = {
@@ -239,7 +216,7 @@ def beam_search(
     }
 
     for step in range(max_output_length):
-        print(f"\nStep {step}")
+        #print(f"\nStep {step}")
         
         # Get decoder input based on model type
         decoder_input = alive_seq if transformer else alive_seq[:, -1].view(-1, 1)
@@ -266,13 +243,13 @@ def beam_search(
         # Get log probabilities
         log_probs = F.log_softmax(logits, dim=-1).squeeze(1)
         
-        # Debug print distribution
-        print(f"Logits shape: {logits.shape}")
+        # Debug #print distribution
+        #print(f"Logits shape: {logits.shape}")
         probs = torch.softmax(logits, dim=-1)
         top_probs, top_indices = torch.topk(probs, k=5, dim=-1)
-        print(f"Top 5 tokens at step {step}:")
-        print(f"Indices: {top_indices[0]}")
-        print(f"Probabilities: {top_probs[0]}")
+        #print(f"Top 5 tokens at step {step}:")
+        #print(f"Indices: {top_indices[0]}")
+        #print(f"Probabilities: {top_probs[0]}")
 
         # Add previous beam scores
         log_probs += topk_log_probs.view(-1).unsqueeze(1)
@@ -289,22 +266,22 @@ def beam_search(
         # Get top k candidates
         topk_scores, topk_ids = curr_scores.topk(size, dim=-1)
         
-        # Debug print beam selections
-        print(f"Selected beam scores: {topk_scores[0]}")
-        print(f"Selected token ids: {topk_ids[0]}")
+        # Debug #print beam selections
+        #print(f"Selected beam scores: {topk_scores[0]}")
+        #print(f"Selected token ids: {topk_ids[0]}")
 
         # Rest of the beam search logic...
         # [existing code for handling finished sequences and updating beams]
 
     # Add final debug prints
-    print("\nFinal Results:")
-    print(f"Number of hypotheses: {len(results['predictions'])}")
+    #print("\nFinal Results:")
+    #print(f"Number of hypotheses: {len(results['predictions'])}")
     if hasattr(decoder, 'output_layer') and hasattr(decoder.output_layer, 'vocab'):
         vocab = decoder.output_layer.vocab
         for batch_idx, preds in enumerate(results['predictions']):
-            print(f"\nBatch {batch_idx} top prediction:")
+            #print(f"\nBatch {batch_idx} top prediction:")
             tokens = [vocab.itos[idx.item()] for idx in preds[0]]
-            print(' '.join(tokens))
-            print(f"Score: {results['scores'][batch_idx][0]}")
+            #print(' '.join(tokens))
+            #print(f"Score: {results['scores'][batch_idx][0]}")
 
     return final_outputs, None
