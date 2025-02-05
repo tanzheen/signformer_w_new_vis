@@ -60,6 +60,8 @@ def validate_on_data(
         )
 
         for valid_batch in progress_bar:
+            # Add debug prints before prediction
+            print("Input batch shape:", valid_batch['txt_input'].shape)
             
             batch_translation_loss = model.get_loss_for_batch(
                 batch=valid_batch,
@@ -70,12 +72,16 @@ def validate_on_data(
             if do_translation:
                 total_translation_loss += batch_translation_loss
 
-            batch_txt_predictions,batch_attention_scores, = model.run_batch(
+            batch_txt_predictions, batch_attention_scores = model.run_batch(
                 batch=valid_batch,
                 translation_beam_size=translation_beam_size if do_translation else None,
                 translation_beam_alpha=translation_beam_alpha,
                 translation_max_output_length=translation_max_output_length
             )
+
+            # Add debug prints after prediction
+            print("Raw predictions shape:", [p.shape for p in batch_txt_predictions])
+            print("First prediction tokens:", batch_txt_predictions[0])
 
             if do_translation:
                 all_txt_outputs.extend(batch_txt_predictions)
@@ -102,11 +108,16 @@ def validate_on_data(
             else:
                 valid_translation_loss = -1
                 valid_ppl = -1
-            # decode back to symbols
-            # print(f"all_txt_outputs: {all_txt_outputs}")
-            # print(f"all_ref_texts: {all_ref_texts}")
+            # Add debug prints before decoding
+            print("Number of predictions:", len(all_txt_outputs))
+            print("Sample prediction before decoding:", all_txt_outputs[0])
+            
             decoded_txt = model.txt_vocab.arrays_to_sentences(arrays=all_txt_outputs)
             decoded_ref = model.txt_vocab.arrays_to_sentences(arrays=all_ref_texts)
+            
+            # Add debug print after decoding
+            print("Sample decoded prediction:", decoded_txt[0])
+            print("Sample reference:", decoded_ref[0])
             
             # evaluate with metric on full dataset
             join_char = " " if level in ["word", "bpe"] else ""
