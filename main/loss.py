@@ -61,14 +61,14 @@ class XentLoss(nn.Module):
         :param targets: target indices
         :return:
         """
-        # print("targets shape before smooth: ", targets.shape)
-        # print("log_probs shape before smooth: ", log_probs.shape)
+        # #print("targets shape before smooth: ", targets.shape)
+        # #print("log_probs shape before smooth: ", log_probs.shape)
         if self.smoothing > 0:
             targets = self._smooth_targets(
                 targets=targets.contiguous().view(-1), vocab_size=log_probs.size(-1)
             )
-            # print("targets shape after smooth: ", targets.shape)
-            # print("log_probs shape after smooth: " , log_probs.contiguous().view(-1, log_probs.size(-1)).shape)
+            # #print("targets shape after smooth: ", targets.shape)
+            # #print("log_probs shape after smooth: " , log_probs.contiguous().view(-1, log_probs.size(-1)).shape)
             # targets: distributions with batch*seq_len x vocab_size
     
             assert (

@@ -61,7 +61,7 @@ def validate_on_data(
 
         for valid_batch in progress_bar:
             # Add debug prints before prediction
-            #print("Input batch shape:", valid_batch['txt_input'].shape)
+            ##print("Input batch shape:", valid_batch['txt_input'].shape)
             
             batch_translation_loss = model.get_loss_for_batch(
                 batch=valid_batch,
@@ -80,16 +80,16 @@ def validate_on_data(
             )
 
             # Add debug prints after prediction
-            #print("Raw predictions shape:", [p.shape for p in batch_txt_predictions])
-            #print("First prediction tokens:", batch_txt_predictions[0])
+            ##print("Raw predictions shape:", [p.shape for p in batch_txt_predictions])
+            ##print("First prediction tokens:", batch_txt_predictions[0])
 
             if do_translation:
                 all_txt_outputs.extend(batch_txt_predictions)
                 all_ref_texts.extend(valid_batch['txt_input'])
-                #print(f"valid_batch['txt_input']: {valid_batch['txt_input']}")
-                #print(f"valid_batch['txt_input'] shape: {valid_batch['txt_input'].shape}")
-                #print(f"batch_txt_predictions: {batch_txt_predictions}")
-                #print(f"batch_txt_predictions shape: {batch_txt_predictions.shape}")
+                ##print(f"valid_batch['txt_input']: {valid_batch['txt_input']}")
+                ##print(f"valid_batch['txt_input'] shape: {valid_batch['txt_input'].shape}")
+                ##print(f"batch_txt_predictions: {batch_txt_predictions}")
+                ##print(f"batch_txt_predictions shape: {batch_txt_predictions.shape}")
 
             all_attention_scores.extend(
                 batch_attention_scores
@@ -112,15 +112,15 @@ def validate_on_data(
                 valid_translation_loss = -1
                 valid_ppl = -1
             # Add debug prints before decoding
-            #print("Number of predictions:", len(all_txt_outputs))
-            #print("Sample prediction before decoding:", all_txt_outputs[0])
+            ##print("Number of predictions:", len(all_txt_outputs))
+            ##print("Sample prediction before decoding:", all_txt_outputs[0])
             
             decoded_txt = model.txt_vocab.arrays_to_sentences(arrays=all_txt_outputs)
             decoded_ref = model.txt_vocab.arrays_to_sentences(arrays=all_ref_texts)
             
-            # Add debug print after decoding
-            #print("Sample decoded prediction:", decoded_txt[0])
-            #print("Sample reference:", decoded_ref[0])
+            # Add debug #print after decoding
+            ##print("Sample decoded prediction:", decoded_txt[0])
+            ##print("Sample reference:", decoded_ref[0])
             
             # evaluate with metric on full dataset
             join_char = " " if level in ["word", "bpe"] else ""

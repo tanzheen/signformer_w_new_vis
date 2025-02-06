@@ -638,9 +638,11 @@ class TrainManager:
         # normalize translation loss
         if self.do_translation:
             if self.translation_normalization_mode == "batch":
-                txt_normalization_factor = batch['txt_input'].shape[0]
+                txt_normalization_factor = batch['txt_input'].shape[0] 
+                #number of sequences  = batch size = 2 
             elif self.translation_normalization_mode == "tokens":
-                txt_normalization_factor = batch['txt_input'].shape[1]
+                txt_normalization_factor = batch['num_txt_tokens']
+                #number of tokens 
             else:
                 raise NotImplementedError("Only normalize by 'batch' or 'tokens'")
 

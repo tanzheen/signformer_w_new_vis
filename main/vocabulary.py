@@ -127,7 +127,7 @@ class TextVocabulary(Vocabulary):
             array = array.flatten()
         sentence = []
         for i in array:
-            #print(f"arr to idx i: {i}")
+            ##print(f"arr to idx i: {i}")
             s = self.itos[i]
             if cut_at_eos and s == EOS_TOKEN:
                 break
@@ -143,7 +143,7 @@ class TextVocabulary(Vocabulary):
         :param cut_at_eos: cut the decoded sentences at the first <eos>
         :return: list of list of strings (tokens)
         """
-        #print(f"arrays to sentences arrays: {arrays}")
+        ##print(f"arrays to sentences arrays: {arrays}")
         sentences = []
         for array in arrays:
             sentences.append(self.array_to_sentence(array=array, cut_at_eos=cut_at_eos))
@@ -189,11 +189,11 @@ def build_vocab(
                     dynamic_ncols=True,  # Automatically adjust width
                     leave=True):  # Leave the progress bar after completion
         if field == "txt":
-            #print(f"tgt_sample from dataset: {i}")
+            ##print(f"tgt_sample from dataset: {i}")
             tokens.extend(i['text'].split())
         else:
             raise ValueError("Unknown field type")
-    #print(f"collated tokens: {tokens}")
+    ##print(f"collated tokens: {tokens}")
     counter = Counter(tokens)
     if min_freq > -1:
         counter = filter_min(counter, min_freq)

@@ -116,7 +116,7 @@ def transformer_greedy(
 
 
         # check if previous symbol was <eos>
-        is_eos = torch.eq(next_word, eos_index)
+        is_eos = torch.eq(next_word, eos_index) 
         finished += is_eos
         #print(f"EOS found: {is_eos.sum().item()}/{batch_size}")
         

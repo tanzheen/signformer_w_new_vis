@@ -73,7 +73,7 @@ training:
   keep_last_ckpts: 1
   batch_multiplier: 1
   logging_freq: 100
-  validation_freq: 5
+  validation_freq: 300
   betas:
     - 0.95
     - 0.998

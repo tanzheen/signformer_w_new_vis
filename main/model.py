@@ -88,15 +88,37 @@ class SignModel(nn.Module):
         :param txt_mask: target mask
         :return: decoder outputs
         """
+        # Print tokenized sequence
+        #tokenized = [self.txt_vocab.itos[idx.item()] for idx in txt_input[0]]
+        # #print("\nTokenized sequence:")
+        # #print(tokenized)
+        #print("============================================")
+        #print("sgn shape", sgn.shape)
+        #print("sgn mask shape", sgn_mask.shape)
+        #print("text mask shape", txt_mask.shape)
+        #print(f"txt input shape: {txt_input.shape}")
         
+        # Print tokenized sequence
+        tokenized = [self.txt_vocab.itos[idx.item()] for idx in txt_input[0]]
+        #print("\nTokenized sequence:")
+        #print(tokenized)
+        
+        # Print token indices
+        #print("\nToken indices:")
+        #print(txt_input[0].tolist())
+        #print("============================================")
+        # Print token indices
+        #print("\nToken indices:")
+        #print(txt_input[0].tolist())
+        #print("============================================")
 
         encoder_output, encoder_hidden = self.encode(
             sgn=sgn, sgn_mask=sgn_mask, sgn_length=sgn_lengths
         )
-        # print("encoder_output: ", encoder_output.shape)
-        # print("encoder_hidden: ", encoder_hidden.shape)
-        # print("txt_mask : ", txt_mask.shape)
-        # print("src_mask: ", sgn_mask.shape)
+        # #print("encoder_output: ", encoder_output.shape)
+        # #print("encoder_hidden: ", encoder_hidden.shape)
+        # #print("txt_mask : ", txt_mask.shape)
+        # #print("src_mask: ", sgn_mask.shape)
         if self.do_translation:
             unroll_steps = txt_input.size(1)
             decoder_outputs = self.decode(
@@ -125,7 +147,7 @@ class SignModel(nn.Module):
         :return: encoder outputs (output, hidden_concat)
         """
         sgn = self.vis_extractor(sgn, sgn_length)
-        #print("sgn: ", sgn.shape)
+        #print("sgn after rearranging from resnet: ", sgn.shape)
         return self.encoder(
             embed_src=self.sgn_embed(src = sgn),
             src_length=sgn_length,
@@ -179,13 +201,13 @@ class SignModel(nn.Module):
         :return: translation_loss: sum of losses over non-pad elements in the batch
         """
         # pylint: disable=unused-variable
-        # print ('================================')
-        # print ('video shape: ', batch['video'].shape)
-        # print ('attention_mask shape: ', batch['attention_mask'].shape)
-        # print ('src_length shape: ', batch['src_length'].shape)
-        # print ('txt_input shape: ', batch['txt_input'].shape)
-        # print ('txt_mask shape: ', batch['txt_mask'].shape)
-        # print ('================================')
+        # #print ('================================')
+        # #print ('video shape: ', batch['video'].shape)
+        # #print ('attention_mask shape: ', batch['attention_mask'].shape)
+        # #print ('src_length shape: ', batch['src_length'].shape)
+        # #print ('txt_input shape: ', batch['txt_input'].shape)
+        # #print ('txt_mask shape: ', batch['txt_mask'].shape)
+        # #print ('================================')
         # Do a forward pass
         decoder_outputs, last_hidden_state = self.forward(
             sgn=batch['video'].cuda(),
@@ -194,18 +216,18 @@ class SignModel(nn.Module):
             txt_input=batch['txt_input'].cuda(),
             txt_mask=batch['txt_mask'].cuda(),
         )
-        #print("decoder_outputs shape: ", decoder_outputs.shape)
+        ##print("decoder_outputs shape: ", decoder_outputs.shape)
        
         if self.do_translation:
             assert decoder_outputs is not None
             word_outputs = decoder_outputs
-            #print("word_outputs shape: ", word_outputs.shape)
+            ##print("word_outputs shape: ", word_outputs.shape)
             # Calculate Translation Loss
             txt_log_probs = F.log_softmax(word_outputs, dim=-1)
-            #print("txt_log_probs shape: ", txt_log_probs.shape)
-            #print("batch['txt_input'] shape: ", batch['txt_input'].shape)
+            ##print("txt_log_probs shape: ", txt_log_probs.shape)
+            ##print("batch['txt_input'] shape: ", batch['txt_input'].shape)
             translation_loss = (
-                translation_loss_function(txt_log_probs, batch['txt_input'].cuda())
+                translation_loss_function(txt_log_probs, batch['labels'].cuda())
                 * translation_loss_weight
             )
 
@@ -356,9 +378,9 @@ def build_model(
     enc_dropout = cfg["encoder"].get("dropout", 0.0)
     enc_emb_dropout = cfg["encoder"]["embeddings"].get("dropout", enc_dropout)
     cope= cfg.get("cope")
-    print('================================')
-    print('COPE: ', cope)
-    print('================================')
+    #print('================================')
+    #print('COPE: ', cope)
+    #print('================================')
     if cfg["encoder"].get("type", "recurrent") == "transformer":
         assert (
             cfg["encoder"]["embeddings"]["embedding_dim"]

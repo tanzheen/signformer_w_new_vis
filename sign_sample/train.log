@@ -1,98 +1,98 @@
-2025-02-05 22:59:58,009 Hello! This is SL-CAT.
-2025-02-05 22:59:58,011 Total params: 14,925,673
-2025-02-05 22:59:58,012 Trainable parameters: ['decoder.layer_norm.bias', 'decoder.layer_norm.weight', 'decoder.layers.0.dec_layer_norm.bias', 'decoder.layers.0.dec_layer_norm.weight', 'decoder.layers.0.feed_forward.layer_norm.bias', 'decoder.layers.0.feed_forward.layer_norm.weight', 'decoder.layers.0.feed_forward.pwff_layer.0.bias', 'decoder.layers.0.feed_forward.pwff_layer.0.weight', 'decoder.layers.0.feed_forward.pwff_layer.3.bias', 'decoder.layers.0.feed_forward.pwff_layer.3.weight', 'decoder.layers.0.output_norm.bias', 'decoder.layers.0.output_norm.weight', 'decoder.layers.0.src_trg_att.k_layer.bias', 'decoder.layers.0.src_trg_att.k_layer.weight', 'decoder.layers.0.src_trg_att.output_layer.bias', 'decoder.layers.0.src_trg_att.output_layer.weight', 'decoder.layers.0.src_trg_att.q_layer.bias', 'decoder.layers.0.src_trg_att.q_layer.weight', 'decoder.layers.0.src_trg_att.v_layer.bias', 'decoder.layers.0.src_trg_att.v_layer.weight', 'decoder.layers.0.trg_trg_att.k_layer.bias', 'decoder.layers.0.trg_trg_att.k_layer.weight', 'decoder.layers.0.trg_trg_att.output_layer.bias', 'decoder.layers.0.trg_trg_att.output_layer.weight', 'decoder.layers.0.trg_trg_att.q_layer.bias', 'decoder.layers.0.trg_trg_att.q_layer.weight', 'decoder.layers.0.trg_trg_att.v_layer.bias', 'decoder.layers.0.trg_trg_att.v_layer.weight', 'decoder.layers.0.x_layer_norm.bias', 'decoder.layers.0.x_layer_norm.weight', 'decoder.output_layer.weight', 'decoder.tokenTypeEmbedding.weight', 'encoder.layer_norm.bias', 'encoder.layer_norm.weight', 'encoder.layers.0.FF2.module.layer_norm.bias', 'encoder.layers.0.FF2.module.layer_norm.weight', 'encoder.layers.0.FF2.module.pwff_layer.0.bias', 'encoder.layers.0.FF2.module.pwff_layer.0.weight', 'encoder.layers.0.FF2.module.pwff_layer.3.bias', 'encoder.layers.0.FF2.module.pwff_layer.3.weight', 'encoder.layers.0.att.module.attention.att_layer.bias', 'encoder.layers.0.att.module.attention.att_layer.weight', 'encoder.layers.0.att.module.attention.k_layer.bias', 'encoder.layers.0.att.module.attention.k_layer.weight', 'encoder.layers.0.att.module.attention.output_layer.bias', 'encoder.layers.0.att.module.attention.output_layer.weight', 'encoder.layers.0.att.module.attention.q_layer.bias', 'encoder.layers.0.att.module.attention.q_layer.weight', 'encoder.layers.0.att.module.attention.sample_offsets.bias', 'encoder.layers.0.att.module.attention.sample_offsets.weight', 'encoder.layers.0.att.module.attention.v_layer.bias', 'encoder.layers.0.att.module.attention.v_layer.weight', 'encoder.layers.0.att.module.layer_norm.bias', 'encoder.layers.0.att.module.layer_norm.weight', 'encoder.layers.0.convMod.module.dep1.conv.bias', 'encoder.layers.0.convMod.module.dep1.conv.weight', 'encoder.layers.0.convMod.module.layerNorm.bias', 'encoder.layers.0.convMod.module.layerNorm.weight', 'encoder.layers.0.convMod.module.layerNorm2.bias', 'encoder.layers.0.convMod.module.layerNorm2.weight', 'encoder.layers.0.convMod.module.point1.conv.bias', 'encoder.layers.0.convMod.module.point1.conv.weight', 'encoder.layers.0.convMod.module.point2.conv.bias', 'encoder.layers.0.convMod.module.point2.conv.weight', 'encoder.layers.0.layerNORM.bias', 'encoder.layers.0.layerNORM.weight', 'sgn_embed.bn_ac.0.bias', 'sgn_embed.bn_ac.0.weight', 'sgn_embed.src_emb.bias', 'sgn_embed.src_emb.weight', 'txt_embed.lut.weight', 'txt_embed.norm.norm.bias', 'txt_embed.norm.norm.weight', 'vis_extractor.resnet.bn1.bias', 'vis_extractor.resnet.bn1.weight', 'vis_extractor.resnet.conv1.weight', 'vis_extractor.resnet.layer1.0.bn1.bias', 'vis_extractor.resnet.layer1.0.bn1.weight', 'vis_extractor.resnet.layer1.0.bn2.bias', 'vis_extractor.resnet.layer1.0.bn2.weight', 'vis_extractor.resnet.layer1.0.conv1.weight', 'vis_extractor.resnet.layer1.0.conv2.weight', 'vis_extractor.resnet.layer1.1.bn1.bias', 'vis_extractor.resnet.layer1.1.bn1.weight', 'vis_extractor.resnet.layer1.1.bn2.bias', 'vis_extractor.resnet.layer1.1.bn2.weight', 'vis_extractor.resnet.layer1.1.conv1.weight', 'vis_extractor.resnet.layer1.1.conv2.weight', 'vis_extractor.resnet.layer2.0.bn1.bias', 'vis_extractor.resnet.layer2.0.bn1.weight', 'vis_extractor.resnet.layer2.0.bn2.bias', 'vis_extractor.resnet.layer2.0.bn2.weight', 'vis_extractor.resnet.layer2.0.conv1.weight', 'vis_extractor.resnet.layer2.0.conv2.weight', 'vis_extractor.resnet.layer2.0.downsample.0.weight', 'vis_extractor.resnet.layer2.0.downsample.1.bias', 'vis_extractor.resnet.layer2.0.downsample.1.weight', 'vis_extractor.resnet.layer2.1.bn1.bias', 'vis_extractor.resnet.layer2.1.bn1.weight', 'vis_extractor.resnet.layer2.1.bn2.bias', 'vis_extractor.resnet.layer2.1.bn2.weight', 'vis_extractor.resnet.layer2.1.conv1.weight', 'vis_extractor.resnet.layer2.1.conv2.weight', 'vis_extractor.resnet.layer3.0.bn1.bias', 'vis_extractor.resnet.layer3.0.bn1.weight', 'vis_extractor.resnet.layer3.0.bn2.bias', 'vis_extractor.resnet.layer3.0.bn2.weight', 'vis_extractor.resnet.layer3.0.conv1.weight', 'vis_extractor.resnet.layer3.0.conv2.weight', 'vis_extractor.resnet.layer3.0.downsample.0.weight', 'vis_extractor.resnet.layer3.0.downsample.1.bias', 'vis_extractor.resnet.layer3.0.downsample.1.weight', 'vis_extractor.resnet.layer3.1.bn1.bias', 'vis_extractor.resnet.layer3.1.bn1.weight', 'vis_extractor.resnet.layer3.1.bn2.bias', 'vis_extractor.resnet.layer3.1.bn2.weight', 'vis_extractor.resnet.layer3.1.conv1.weight', 'vis_extractor.resnet.layer3.1.conv2.weight', 'vis_extractor.resnet.layer4.0.bn1.bias', 'vis_extractor.resnet.layer4.0.bn1.weight', 'vis_extractor.resnet.layer4.0.bn2.bias', 'vis_extractor.resnet.layer4.0.bn2.weight', 'vis_extractor.resnet.layer4.0.conv1.weight', 'vis_extractor.resnet.layer4.0.conv2.weight', 'vis_extractor.resnet.layer4.0.downsample.0.weight', 'vis_extractor.resnet.layer4.0.downsample.1.bias', 'vis_extractor.resnet.layer4.0.downsample.1.weight', 'vis_extractor.resnet.layer4.1.bn1.bias', 'vis_extractor.resnet.layer4.1.bn1.weight', 'vis_extractor.resnet.layer4.1.bn2.bias', 'vis_extractor.resnet.layer4.1.bn2.weight', 'vis_extractor.resnet.layer4.1.conv1.weight', 'vis_extractor.resnet.layer4.1.conv2.weight']
-2025-02-05 22:59:58,180 cfg.name                           : sign_experiment
-2025-02-05 22:59:58,181 cfg.data.img_path                  : ../../PHOENIX-2014-T-release-v3/PHOENIX-2014-T/features/fullFrame-210x260px/
-2025-02-05 22:59:58,181 cfg.data.version                   : phoenix_2014_trans
-2025-02-05 22:59:58,181 cfg.data.sgn                       : sign
-2025-02-05 22:59:58,181 cfg.data.txt                       : text
-2025-02-05 22:59:58,181 cfg.data.gls                       : gloss
-2025-02-05 22:59:58,181 cfg.data.train_path                : ./data/Phonexi-2014T/labels.train
-2025-02-05 22:59:58,182 cfg.data.dev_path                  : ./data/Phonexi-2014T/labels.dev
-2025-02-05 22:59:58,182 cfg.data.test_path                 : ./data/Phonexi-2014T/labels.test
-2025-02-05 22:59:58,182 cfg.data.feature_size              : 512
-2025-02-05 22:59:58,182 cfg.data.level                     : word
-2025-02-05 22:59:58,182 cfg.data.txt_lowercase             : True
-2025-02-05 22:59:58,182 cfg.data.max_sent_length           : 400
-2025-02-05 22:59:58,183 cfg.data.random_train_subset       : -1
-2025-02-05 22:59:58,183 cfg.data.random_dev_subset         : -1
-2025-02-05 22:59:58,183 cfg.data.multimodal                : 0.0
-2025-02-05 22:59:58,183 cfg.data.max_length                : 500
-2025-02-05 22:59:58,183 cfg.testing.recognition_beam_sizes : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-2025-02-05 22:59:58,183 cfg.testing.translation_beam_sizes : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-2025-02-05 22:59:58,184 cfg.testing.translation_beam_alphas : [-1, 0, 1, 2, 3, 4, 5]
-2025-02-05 22:59:58,184 cfg.training.reset_best_ckpt       : False
-2025-02-05 22:59:58,184 cfg.training.reset_scheduler       : False
-2025-02-05 22:59:58,184 cfg.training.reset_optimizer       : False
-2025-02-05 22:59:58,184 cfg.training.random_seed           : 42
-2025-02-05 22:59:58,184 cfg.training.model_dir             : ./sign_sample
-2025-02-05 22:59:58,184 cfg.training.recognition_loss_weight : 0.0
-2025-02-05 22:59:58,185 cfg.training.translation_loss_weight : 1.0
-2025-02-05 22:59:58,185 cfg.training.eval_metric           : bleu
-2025-02-05 22:59:58,185 cfg.training.optimizer             : sophiag
-2025-02-05 22:59:58,185 cfg.training.learning_rate         : 0.0004
-2025-02-05 22:59:58,185 cfg.training.batch_size            : 2
-2025-02-05 22:59:58,185 cfg.training.num_valid_log         : 6
-2025-02-05 22:59:58,186 cfg.training.epochs                : 1000
-2025-02-05 22:59:58,186 cfg.training.early_stopping_metric : eval_metric
-2025-02-05 22:59:58,186 cfg.training.batch_type            : sentence
-2025-02-05 22:59:58,186 cfg.training.translation_normalization : batch
-2025-02-05 22:59:58,186 cfg.training.eval_translation_beam_size : 1
-2025-02-05 22:59:58,186 cfg.training.eval_translation_beam_alpha : -1
-2025-02-05 22:59:58,187 cfg.training.overwrite             : True
-2025-02-05 22:59:58,187 cfg.training.shuffle               : True
-2025-02-05 22:59:58,187 cfg.training.use_cuda              : True
-2025-02-05 22:59:58,187 cfg.training.translation_max_output_length : 30
-2025-02-05 22:59:58,187 cfg.training.keep_last_ckpts       : 1
-2025-02-05 22:59:58,187 cfg.training.batch_multiplier      : 1
-2025-02-05 22:59:58,188 cfg.training.logging_freq          : 100
-2025-02-05 22:59:58,188 cfg.training.validation_freq       : 5
-2025-02-05 22:59:58,188 cfg.training.betas                 : [0.95, 0.998]
-2025-02-05 22:59:58,188 cfg.training.scheduling            : plateau
-2025-02-05 22:59:58,188 cfg.training.learning_rate_min     : 1e-06
-2025-02-05 22:59:58,188 cfg.training.weight_decay          : 0.003
-2025-02-05 22:59:58,188 cfg.training.patience              : 10
-2025-02-05 22:59:58,189 cfg.training.decrease_factor       : 0.8
-2025-02-05 22:59:58,189 cfg.training.label_smoothing       : 0.1
-2025-02-05 22:59:58,189 cfg.training.lr_s_dim_model        : 256
-2025-02-05 22:59:58,189 cfg.training.warmup_step           : 1000
-2025-02-05 22:59:58,189 cfg.training.K                     : 2
-2025-02-05 22:59:58,189 cfg.model.initializer              : xavier
-2025-02-05 22:59:58,190 cfg.model.bias_initializer         : zeros
-2025-02-05 22:59:58,190 cfg.model.init_gain                : 1.0
-2025-02-05 22:59:58,190 cfg.model.embed_initializer        : xavier
-2025-02-05 22:59:58,190 cfg.model.embed_init_gain          : 1.0
-2025-02-05 22:59:58,190 cfg.model.tied_softmax             : False
-2025-02-05 22:59:58,191 cfg.model.cope                     : False
-2025-02-05 22:59:58,191 cfg.model.encoder.type             : transformer
-2025-02-05 22:59:58,191 cfg.model.encoder.num_layers       : 1
-2025-02-05 22:59:58,191 cfg.model.encoder.num_heads        : 8
-2025-02-05 22:59:58,191 cfg.model.encoder.embeddings.embedding_dim : 256
-2025-02-05 22:59:58,191 cfg.model.encoder.embeddings.scale : False
-2025-02-05 22:59:58,191 cfg.model.encoder.embeddings.dropout : 0.1
-2025-02-05 22:59:58,192 cfg.model.encoder.embeddings.norm_type : batch
-2025-02-05 22:59:58,192 cfg.model.encoder.embeddings.activation_type : softsign
-2025-02-05 22:59:58,192 cfg.model.encoder.hidden_size      : 256
-2025-02-05 22:59:58,192 cfg.model.encoder.ff_size          : 1024
-2025-02-05 22:59:58,192 cfg.model.encoder.dropout          : 0.1
-2025-02-05 22:59:58,193 cfg.model.decoder.type             : transformer
-2025-02-05 22:59:58,193 cfg.model.decoder.num_layers       : 1
-2025-02-05 22:59:58,193 cfg.model.decoder.num_heads        : 8
-2025-02-05 22:59:58,193 cfg.model.decoder.embeddings.embedding_dim : 256
-2025-02-05 22:59:58,193 cfg.model.decoder.embeddings.scale : False
-2025-02-05 22:59:58,193 cfg.model.decoder.embeddings.dropout : 0.1
-2025-02-05 22:59:58,194 cfg.model.decoder.embeddings.norm_type : batch
-2025-02-05 22:59:58,194 cfg.model.decoder.embeddings.activation_type : softsign
-2025-02-05 22:59:58,194 cfg.model.decoder.hidden_size      : 256
-2025-02-05 22:59:58,194 cfg.model.decoder.ff_size          : 1024
-2025-02-05 22:59:58,194 cfg.model.decoder.dropout          : 0.1
-2025-02-05 22:59:58,194 Data set sizes: 
+2025-02-06 15:28:43,095 Hello! This is SL-CAT.
+2025-02-06 15:28:43,098 Total params: 14,925,673
+2025-02-06 15:28:43,099 Trainable parameters: ['decoder.layer_norm.bias', 'decoder.layer_norm.weight', 'decoder.layers.0.dec_layer_norm.bias', 'decoder.layers.0.dec_layer_norm.weight', 'decoder.layers.0.feed_forward.layer_norm.bias', 'decoder.layers.0.feed_forward.layer_norm.weight', 'decoder.layers.0.feed_forward.pwff_layer.0.bias', 'decoder.layers.0.feed_forward.pwff_layer.0.weight', 'decoder.layers.0.feed_forward.pwff_layer.3.bias', 'decoder.layers.0.feed_forward.pwff_layer.3.weight', 'decoder.layers.0.output_norm.bias', 'decoder.layers.0.output_norm.weight', 'decoder.layers.0.src_trg_att.k_layer.bias', 'decoder.layers.0.src_trg_att.k_layer.weight', 'decoder.layers.0.src_trg_att.output_layer.bias', 'decoder.layers.0.src_trg_att.output_layer.weight', 'decoder.layers.0.src_trg_att.q_layer.bias', 'decoder.layers.0.src_trg_att.q_layer.weight', 'decoder.layers.0.src_trg_att.v_layer.bias', 'decoder.layers.0.src_trg_att.v_layer.weight', 'decoder.layers.0.trg_trg_att.k_layer.bias', 'decoder.layers.0.trg_trg_att.k_layer.weight', 'decoder.layers.0.trg_trg_att.output_layer.bias', 'decoder.layers.0.trg_trg_att.output_layer.weight', 'decoder.layers.0.trg_trg_att.q_layer.bias', 'decoder.layers.0.trg_trg_att.q_layer.weight', 'decoder.layers.0.trg_trg_att.v_layer.bias', 'decoder.layers.0.trg_trg_att.v_layer.weight', 'decoder.layers.0.x_layer_norm.bias', 'decoder.layers.0.x_layer_norm.weight', 'decoder.output_layer.weight', 'decoder.tokenTypeEmbedding.weight', 'encoder.layer_norm.bias', 'encoder.layer_norm.weight', 'encoder.layers.0.FF2.module.layer_norm.bias', 'encoder.layers.0.FF2.module.layer_norm.weight', 'encoder.layers.0.FF2.module.pwff_layer.0.bias', 'encoder.layers.0.FF2.module.pwff_layer.0.weight', 'encoder.layers.0.FF2.module.pwff_layer.3.bias', 'encoder.layers.0.FF2.module.pwff_layer.3.weight', 'encoder.layers.0.att.module.attention.att_layer.bias', 'encoder.layers.0.att.module.attention.att_layer.weight', 'encoder.layers.0.att.module.attention.k_layer.bias', 'encoder.layers.0.att.module.attention.k_layer.weight', 'encoder.layers.0.att.module.attention.output_layer.bias', 'encoder.layers.0.att.module.attention.output_layer.weight', 'encoder.layers.0.att.module.attention.q_layer.bias', 'encoder.layers.0.att.module.attention.q_layer.weight', 'encoder.layers.0.att.module.attention.sample_offsets.bias', 'encoder.layers.0.att.module.attention.sample_offsets.weight', 'encoder.layers.0.att.module.attention.v_layer.bias', 'encoder.layers.0.att.module.attention.v_layer.weight', 'encoder.layers.0.att.module.layer_norm.bias', 'encoder.layers.0.att.module.layer_norm.weight', 'encoder.layers.0.convMod.module.dep1.conv.bias', 'encoder.layers.0.convMod.module.dep1.conv.weight', 'encoder.layers.0.convMod.module.layerNorm.bias', 'encoder.layers.0.convMod.module.layerNorm.weight', 'encoder.layers.0.convMod.module.layerNorm2.bias', 'encoder.layers.0.convMod.module.layerNorm2.weight', 'encoder.layers.0.convMod.module.point1.conv.bias', 'encoder.layers.0.convMod.module.point1.conv.weight', 'encoder.layers.0.convMod.module.point2.conv.bias', 'encoder.layers.0.convMod.module.point2.conv.weight', 'encoder.layers.0.layerNORM.bias', 'encoder.layers.0.layerNORM.weight', 'sgn_embed.bn_ac.0.bias', 'sgn_embed.bn_ac.0.weight', 'sgn_embed.src_emb.bias', 'sgn_embed.src_emb.weight', 'txt_embed.lut.weight', 'txt_embed.norm.norm.bias', 'txt_embed.norm.norm.weight', 'vis_extractor.resnet.bn1.bias', 'vis_extractor.resnet.bn1.weight', 'vis_extractor.resnet.conv1.weight', 'vis_extractor.resnet.layer1.0.bn1.bias', 'vis_extractor.resnet.layer1.0.bn1.weight', 'vis_extractor.resnet.layer1.0.bn2.bias', 'vis_extractor.resnet.layer1.0.bn2.weight', 'vis_extractor.resnet.layer1.0.conv1.weight', 'vis_extractor.resnet.layer1.0.conv2.weight', 'vis_extractor.resnet.layer1.1.bn1.bias', 'vis_extractor.resnet.layer1.1.bn1.weight', 'vis_extractor.resnet.layer1.1.bn2.bias', 'vis_extractor.resnet.layer1.1.bn2.weight', 'vis_extractor.resnet.layer1.1.conv1.weight', 'vis_extractor.resnet.layer1.1.conv2.weight', 'vis_extractor.resnet.layer2.0.bn1.bias', 'vis_extractor.resnet.layer2.0.bn1.weight', 'vis_extractor.resnet.layer2.0.bn2.bias', 'vis_extractor.resnet.layer2.0.bn2.weight', 'vis_extractor.resnet.layer2.0.conv1.weight', 'vis_extractor.resnet.layer2.0.conv2.weight', 'vis_extractor.resnet.layer2.0.downsample.0.weight', 'vis_extractor.resnet.layer2.0.downsample.1.bias', 'vis_extractor.resnet.layer2.0.downsample.1.weight', 'vis_extractor.resnet.layer2.1.bn1.bias', 'vis_extractor.resnet.layer2.1.bn1.weight', 'vis_extractor.resnet.layer2.1.bn2.bias', 'vis_extractor.resnet.layer2.1.bn2.weight', 'vis_extractor.resnet.layer2.1.conv1.weight', 'vis_extractor.resnet.layer2.1.conv2.weight', 'vis_extractor.resnet.layer3.0.bn1.bias', 'vis_extractor.resnet.layer3.0.bn1.weight', 'vis_extractor.resnet.layer3.0.bn2.bias', 'vis_extractor.resnet.layer3.0.bn2.weight', 'vis_extractor.resnet.layer3.0.conv1.weight', 'vis_extractor.resnet.layer3.0.conv2.weight', 'vis_extractor.resnet.layer3.0.downsample.0.weight', 'vis_extractor.resnet.layer3.0.downsample.1.bias', 'vis_extractor.resnet.layer3.0.downsample.1.weight', 'vis_extractor.resnet.layer3.1.bn1.bias', 'vis_extractor.resnet.layer3.1.bn1.weight', 'vis_extractor.resnet.layer3.1.bn2.bias', 'vis_extractor.resnet.layer3.1.bn2.weight', 'vis_extractor.resnet.layer3.1.conv1.weight', 'vis_extractor.resnet.layer3.1.conv2.weight', 'vis_extractor.resnet.layer4.0.bn1.bias', 'vis_extractor.resnet.layer4.0.bn1.weight', 'vis_extractor.resnet.layer4.0.bn2.bias', 'vis_extractor.resnet.layer4.0.bn2.weight', 'vis_extractor.resnet.layer4.0.conv1.weight', 'vis_extractor.resnet.layer4.0.conv2.weight', 'vis_extractor.resnet.layer4.0.downsample.0.weight', 'vis_extractor.resnet.layer4.0.downsample.1.bias', 'vis_extractor.resnet.layer4.0.downsample.1.weight', 'vis_extractor.resnet.layer4.1.bn1.bias', 'vis_extractor.resnet.layer4.1.bn1.weight', 'vis_extractor.resnet.layer4.1.bn2.bias', 'vis_extractor.resnet.layer4.1.bn2.weight', 'vis_extractor.resnet.layer4.1.conv1.weight', 'vis_extractor.resnet.layer4.1.conv2.weight']
+2025-02-06 15:28:43,254 cfg.name                           : sign_experiment
+2025-02-06 15:28:43,254 cfg.data.img_path                  : ../../PHOENIX-2014-T-release-v3/PHOENIX-2014-T/features/fullFrame-210x260px/
+2025-02-06 15:28:43,254 cfg.data.version                   : phoenix_2014_trans
+2025-02-06 15:28:43,254 cfg.data.sgn                       : sign
+2025-02-06 15:28:43,255 cfg.data.txt                       : text
+2025-02-06 15:28:43,255 cfg.data.gls                       : gloss
+2025-02-06 15:28:43,255 cfg.data.train_path                : ./data/Phonexi-2014T/labels.train
+2025-02-06 15:28:43,255 cfg.data.dev_path                  : ./data/Phonexi-2014T/labels.dev
+2025-02-06 15:28:43,255 cfg.data.test_path                 : ./data/Phonexi-2014T/labels.test
+2025-02-06 15:28:43,256 cfg.data.feature_size              : 512
+2025-02-06 15:28:43,256 cfg.data.level                     : word
+2025-02-06 15:28:43,256 cfg.data.txt_lowercase             : True
+2025-02-06 15:28:43,256 cfg.data.max_sent_length           : 400
+2025-02-06 15:28:43,256 cfg.data.random_train_subset       : -1
+2025-02-06 15:28:43,256 cfg.data.random_dev_subset         : -1
+2025-02-06 15:28:43,256 cfg.data.multimodal                : 0.0
+2025-02-06 15:28:43,257 cfg.data.max_length                : 500
+2025-02-06 15:28:43,257 cfg.testing.recognition_beam_sizes : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+2025-02-06 15:28:43,257 cfg.testing.translation_beam_sizes : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+2025-02-06 15:28:43,257 cfg.testing.translation_beam_alphas : [-1, 0, 1, 2, 3, 4, 5]
+2025-02-06 15:28:43,257 cfg.training.reset_best_ckpt       : False
+2025-02-06 15:28:43,257 cfg.training.reset_scheduler       : False
+2025-02-06 15:28:43,258 cfg.training.reset_optimizer       : False
+2025-02-06 15:28:43,258 cfg.training.random_seed           : 42
+2025-02-06 15:28:43,258 cfg.training.model_dir             : ./sign_sample
+2025-02-06 15:28:43,258 cfg.training.recognition_loss_weight : 0.0
+2025-02-06 15:28:43,258 cfg.training.translation_loss_weight : 1.0
+2025-02-06 15:28:43,258 cfg.training.eval_metric           : bleu
+2025-02-06 15:28:43,259 cfg.training.optimizer             : sophiag
+2025-02-06 15:28:43,259 cfg.training.learning_rate         : 0.0004
+2025-02-06 15:28:43,259 cfg.training.batch_size            : 2
+2025-02-06 15:28:43,259 cfg.training.num_valid_log         : 6
+2025-02-06 15:28:43,259 cfg.training.epochs                : 1000
+2025-02-06 15:28:43,260 cfg.training.early_stopping_metric : eval_metric
+2025-02-06 15:28:43,260 cfg.training.batch_type            : sentence
+2025-02-06 15:28:43,260 cfg.training.translation_normalization : batch
+2025-02-06 15:28:43,260 cfg.training.eval_translation_beam_size : 1
+2025-02-06 15:28:43,260 cfg.training.eval_translation_beam_alpha : -1
+2025-02-06 15:28:43,260 cfg.training.overwrite             : True
+2025-02-06 15:28:43,261 cfg.training.shuffle               : True
+2025-02-06 15:28:43,261 cfg.training.use_cuda              : True
+2025-02-06 15:28:43,261 cfg.training.translation_max_output_length : 30
+2025-02-06 15:28:43,261 cfg.training.keep_last_ckpts       : 1
+2025-02-06 15:28:43,261 cfg.training.batch_multiplier      : 1
+2025-02-06 15:28:43,261 cfg.training.logging_freq          : 100
+2025-02-06 15:28:43,262 cfg.training.validation_freq       : 300
+2025-02-06 15:28:43,262 cfg.training.betas                 : [0.95, 0.998]
+2025-02-06 15:28:43,262 cfg.training.scheduling            : plateau
+2025-02-06 15:28:43,262 cfg.training.learning_rate_min     : 1e-06
+2025-02-06 15:28:43,262 cfg.training.weight_decay          : 0.003
+2025-02-06 15:28:43,263 cfg.training.patience              : 10
+2025-02-06 15:28:43,263 cfg.training.decrease_factor       : 0.8
+2025-02-06 15:28:43,263 cfg.training.label_smoothing       : 0.1
+2025-02-06 15:28:43,263 cfg.training.lr_s_dim_model        : 256
+2025-02-06 15:28:43,263 cfg.training.warmup_step           : 1000
+2025-02-06 15:28:43,263 cfg.training.K                     : 2
+2025-02-06 15:28:43,264 cfg.model.initializer              : xavier
+2025-02-06 15:28:43,264 cfg.model.bias_initializer         : zeros
+2025-02-06 15:28:43,264 cfg.model.init_gain                : 1.0
+2025-02-06 15:28:43,264 cfg.model.embed_initializer        : xavier
+2025-02-06 15:28:43,264 cfg.model.embed_init_gain          : 1.0
+2025-02-06 15:28:43,264 cfg.model.tied_softmax             : False
+2025-02-06 15:28:43,265 cfg.model.cope                     : False
+2025-02-06 15:28:43,265 cfg.model.encoder.type             : transformer
+2025-02-06 15:28:43,265 cfg.model.encoder.num_layers       : 1
+2025-02-06 15:28:43,265 cfg.model.encoder.num_heads        : 8
+2025-02-06 15:28:43,265 cfg.model.encoder.embeddings.embedding_dim : 256
+2025-02-06 15:28:43,265 cfg.model.encoder.embeddings.scale : False
+2025-02-06 15:28:43,266 cfg.model.encoder.embeddings.dropout : 0.1
+2025-02-06 15:28:43,266 cfg.model.encoder.embeddings.norm_type : batch
+2025-02-06 15:28:43,266 cfg.model.encoder.embeddings.activation_type : softsign
+2025-02-06 15:28:43,266 cfg.model.encoder.hidden_size      : 256
+2025-02-06 15:28:43,266 cfg.model.encoder.ff_size          : 1024
+2025-02-06 15:28:43,266 cfg.model.encoder.dropout          : 0.1
+2025-02-06 15:28:43,267 cfg.model.decoder.type             : transformer
+2025-02-06 15:28:43,267 cfg.model.decoder.num_layers       : 1
+2025-02-06 15:28:43,267 cfg.model.decoder.num_heads        : 8
+2025-02-06 15:28:43,267 cfg.model.decoder.embeddings.embedding_dim : 256
+2025-02-06 15:28:43,267 cfg.model.decoder.embeddings.scale : False
+2025-02-06 15:28:43,267 cfg.model.decoder.embeddings.dropout : 0.1
+2025-02-06 15:28:43,267 cfg.model.decoder.embeddings.norm_type : batch
+2025-02-06 15:28:43,268 cfg.model.decoder.embeddings.activation_type : softsign
+2025-02-06 15:28:43,268 cfg.model.decoder.hidden_size      : 256
+2025-02-06 15:28:43,268 cfg.model.decoder.ff_size          : 1024
+2025-02-06 15:28:43,268 cfg.model.decoder.dropout          : 0.1
+2025-02-06 15:28:43,268 Data set sizes: 
 	train 7096,
 	valid 519,
 	test 642
-2025-02-05 22:59:58,195 First 10 words (txt): (0) <unk> (1) <pad> (2) <s> (3) </s> (4) und (5) im (6) es (7) der (8) am (9) in
-2025-02-05 22:59:58,195 Number of unique words (types): 2891
-2025-02-05 22:59:58,196 SignModel(
+2025-02-06 15:28:43,269 First 10 words (txt): (0) <unk> (1) <pad> (2) <s> (3) </s> (4) und (5) im (6) es (7) der (8) am (9) in
+2025-02-06 15:28:43,269 Number of unique words (types): 2891
+2025-02-06 15:28:43,270 SignModel(
 	encoder=TransformerEncoder(
   (layers): ModuleList(
     (0): CA_TransformerEncoderLayer(
@@ -199,7 +199,10 @@
   )
 ),
 	txt_embed=Embeddings(embedding_dim=256, vocab_size=2891))
-2025-02-05 22:59:58,204 EPOCH 1
-2025-02-05 23:08:10,127 Saved 518 text references to ./sign_sample\txt_references_5.txt and 518 text hypotheses to ./sign_sample\txt_hypotheses_5.txt
-2025-02-05 23:08:10,138 Hooray! New best validation result [eval_metric]!
-2025-02-05 23:08:10,138 Saving new checkpoint.
+2025-02-06 15:28:43,279 EPOCH 1
+2025-02-06 15:30:19,071 [Epoch: 001 Step: 00000100] Batch Translation Loss:  64.215561 => Lr: 0.000400
+2025-02-06 15:32:37,977 [Epoch: 001 Step: 00000200] Batch Translation Loss:  72.831352 => Lr: 0.000400
+2025-02-06 15:34:42,539 [Epoch: 001 Step: 00000300] Batch Translation Loss: 136.348953 => Lr: 0.000400
+2025-02-06 15:38:38,523 Saved 518 text references to ./sign_sample\txt_references_300.txt and 518 text hypotheses to ./sign_sample\txt_hypotheses_300.txt
+2025-02-06 15:38:38,533 Hooray! New best validation result [eval_metric]!
+2025-02-06 15:38:38,533 Saving new checkpoint.

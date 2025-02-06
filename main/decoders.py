@@ -113,6 +113,8 @@ class TransformerDecoder(Decoder):
             assert trg_mask is not None, "trg_mask required for Transformer"
             x = self.pe(trg_embed)
             x = self.emb_dropout(x)
+            #print("trg_mask shape", trg_mask.shape)
+            #print("subsequent_mask shape", subsequent_mask(trg_embed.size(1)).shape)
             trg_mask = trg_mask & subsequent_mask(trg_embed.size(1)).type_as(trg_mask)
             encoder_output = self.emb_dropout(encoder_output)
             for layer in self.layers: 

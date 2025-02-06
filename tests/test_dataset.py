@@ -99,7 +99,7 @@ class TestSignTranslationDataset(unittest.TestCase):
         self.txt_vocab = TextVocabulary(tokens=['hello', 'world', 'how', 'are', 'you', 'sign', 'language'])
         self.txt_field.vocab = self.txt_vocab
         self.dataset.set_txt_field(self.txt_field)
-        print(self.dataset.txt_field.vocab, "txt vocab")
+        #print(self.dataset.txt_field.vocab, "txt vocab")
     def test_dataset_length(self):
         """Test if dataset length is correct"""
         self.assertEqual(len(self.dataset), 3)
@@ -137,7 +137,7 @@ class TestSignTranslationDataset(unittest.TestCase):
             self.assertIn(key, batch_dict)
         
         # Check batch dimensions
-        print(batch_dict['video'].shape, "video shape")
+        #print(batch_dict['video'].shape, "video shape")
         
         # don't need to check video shape as all the video images across the batch are in the same sequence
         self.assertEqual(batch_dict['txt_input'].shape[0], 2)  # Batch size 2

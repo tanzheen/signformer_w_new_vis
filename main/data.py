@@ -88,7 +88,7 @@ class Field:
         """Convert text tokens to indices"""
         if self.vocab is None:
             raise RuntimeError("Vocab not set for Field")
-        print(f"arr: {arr}")
+        #print(f"arr: {arr}")
         # Ensure each token is a string before lookup
         nums = [[self.vocab.stoi.get(str(x) if not isinstance(x, str) else x, 
                 self.vocab.stoi[self.unk_token]) for x in ex] for ex in arr]
