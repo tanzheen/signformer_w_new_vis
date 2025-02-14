@@ -103,7 +103,6 @@ class TrainManager:
         # early_stopping_metric decides on how to find the early stopping point:
         # ckpts are written when there's a new high/low score for this metric
         if self.early_stopping_metric in [
-            "ppl",
             "translation_loss",
             "recognition_loss",
         ]:
@@ -476,9 +475,7 @@ class TrainManager:
                         val_res["valid_translation_loss"],
                         self.steps,
                     )
-                    self.tb_writer.add_scalar(
-                        "valid/valid_ppl", val_res["valid_ppl"], self.steps
-                    )
+    
 
                     # Log Scores
                     self.tb_writer.add_scalar(
@@ -538,7 +535,6 @@ class TrainManager:
                     valid_translation_loss=val_res["valid_translation_loss"]
                     if self.do_translation
                     else None,
-                    valid_ppl=val_res["valid_ppl"] if self.do_translation else None,
                     eval_metric=self.eval_metric,
                     new_best=new_best,
                 )
@@ -551,7 +547,6 @@ class TrainManager:
                     "Translation Beam Alpha: %d\n\t"
                     "Recognition Loss: %4.5f\t"
                     "Translation Loss: %4.5f\t"
-                    "PPL: %4.5f\n\t"
                     "Eval Metric: %s\n\t"
                     "WER %3.2f\t(DEL: %3.2f,\tINS: %3.2f,\tSUB: %3.2f)\n\t"
                     "BLEU-4 %.2f\t(BLEU-1: %.2f,\tBLEU-2: %.2f,\tBLEU-3: %.2f,\tBLEU-4: %.2f)\n\t"
@@ -565,7 +560,6 @@ class TrainManager:
                     val_res["valid_translation_loss"]
                     if self.do_translation
                     else -1,
-                    val_res["valid_ppl"] if self.do_translation else -1,
                     self.eval_metric.upper(),
                 
                     # BLEU
@@ -655,7 +649,7 @@ class TrainManager:
 
         # compute gradients
         # divide loss by gradient accumulation steps for normalized gradients
-        (normalized_translation_loss / 8).backward()
+        (normalized_translation_loss / 8).backward() # instead of 8 can try 16 gradient accumulation steps too (currently running on hpc)
         if update:
             # make gradient step after accumulating 8 batches
             if self.steps % 8 == 0:
@@ -707,7 +701,6 @@ class TrainManager:
         self,
         valid_scores: Dict,
         valid_translation_loss: float,
-        valid_ppl: float,
         eval_metric: str,
         new_best: bool = False,
     ) -> None:
@@ -716,7 +709,6 @@ class TrainManager:
 
         :param valid_scores: Dictionary of validation scores
         :param valid_translation_loss: validation loss (sum over whole validation set)
-        :param valid_ppl: validation perplexity
         :param eval_metric: evaluation metric, e.g. "bleu"
         :param new_best: whether this is a new best model
         """
@@ -735,7 +727,6 @@ class TrainManager:
             opened_file.write(
                 "Steps: {}\t"
                 "Translation Loss: {:.5f}\t"
-                "PPL: {:.5f}\t"
                 "Eval Metric: {}\t"
                 "BLEU-4 {:.2f}\t(BLEU-1: {:.2f},\tBLEU-2: {:.2f},\tBLEU-3: {:.2f},\tBLEU-4: {:.2f})\t"
                 "CHRF {:.2f}\t"
@@ -743,7 +734,6 @@ class TrainManager:
                 "LR: {:.8f}\t{}\n".format(
                     self.steps,
                     valid_translation_loss if self.do_translation else -1,
-                    valid_ppl if self.do_translation else -1,
                     eval_metric,
                     # BLEU
                     valid_scores["bleu"] if self.do_translation else -1,
