@@ -47,8 +47,6 @@ def validate_on_data(
         all_txt_outputs = []
         all_attention_scores = []
         total_translation_loss = 0
-        total_num_txt_tokens = 0
-        total_num_seqs = 0
 
         # Create progress bar
         progress_bar = tqdm(
@@ -102,15 +100,13 @@ def validate_on_data(
             if (
                 translation_loss_function is not None
                 and translation_loss_weight != 0
-                and total_num_txt_tokens > 0
             ):
                 # total validation translation loss
                 valid_translation_loss = total_translation_loss
-                # exponent of token-level negative log prob
-                valid_ppl = torch.exp(total_translation_loss / total_num_txt_tokens)
+
             else:
                 valid_translation_loss = -1
-                valid_ppl = -1
+
             # Add debug prints before decoding
             ##print("Number of predictions:", len(all_txt_outputs))
             ##print("Sample prediction before decoding:", all_txt_outputs[0])
@@ -153,7 +149,6 @@ def validate_on_data(
     }
     if do_translation:
         results["valid_translation_loss"] = valid_translation_loss
-        results["valid_ppl"] = valid_ppl
         results["decoded_txt"] = decoded_txt
         results["txt_ref"] = txt_ref
         results["txt_hyp"] = txt_hyp

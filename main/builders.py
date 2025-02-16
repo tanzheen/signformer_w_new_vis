@@ -129,7 +129,7 @@ def build_optimizer(config: dict, parameters) -> Optimizer:
         return torch.optim.SGD(
             params=parameters,
             lr=learning_rate,
-            momentum=config.get("momentum", 0),
+            momentum=config.get("momentum", 0.9),
             weight_decay=weight_decay,
         )
     elif optimizer_name == "sophiag":
