@@ -1,6 +1,5 @@
 import argparse
 import os
-from accelerate import Accelerator  # Import Accelerator
 from training import train
 from prediction import test
 from pathlib import Path

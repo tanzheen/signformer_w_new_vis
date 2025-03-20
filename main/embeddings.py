@@ -58,6 +58,8 @@ class MaskedNorm(nn.Module):
         if self.training:
             reshaped = x.reshape([-1, self.num_features])
             reshaped_mask = mask.reshape([-1, 1]) > 0
+            print("reshaped_mask: ", reshaped_mask.shape)
+            print("reshaped: ", reshaped.shape)
             selected = torch.masked_select(reshaped, reshaped_mask).reshape(
                 [-1, self.num_features]
             )

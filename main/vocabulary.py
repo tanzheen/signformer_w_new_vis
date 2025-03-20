@@ -188,7 +188,7 @@ def build_vocab(
                     unit="sample",
                     dynamic_ncols=True,  # Automatically adjust width
                     leave=True):  # Leave the progress bar after completion
-        if field == "txt":
+        if field == "txt" or field == "bpe":
             ##print(f"tgt_sample from dataset: {i}")
             tokens.extend(i['text'].split())
         else:
@@ -200,7 +200,7 @@ def build_vocab(
     vocab_tokens = sort_and_cut(counter, max_size)
     assert len(vocab_tokens) <= max_size
 
-    if field == "txt":
+    if field == "txt" or field == "bpe":
         vocab = TextVocabulary(tokens=vocab_tokens)
     else:
         raise ValueError("Unknown vocabulary type")

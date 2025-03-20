@@ -102,7 +102,7 @@ class SignModel(nn.Module):
         #print(f"txt input shape: {txt_input.shape}")
         
         # Print tokenized sequence
-        tokenized = [self.txt_vocab.itos[idx.item()] for idx in txt_input[0]]
+        #tokenized = [self.txt_vocab.itos[idx.item()] for idx in txt_input[0]]
         #print("\nTokenized sequence:")
         #print(tokenized)
         

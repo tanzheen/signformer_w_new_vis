@@ -63,8 +63,8 @@ class TrainManager:
         self.dataset_version = config["data"].get("version", "phoenix_2014_trans")
 
         # model
-        self.txt_pad_index = self.model.module.txt_pad_index
-        self.txt_bos_index = self.model.module.txt_bos_index
+        self.txt_pad_index = self.model.txt_pad_index
+        self.txt_bos_index = self.model.txt_bos_index
         self.model_dir = make_model_dir(
             train_config["model_dir"], overwrite=train_config.get("overwrite", False)
         )

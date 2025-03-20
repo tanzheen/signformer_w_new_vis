@@ -48,6 +48,7 @@ class SignTranslationDataset(Dataset.Dataset):
         
         # Setup text tokenization
         self.txt_field = None  # Will be set after vocabulary is built
+        self.bpe_tokenizer = None 
         
         # Video augmentation setup
         sometimes = lambda aug: va.Sometimes(0.5, aug)
@@ -100,9 +101,10 @@ class SignTranslationDataset(Dataset.Dataset):
             img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
             img = Image.fromarray(img)
             batch_image.append(img)
-
-        if self.phase == 'train':
-            batch_image = self.seq(batch_image)
+        
+        # NOTE: dont' mess with the frame augmentation first because it is hard to imagine what kind of augmentation simulate real life conditions
+        # if self.phase == 'train':
+        #     batch_image = self.seq(batch_image)
 
         for i, img in enumerate(batch_image):
             img = img.resize(resize)
@@ -156,8 +158,8 @@ class SignTranslationDataset(Dataset.Dataset):
         ##print("mask_gen", mask_gen)
         ##print("img_padding_mask at collating: ", img_padding_mask.shape)
 
-        # Process text
-        if self.txt_field is not None:
+        #Process text
+        if self.txt_field is None:
             ##print("Original texts:", tgt_batch)
             
             # Explicitly tokenize and process
@@ -182,16 +184,27 @@ class SignTranslationDataset(Dataset.Dataset):
             txt_input = txt_copy[:, :-1]
             # Create text mask
             txt_mask = (txt_input != self.txt_field.vocab.stoi[PAD_TOKEN]).long().unsqueeze(1)
-            # #print ('txt_input shape: ', txt_input.shape)
-            # #print("txt_maska at collating : ", txt_mask.shape)
+            print ('txt_input shape: ', txt_input.shape)
+            print("txt_maska at collating : ", txt_mask.shape)
 
             #Prepare decoder input by shifting right
             decoder_input = txt_copy[:, 1:]
-            print("decoder_input at batch collate: ", decoder_input)
-        else:
-            txt_input = None
-            txt_mask = None
-  
+            print(decoder_input.shape)
+            print("decoder_input at batch collate: ", decoder_input.shape)
+        
+        else: 
+            txt_input = self.bpe_tokenizer.encode(tgt_batch)
+            print("FIGURE OUT TOKENIZER")
+            print(txt_input)
+            txt_mask = txt_input['attention_mask'][:, :-1].unsqueeze(1)
+            print("txt_mask at batch collate: ", txt_mask.shape)
+            txt_input = txt_input['input_ids'].clone()
+            txt_input_copy = txt_input.clone()
+            txt_input = txt_input_copy[:, :-1]
+            print("txt_input at batch collate: ", txt_input.shape)
+            print("txt_mask at batch collate: ", txt_mask.shape)
+            decoder_input = txt_input_copy[:, 1:]
+    
         return {
             'video': img_batch,
             'attention_mask': img_padding_mask,

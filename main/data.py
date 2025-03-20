@@ -19,7 +19,7 @@ from vocabulary import (
     BOS_TOKEN,
     PAD_TOKEN,
 )
-from bpe_vocabulary import build_vocab_bpe
+from bpe_tokenizer import BPETokenizer, create_bpe_tokenizer
 class Field:
     """Custom Field class for text processing and numericalization"""
     def __init__(
@@ -132,18 +132,19 @@ def load_data(data_cfg: dict, args) -> (Dataset, Dataset, Dataset, Vocabulary, F
     )
     train_data.set_txt_field(txt_field)
     # Build vocabulary from training data
-    txt_max_size = data_cfg.get("txt_voc_limit", sys.maxsize)
+    txt_max_size = data_cfg.get("txt_voc_limit", 8000)
     txt_min_freq = data_cfg.get("txt_voc_min_freq", 1)
     txt_vocab_file = data_cfg.get("txt_vocab", None)
     
-    txt_vocab = build_vocab_bpe(
-        field="txt",
+    txt_vocab = build_vocab(
+        field="bpe",
         min_freq=txt_min_freq,
         max_size=txt_max_size,
         dataset=train_data.raw_data,
         vocab_file=txt_vocab_file,
     )
-    
+    bpe_tokenizer = create_bpe_tokenizer(train_data.raw_data, field="bpe", vocab_size=txt_max_size, min_frequency=txt_min_freq)
+    train_data.bpe_tokenizer= bpe_tokenizer
     # Assign vocabulary to text field
     txt_field.vocab = txt_vocab
     
@@ -157,7 +158,8 @@ def load_data(data_cfg: dict, args) -> (Dataset, Dataset, Dataset, Vocabulary, F
     dev_data.set_txt_field(txt_field)
     test_data.set_txt_field(txt_field)
 
-    
+    dev_data.bpe_tokenizer= bpe_tokenizer
+    test_data.bpe_tokenizer= bpe_tokenizer
 
     return train_data, dev_data, test_data, txt_vocab, txt_field
 
