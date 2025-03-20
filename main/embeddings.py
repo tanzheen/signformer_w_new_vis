@@ -1,6 +1,6 @@
 import math
 import torch
-
+from accelerate import Accelerator
 from torch import nn, Tensor
 from helpers import freeze_params
 
@@ -186,6 +186,7 @@ class SpatialEmbeddings(nn.Module):
         scale: bool = False,
         scale_factor: float = None,
         multimodal: bool = False,
+        accelerator: Accelerator = None,
         **kwargs
     ):
         """
@@ -244,12 +245,12 @@ class SpatialEmbeddings(nn.Module):
         if self.multimodal:
             x, x_2 = x.split([1024, 100], dim=-1)
             x_2 = self.ln2(x_2)
-            x_2_embedding = self.skeletalEmbedding(torch.tensor(0, dtype=torch.int).cuda())
+            x_2_embedding = self.skeletalEmbedding(torch.tensor(0, dtype=torch.int).to(self.accelerator.device))
             x_2 = x_2 + x_2_embedding
 
         x = self.ln(x)
         if self.multimodal:
-            x_embedding = self.imageEmbedding(torch.tensor(0, dtype=torch.int).cuda())
+            x_embedding = self.imageEmbedding(torch.tensor(0, dtype=torch.int).to(self.accelerator.device))
             x = x + x_embedding
 
         if self.norm_type:

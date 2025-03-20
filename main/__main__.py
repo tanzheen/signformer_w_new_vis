@@ -1,5 +1,6 @@
 import argparse
 import os
+from accelerate import Accelerator  # Import Accelerator
 from training import train
 from prediction import test
 from pathlib import Path
@@ -17,7 +18,7 @@ def get_args_parser():
     # Add data processing arguments
     parser.add_argument('--input-size', default=224, type=int)
     parser.add_argument('--resize', default=256, type=int)
- 
+    
     return parser
 
 def main():
@@ -25,12 +26,13 @@ def main():
     args = parser.parse_args()
     
     cfg_file = args.config_path
-    os.environ["CUDA_VISIBLE_DEVICES"] = args.gpu_id
+
+
 
     if args.mode == "train":
-        train(cfg_file=cfg_file, args=args)
+        train(cfg_file=cfg_file, args=args)  # Pass the accelerator
     elif args.mode == "test":
-        test(cfg_file=args.config_path, ckpt=args.ckpt, output_path=args.output_path)
+        test(cfg_file=cfg_file, ckpt=args.ckpt, output_path=args.output_path)
     else:
         raise ValueError("Unknown mode")
 
@@ -38,9 +40,8 @@ if __name__ == "__main__":
     main()
 
 '''
-To train: python main.py train configs/sign_volta.yaml
-python -m main train [CONFIG PATH]
-
-To test: python main.py test configs/sign.yaml --ckpt checkpoints/best.IT_00000000.ckpt --output_path outputs/test.txt
-python -m main test [CONFIG PATH] --ckpt [CHECKPOINT PATH]
+To train (distributed example):
+    torchrun --nproc_per_node=NUM_GPUS main/__main__.py train configs/sign_volta.yaml --distributed
+To test:
+    torchrun --nproc_per_node=NUM_GPUS main/__main__.py test configs/sign.yaml --ckpt <checkpoint> --output_path outputs/test.txt --distributed
 '''

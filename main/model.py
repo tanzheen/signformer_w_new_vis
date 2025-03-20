@@ -22,7 +22,7 @@ from helpers import freeze_params
 from torch import Tensor
 from typing import Union
 import torch 
-
+from accelerate import Accelerator
 
 class SignModel(nn.Module):
     """
@@ -39,6 +39,7 @@ class SignModel(nn.Module):
         txt_vocab: TextVocabulary,
         do_recognition: bool = True,
         do_translation: bool = True,
+        accelerator: Accelerator = None,
     ):
         """
         Create a new encoder-decoder model
@@ -53,6 +54,8 @@ class SignModel(nn.Module):
         :param do_translation: flag to build the model with translation decoder.
         """
         super().__init__()
+        self.accelerator = accelerator
+        
         self.vis_extractor = vis_extractor
         self.encoder = encoder
         self.decoder = decoder
@@ -210,11 +213,11 @@ class SignModel(nn.Module):
         # #print ('================================')
         # Do a forward pass
         decoder_outputs, last_hidden_state = self.forward(
-            sgn=batch['video'].cuda(),
-            sgn_mask=batch['attention_mask'].cuda(),
-            sgn_lengths=batch['src_length'].cuda(),
-            txt_input=batch['txt_input'].cuda(),
-            txt_mask=batch['txt_mask'].cuda(),
+            sgn=batch['video'].to(self.accelerator.device),
+            sgn_mask=batch['attention_mask'].to(self.accelerator.device),
+            sgn_lengths=batch['src_length'].to(self.accelerator.device),
+            txt_input=batch['txt_input'].to(self.accelerator.device),
+            txt_mask=batch['txt_mask'].to(self.accelerator.device),
         )
         ##print("decoder_outputs shape: ", decoder_outputs.shape)
        
@@ -227,7 +230,7 @@ class SignModel(nn.Module):
             ##print("txt_log_probs shape: ", txt_log_probs.shape)
             ##print("batch['txt_input'] shape: ", batch['txt_input'].shape)
             translation_loss = (
-                translation_loss_function(txt_log_probs, batch['labels'].cuda())
+                translation_loss_function(txt_log_probs, batch['labels'].to(self.accelerator.device))
                 * translation_loss_weight
             )
 
@@ -257,7 +260,7 @@ class SignModel(nn.Module):
     
         
         encoder_output, encoder_hidden = self.encode(
-            sgn=batch['video'].cuda(), sgn_mask=batch['attention_mask'].cuda(), sgn_length=batch['src_length'].cuda()
+            sgn=batch['video'].to(self.accelerator.device), sgn_mask=batch['attention_mask'].to(self.accelerator.device), sgn_length=batch['src_length'].to(self.accelerator.device)
         )
 
 
@@ -267,7 +270,7 @@ class SignModel(nn.Module):
                 stacked_txt_output, stacked_attention_scores = greedy(
                     encoder_hidden=encoder_hidden,
                     encoder_output=encoder_output,
-                    src_mask=batch['attention_mask'].cuda(),
+                    src_mask=batch['attention_mask'].to(self.accelerator.device),
                     embed=self.txt_embed,
                     bos_index=self.txt_bos_index,
                     eos_index=self.txt_eos_index,
@@ -280,7 +283,7 @@ class SignModel(nn.Module):
                     size=translation_beam_size,
                     encoder_hidden=encoder_hidden,
                     encoder_output=encoder_output,
-                    src_mask=batch['attention_mask'].cuda(),
+                    src_mask=batch['attention_mask'].to(self.accelerator.device),
                     embed=self.txt_embed,
                     max_output_length=translation_max_output_length,
                     alpha=translation_beam_alpha,
@@ -315,7 +318,7 @@ class SignModel(nn.Module):
             )
         )
 
-def make_resnet(name='resnet18'):
+def make_resnet(name='resnet18', freeze=False):
     if name == 'resnet18':
         model = resnet18(pretrained= False )
     else:
@@ -325,6 +328,9 @@ def make_resnet(name='resnet18'):
     model.load_state_dict(state_dict)
     inchannel = model.fc.in_features
     model.fc = nn.Identity()
+    if freeze:
+        for param in model.parameters():
+            param.requires_grad = False
     return model
 
 
@@ -351,6 +357,7 @@ def build_model(
     txt_vocab: TextVocabulary,
     multimodal: bool = False,
     do_translation: bool = True,
+    accelerator: Accelerator = None,
 ) -> SignModel:
     """
     Build and initialize the model according to the configuration.
@@ -362,12 +369,13 @@ def build_model(
     :param do_recognition: flag to build the model with recognition output.
     :param do_translation: flag to build the model with translation decoder.
     """
+    
     txt_padding_idx = txt_vocab.stoi[PAD_TOKEN]
 
     # build visual encoder 
     vis_extractor = resnet()
 
-    # Multimodal MLP for sign embeddings to match hidden size of text transforrmer
+    # Multimodal MLP for sign embeddings to match hidden size of text transformer
     sgn_embed: V_encoder = V_encoder(
         embedding_dim=cfg["encoder"]["embeddings"]["embedding_dim"],
         input_size=sgn_dim,
@@ -377,7 +385,7 @@ def build_model(
     # build text encoder
     enc_dropout = cfg["encoder"].get("dropout", 0.0)
     enc_emb_dropout = cfg["encoder"]["embeddings"].get("dropout", enc_dropout)
-    cope= cfg.get("cope")
+    cope = cfg.get("cope")
     #print('================================')
     #print('COPE: ', cope)
     #print('================================')
@@ -423,23 +431,25 @@ def build_model(
         txt_embed=txt_embed,
         txt_vocab=txt_vocab,
         do_translation=do_translation,
+        accelerator=accelerator
     )
+
+    if cfg['transferred_backbone'] == True:
+        model.vis_extractor.load_state_dict(torch.load(cfg['transferred_backbone_path']))
+        for param in model.vis_extractor.parameters():
+            param.requires_grad = False
+
     if do_translation:
         # tie softmax layer with txt embeddings
         if cfg.get("tied_softmax", False):
-            # noinspection PyUnresolvedReferences
             if txt_embed.lut.weight.shape == model.decoder.output_layer.weight.shape:
-                # (also) share txt embeddings and softmax layer:
-                # noinspection PyUnresolvedReferences
                 model.decoder.output_layer.weight = txt_embed.lut.weight
             else:
                 raise ValueError(
                     "For tied_softmax, the decoder embedding_dim and decoder "
-                    "hidden_size must be the same."
-                    "The decoder must be a Transformer."
+                    "hidden_size must be the same. The decoder must be a Transformer."
                 )
 
-    # custom initialization of model parameters
     initialize_model(model, cfg, txt_padding_idx)
 
     return model

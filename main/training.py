@@ -37,27 +37,34 @@ import torch.utils.data.dataset as Dataset
 from torch.utils.data import DataLoader
 
 
+
+# Import Accelerator
+from accelerate import Accelerator
+
 # pylint: disable=too-many-instance-attributes
 class TrainManager:
     """ Manages training loop, validations, learning rate scheduling
     and early stopping."""
 
-    def __init__(self, model: SignModel, config: dict) -> None:
+    def __init__(self, model: SignModel, config: dict, args: argparse.Namespace, accelerator: Accelerator) -> None:
         """
         Creates a new TrainManager for a model, specified as in configuration.
 
         :param model: torch module defining the model
         :param config: dictionary containing the training configurations
+        :param accelerator: Accelerator object for distributed training
         """
+        self.accelerator = accelerator  # Store the accelerator
+        self.model = accelerator.prepare(model)  # Prepare the model with accelerator
+        self.args = args  # store the args for distributed checks
         train_config = config["training"]
 
         # files for logging and storing 
         self.dataset_version = config["data"].get("version", "phoenix_2014_trans")
 
         # model
-        self.model = model
-        self.txt_pad_index = self.model.txt_pad_index
-        self.txt_bos_index = self.model.txt_bos_index
+        self.txt_pad_index = self.model.module.txt_pad_index
+        self.txt_bos_index = self.model.module.txt_bos_index
         self.model_dir = make_model_dir(
             train_config["model_dir"], overwrite=train_config.get("overwrite", False)
         )
@@ -80,10 +87,11 @@ class TrainManager:
         self.learning_rate_min = train_config.get("learning_rate_min", 1.0e-8)
         self.clip_grad_fun = build_gradient_clipper(config=train_config)
 
-        params = model.parameters()
+        params = self.model.parameters()
         self.optimizer = build_optimizer(
             config=train_config, parameters=params
         )
+        self.optimizer = self.accelerator.prepare(self.optimizer)
         self.batch_multiplier = train_config.get("batch_multiplier", 1)
 
          # validation & early stopping
@@ -98,10 +106,6 @@ class TrainManager:
         self.early_stopping_metric = train_config.get(
             "early_stopping_metric", "eval_metric"
         )
-
-        # if we schedule after BLEU/chrf, we want to maximize it, else minimize
-        # early_stopping_metric decides on how to find the early stopping point:
-        # ckpts are written when there's a new high/low score for this metric
         if self.early_stopping_metric in [
             "translation_loss",
             "recognition_loss",
@@ -127,6 +131,8 @@ class TrainManager:
             optimizer=self.optimizer,
             hidden_size=config["model"]["encoder"]["hidden_size"],
         )
+        self.scheduler = self.accelerator.prepare(self.scheduler)
+
 
         # data & batch handling
         self.level = config["data"]["level"]
@@ -202,16 +208,9 @@ class TrainManager:
         )
 
     def _save_checkpoint(self) -> None:
-        """
-        Save the model's current parameters and the training state to a
-        checkpoint.
+        # Only rank 0 saves checkpoints
 
-        The training state contains the total number of training steps,
-        the total number of training tokens,
-        the best checkpoint score and iteration so far,
-        and optimizer and scheduler states.
-
-        """
+    
         model_path = "{}/{}.ckpt".format(self.model_dir, self.steps)
         state = {
             "steps": self.steps,
@@ -313,7 +312,7 @@ class TrainManager:
         self.logger.info("Trainable parameters: %s", sorted(trainable_params))
         assert trainable_params
 
-    def train_and_validate(self,  train_data: Dataset, valid_data: Dataset) -> None:
+    def train_and_validate(self, train_data: Dataset, valid_data: Dataset) -> None:
         """
         Train the model and validate it from time to time on the validation set.
 
@@ -322,16 +321,31 @@ class TrainManager:
         """
         
         epoch_no = None
-        # Create dataloader
-        train_dataloader = DataLoader(train_data, batch_size=self.batch_size, shuffle=self.shuffle, collate_fn=train_data.collate_fn)
-        valid_dataloader = DataLoader(valid_data, batch_size=self.eval_batch_size, shuffle=False, collate_fn=valid_data.collate_fn, drop_last=True)
+        # Use DistributedSampler if distributed training is enabled
+
+
+        train_dataloader = DataLoader(
+            train_data,
+            batch_size=self.batch_size,
+            shuffle=True,
+            collate_fn=train_data.collate_fn
+        )
+        valid_dataloader = DataLoader(
+            valid_data,
+            batch_size=self.eval_batch_size,
+            shuffle=False,
+     
+            collate_fn=valid_data.collate_fn,
+            drop_last=True
+        )
+
+        # Prepare dataloaders with accelerator
+        train_dataloader = self.accelerator.prepare(train_dataloader)
+        valid_dataloader = self.accelerator.prepare(valid_dataloader)
 
         for epoch_no in range(self.epochs):
-
+            # Set epoch for distributed sampler so that each process gets a different slice
             self.train_epoch(train_dataloader, valid_dataloader, epoch_no)
-
-            
-
         else:
             self.logger.info("Training ended after %3d epochs.", epoch_no + 1)
         self.logger.info(
@@ -376,37 +390,37 @@ class TrainManager:
 
         for batch in progress_bar:
             # Create batch object and get losses
-            
-            # ensure that train_batch is designed properly for extracting the features
-            update = count == 0
-            translation_loss = self._train_batch(batch, update=update)
+            with self.accelerator.accumulate():
+                # ensure that train_batch is designed properly for extracting the features
+                update = count == 0
+                translation_loss = self._train_batch(batch, update=update)
 
-            # Update progress bar with current loss
-            if self.do_translation:
-                epoch_stats["translation_loss"] += translation_loss.detach().cpu().numpy()
-                progress_bar.set_postfix(
-                    {
-                        "trans_loss": f"{translation_loss:.4f}",
-                        "lr": f"{self.optimizer.param_groups[0]['lr']:.6f}"
-                    }
-                )
+                # Update progress bar with current loss
+                if self.do_translation:
+                    epoch_stats["translation_loss"] += translation_loss.detach().cpu().numpy()
+                    progress_bar.set_postfix(
+                        {
+                            "trans_loss": f"{translation_loss:.4f}",
+                            "lr": f"{self.optimizer.param_groups[0]['lr']:.6f}"
+                        }
+                    )
 
-            # Rest of the existing training logic
-            count = self.batch_multiplier if update else count
-            count -= 1
+                # Rest of the existing training logic
+                count = self.batch_multiplier if update else count
+                count -= 1
 
 
-            if self.do_translation:
-                self.tb_writer.add_scalar(
-                    "train/train_translation_loss", translation_loss, self.steps
-                )
+                if self.do_translation:
+                    self.tb_writer.add_scalar(
+                        "train/train_translation_loss", translation_loss, self.steps
+                    )
 
-            if (
-                self.scheduler is not None
-                and self.scheduler_step_at == "step"
-                and update
-            ):
-                self.scheduler.step()
+                if (
+                    self.scheduler is not None
+                    and self.scheduler_step_at == "step"
+                    and update
+                ):
+                    self.scheduler.step()
 
             # log learning progress
             if self.steps % self.logging_freq == 0 and update:
@@ -581,8 +595,8 @@ class TrainManager:
                     val_res["valid_scores"]["rouge"] if self.do_translation else -1,
                 )
 
-        
-                
+            
+                    
 
 
 
@@ -622,7 +636,7 @@ class TrainManager:
         :return normalized_recognition_loss: Normalized recognition loss
         :return normalized_translation_loss: Normalized translation loss
         """
-
+       
         translation_loss = self.model.get_loss_for_batch(
             batch=batch,
             translation_loss_function=self.translation_loss_function,
@@ -649,19 +663,15 @@ class TrainManager:
 
         # compute gradients
         # divide loss by gradient accumulation steps for normalized gradients
-        (normalized_translation_loss / 8).backward() # instead of 8 can try 16 gradient accumulation steps too (currently running on hpc)
-        if update:
-            # make gradient step after accumulating 8 batches
-            if self.steps % 8 == 0:
-                if self.clip_grad_fun is not None:
-                    # clip gradients (in-place) before optimizer step
-                    self.clip_grad_fun(params=self.model.parameters())
-                    
-                self.optimizer.step()
-                self.optimizer.zero_grad()
+        self.accelerator.backward(normalized_translation_loss / 8) # instead of 8 can try 16 gradient accumulation steps too (currently running on hpc)
+        # if self.accelerator.sync_gradients:
+        #     self.accelerator.clip_grad_norm_(self.model.parameters(), 1.0)
+        self.optimizer.step()
 
-            # increment step counter
-            self.steps += 1
+        self.optimizer.zero_grad()
+
+        # increment step counter
+        self.steps += 1
 
         # increment token counter
         if self.do_translation:
@@ -712,6 +722,9 @@ class TrainManager:
         :param eval_metric: evaluation metric, e.g. "bleu"
         :param new_best: whether this is a new best model
         """
+        # Only rank 0 writes the validation report
+
+
         current_lr = -1
         # ignores other param groups for now
         for param_group in self.optimizer.param_groups:
@@ -769,16 +782,20 @@ def train(cfg_file: str, args: argparse.Namespace) -> None:
 
     # build model and load parameters into it
     do_translation = cfg["training"].get("translation_loss_weight", 1.0) > 0.0
-
+    accelerator = Accelerator(mixed_precision='fp16', gradient_accumulation_steps=4, split_batches=False)
     model = build_model(
         cfg=cfg["model"],
         txt_vocab=txt_vocab,
         sgn_dim=cfg["data"]["feature_size"],
         do_translation=do_translation,
+        accelerator=accelerator
     )
 
+    # Initialize the accelerator
+    
+
     # for training management, e.g. early stopping and model selection
-    trainer = TrainManager(model=model, config=cfg)
+    trainer = TrainManager(model=model, config=cfg,args=args, accelerator=accelerator)
 
     # store copy of original training config in model dir
     shutil.copy2(cfg_file, trainer.model_dir + "/config.yaml")
@@ -817,20 +834,25 @@ def train(cfg_file: str, args: argparse.Namespace) -> None:
     
 
 
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser("Joey-NMT")
-    parser.add_argument(
-        "config",
-        default="configs/default.yaml",
-        type=str,
-        help="Training configuration file (yaml).",
-    )
-    parser.add_argument(
-        "--gpu_id", type=str, default="0", help="gpu to run your job on"
-    )
-    args = parser.parse_args()
-    os.environ["CUDA_VISIBLE_DEVICES"] = args.gpu_id
-    train(cfg_file=args.config)
+# if __name__ == "__main__":
+#     local_rank = int(os.environ.get("LOCAL_RANK", 0))  # Get local rank
+#     torch.cuda.set_device(local_rank)  # Set GPU for this process
+#     parser = argparse.ArgumentParser("Joey-NMT")
+#     parser.add_argument(
+#         "config",
+#         default="configs/default.yaml",
+#         type=str,
+#         help="Training configuration file (yaml).",
+#     )
+#     parser.add_argument(
+#         "--gpu_id", type=str, default="0", help="gpu to run your job on"
+#     )
+#     parser.add_argument(
+#         "--", type=int, default=local_rank, help="local rank for distributed training"
+#     )
+#     args = parser.parse_args()
+#     os.environ["CUDA_VISIBLE_DEVICES"] = args.gpu_id
+#     train(cfg_file=args.config)
     
 
 

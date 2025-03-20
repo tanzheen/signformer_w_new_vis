@@ -52,12 +52,12 @@ training:
   reset_scheduler: false
   reset_optimizer: false
   random_seed: 42
-  model_dir: "./sign_sample"
+  model_dir: "./sign_sample_8_amp"
   recognition_loss_weight: 0.0
   translation_loss_weight: 1.0
   eval_metric: bleu
-  optimizer: sophiag
-  learning_rate: 0.0004
+  optimizer: sgd
+  learning_rate: 0.001
   batch_size: 2
   num_valid_log: 6
   epochs: 1000
@@ -87,6 +87,8 @@ training:
   warmup_step: 1000
   K: 2
 model:
+  transferred_backbone: false
+  transferred_backbone_path: signformer_trained_CNN.pth
   initializer: xavier
   bias_initializer: zeros
   init_gain: 1.0

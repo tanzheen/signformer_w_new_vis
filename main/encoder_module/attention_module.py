@@ -32,9 +32,6 @@ class Linear(nn.Linear):
         self.noise = torch.normal(mean=0.0, std=1.0, size=self.weight.size(), device=self.weight.device,
                                   dtype=self.weight.dtype)
 
-        # Broadcast Noise
-        if distributed:
-            torch.distributed.broadcast(self.noise, 0)
 
     def forward(self, input):
 
