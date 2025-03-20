@@ -4,6 +4,8 @@ import random
 
 import torch
 
+from tokenizers import ByteLevelBPETokenizer
+from collections import Counter
 
 from torch.utils.data.dataset import Dataset
 from torch.utils.data import DataLoader
@@ -17,7 +19,7 @@ from vocabulary import (
     BOS_TOKEN,
     PAD_TOKEN,
 )
-
+from bpe_vocabulary import build_vocab_bpe
 class Field:
     """Custom Field class for text processing and numericalization"""
     def __init__(
@@ -134,7 +136,7 @@ def load_data(data_cfg: dict, args) -> (Dataset, Dataset, Dataset, Vocabulary, F
     txt_min_freq = data_cfg.get("txt_voc_min_freq", 1)
     txt_vocab_file = data_cfg.get("txt_vocab", None)
     
-    txt_vocab = build_vocab(
+    txt_vocab = build_vocab_bpe(
         field="txt",
         min_freq=txt_min_freq,
         max_size=txt_max_size,
