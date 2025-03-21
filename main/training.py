@@ -57,7 +57,7 @@ class TrainManager:
         self.accelerator = accelerator  # Store the accelerator
         self.model = accelerator.prepare(model)  # Prepare the model with accelerator
         self.args = args  # store the args for distributed checks
-        train_config = config["training"]
+        self.train_config = config["training"]
 
         # files for logging and storing 
         self.dataset_version = config["data"].get("version", "phoenix_2014_trans")
@@ -66,11 +66,11 @@ class TrainManager:
         self.txt_pad_index = self.model.txt_pad_index
         self.txt_bos_index = self.model.txt_bos_index
         self.model_dir = make_model_dir(
-            train_config["model_dir"], overwrite=train_config.get("overwrite", False)
+            self.train_config["model_dir"], overwrite=self.train_config.get("overwrite", False)
         )
         self.tb_writer = SummaryWriter(log_dir=self.model_dir + "/tensorboard/")
-        self.logger = make_logger(model_dir=train_config["model_dir"])
-        self.logging_freq = train_config.get("logging_freq", 100)
+        self.logger = make_logger(model_dir=self.train_config["model_dir"])
+        self.logging_freq = self.train_config.get("logging_freq", 100)
         self.valid_report_file = "{}/validations.txt".format(self.model_dir)
         self._log_parameters_list()
 
@@ -78,32 +78,33 @@ class TrainManager:
         self.do_translation = (
             config["training"].get("translation_loss_weight", 1.0) > 0.0
         )
+        self.level = config["data"]["level"]
 
         if self.do_translation:
-            self._get_translation_params(train_config=train_config)
+            self._get_translation_params(train_config=self.train_config)
 
         # optimization
-        self.last_best_lr = train_config.get("learning_rate", -1)
-        self.learning_rate_min = train_config.get("learning_rate_min", 1.0e-8)
-        self.clip_grad_fun = build_gradient_clipper(config=train_config)
+        self.last_best_lr = self.train_config.get("learning_rate", -1)
+        self.learning_rate_min = self.train_config.get("learning_rate_min", 1.0e-8)
+        self.clip_grad_fun = build_gradient_clipper(config=self.train_config)
 
         params = self.model.parameters()
         self.optimizer = build_optimizer(
-            config=train_config, parameters=params
+            config=self.train_config, parameters=params
         )
         self.optimizer = self.accelerator.prepare(self.optimizer)
-        self.batch_multiplier = train_config.get("batch_multiplier", 1)
+        self.batch_multiplier = self.train_config.get("batch_multiplier", 1)
 
          # validation & early stopping
-        self.validation_freq = train_config.get("validation_freq", 100)
-        self.num_valid_log = train_config.get("num_valid_log", 5)
-        self.ckpt_queue = queue.Queue(maxsize=train_config.get("keep_last_ckpts", 5))
-        self.eval_metric = train_config.get("eval_metric", "bleu")
+        self.validation_freq = self.train_config.get("validation_freq", 100)
+        self.num_valid_log = self.train_config.get("num_valid_log", 5)
+        self.ckpt_queue = queue.Queue(maxsize=self.train_config.get("keep_last_ckpts", 5))
+        self.eval_metric = self.train_config.get("eval_metric", "bleu")
         if self.eval_metric not in ["bleu", "chrf", "wer", "rouge"]:
             raise ValueError(
                 "Invalid setting for 'eval_metric': {}".format(self.eval_metric)
             )
-        self.early_stopping_metric = train_config.get(
+        self.early_stopping_metric = self.train_config.get(
             "early_stopping_metric", "eval_metric"
         )
         if self.early_stopping_metric in [
@@ -126,7 +127,7 @@ class TrainManager:
         
         # learning rate scheduling
         self.scheduler, self.scheduler_step_at = build_scheduler(
-            config=train_config,
+            config=self.train_config,
             scheduler_mode="min" if self.minimize_metric else "max",
             optimizer=self.optimizer,
             hidden_size=config["model"]["encoder"]["hidden_size"],
@@ -139,14 +140,14 @@ class TrainManager:
         if self.level not in ["word", "bpe", "char"]:
             raise ValueError("Invalid segmentation level': {}".format(self.level))
         
-        self.shuffle = train_config.get("shuffle", True)
-        self.epochs = train_config["epochs"]
-        self.batch_size = train_config["batch_size"]
-        self.batch_type = train_config.get("batch_type", "sentence")
-        self.eval_batch_size = train_config.get("eval_batch_size", self.batch_size)
-        self.eval_batch_type = train_config.get("eval_batch_type", self.batch_type)
+        self.shuffle = self.train_config.get("shuffle", True)
+        self.epochs = self.train_config["epochs"]
+        self.batch_size = self.train_config["batch_size"]
+        self.batch_type = self.train_config.get("batch_type", "sentence")
+        self.eval_batch_size = self.train_config.get("eval_batch_size", self.batch_size)
+        self.eval_batch_type = self.train_config.get("eval_batch_type", self.batch_type)
 
-        self.use_cuda = train_config["use_cuda"]
+        self.use_cuda = self.train_config["use_cuda"]
         if self.use_cuda:
             self.model.cuda()
             if self.do_translation:
@@ -170,12 +171,12 @@ class TrainManager:
         )
 
         # model parameters
-        if "load_model" in train_config.keys():
-            model_load_path = train_config["load_model"]
+        if "load_model" in self.train_config.keys():
+            model_load_path = self.train_config["load_model"]
             self.logger.info("Loading model from %s", model_load_path)
-            reset_best_ckpt = train_config.get("reset_best_ckpt", False)
-            reset_scheduler = train_config.get("reset_scheduler", False)
-            reset_optimizer = train_config.get("reset_optimizer", False)
+            reset_best_ckpt = self.train_config.get("reset_best_ckpt", False)
+            reset_scheduler = self.train_config.get("reset_scheduler", False)
+            reset_optimizer = self.train_config.get("reset_optimizer", False)
             self.init_from_checkpoint(
                 model_load_path,
                 reset_best_ckpt=reset_best_ckpt,
@@ -775,7 +776,7 @@ def train(cfg_file: str, args: argparse.Namespace) -> None:
     # set the random seed
     set_seed(seed=cfg["training"].get("random_seed", 42))
 
-    train_data, dev_data, test_data, txt_vocab, txt_field = load_data(
+    train_data, dev_data, test_data, txt_vocab, vocab_len = load_data(
         data_cfg=cfg["data"], 
         args=args
     )
@@ -788,7 +789,8 @@ def train(cfg_file: str, args: argparse.Namespace) -> None:
         txt_vocab=txt_vocab,
         sgn_dim=cfg["data"]["feature_size"],
         do_translation=do_translation,
-        accelerator=accelerator
+        accelerator=accelerator,
+        vocab_len=vocab_len
     )
 
     # Initialize the accelerator

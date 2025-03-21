@@ -9,7 +9,7 @@ data:
   dev_path: ./data/Phonexi-2014T/labels.dev
   test_path: ./data/Phonexi-2014T/labels.test
   feature_size: 512
-  level: word
+  level: bpe
   txt_lowercase: true
   max_sent_length: 400
   random_train_subset: -1

@@ -101,7 +101,7 @@ class Field:
             return var, lengths
         return var
 
-def load_data(data_cfg: dict, args) -> (Dataset, Dataset, Dataset, Vocabulary, Field):
+def load_data(data_cfg: dict, args) -> (Dataset, Dataset, Dataset, Vocabulary,  int):
     """
     Load train, dev and test data as specified in configuration.
     """
@@ -143,11 +143,15 @@ def load_data(data_cfg: dict, args) -> (Dataset, Dataset, Dataset, Vocabulary, F
         dataset=train_data.raw_data,
         vocab_file=txt_vocab_file,
     )
+    
     bpe_tokenizer = create_bpe_tokenizer(train_data.raw_data, field="bpe", vocab_size=txt_max_size, min_frequency=txt_min_freq)
     train_data.bpe_tokenizer= bpe_tokenizer
     # Assign vocabulary to text field
     txt_field.vocab = txt_vocab
-    
+    if level == "bpe":
+        vocab_len = bpe_tokenizer.vocab_size
+    elif level == "word":
+        vocab_len = len(txt_vocab)
     # Load dev and test data
     dev_data = SignTranslationDataset(
         data_cfg['dev_path'], data_cfg, args, phase='dev'
@@ -161,7 +165,7 @@ def load_data(data_cfg: dict, args) -> (Dataset, Dataset, Dataset, Vocabulary, F
     dev_data.bpe_tokenizer= bpe_tokenizer
     test_data.bpe_tokenizer= bpe_tokenizer
 
-    return train_data, dev_data, test_data, txt_vocab, txt_field
+    return train_data, dev_data, test_data, txt_vocab, vocab_len
 
 
 def token_batch_size_fn(new, count):

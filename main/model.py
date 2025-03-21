@@ -355,7 +355,7 @@ def build_model(
     cfg: dict,
     sgn_dim: int,
     txt_vocab: TextVocabulary,
-    multimodal: bool = False,
+    vocab_len: int,
     do_translation: bool = True,
     accelerator: Accelerator = None,
 ) -> SignModel:
@@ -382,6 +382,7 @@ def build_model(
         config=cfg
     )
 
+
     # build text encoder
     enc_dropout = cfg["encoder"].get("dropout", 0.0)
     enc_emb_dropout = cfg["encoder"]["embeddings"].get("dropout", enc_dropout)
@@ -407,7 +408,7 @@ def build_model(
         txt_embed: Union[Embeddings, None] = Embeddings(
             **cfg["decoder"]["embeddings"],
             num_heads=cfg["decoder"]["num_heads"],
-            vocab_size=len(txt_vocab),
+            vocab_size=vocab_len,
             padding_idx=txt_padding_idx,
         )
         dec_dropout = cfg["decoder"].get("dropout", 0.0)
@@ -415,7 +416,7 @@ def build_model(
         if cfg["decoder"].get("type", "recurrent") == "transformer":
             decoder = TransformerDecoder(
                 **cfg["decoder"],
-                vocab_size=len(txt_vocab),
+                vocab_size=vocab_len,
                 emb_dropout=dec_emb_dropout,
                 cope=cope
             )

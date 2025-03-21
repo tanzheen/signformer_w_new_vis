@@ -110,23 +110,23 @@ def validate_on_data(
             # Add debug prints before decoding
             ##print("Number of predictions:", len(all_txt_outputs))
             ##print("Sample prediction before decoding:", all_txt_outputs[0])
-            
-            decoded_txt = model.txt_vocab.arrays_to_sentences(arrays=all_txt_outputs)
-            decoded_ref = model.txt_vocab.arrays_to_sentences(arrays=all_ref_texts)
-            
-            # Add debug #print after decoding
-            ##print("Sample decoded prediction:", decoded_txt[0])
-            ##print("Sample reference:", decoded_ref[0])
-            
-            # evaluate with metric on full dataset
-            join_char = " " if level in ["word", "bpe"] else ""
-            # Construct text sequences for metrics
-            txt_ref = [join_char.join(t) for t in decoded_ref]
-            txt_hyp = [join_char.join(t) for t in decoded_txt]
-            # post-process
-            if level == "bpe":
-                txt_ref = [bpe_postprocess(v) for v in txt_ref]
-                txt_hyp = [bpe_postprocess(v) for v in txt_hyp]
+            if level == "word":
+                decoded_txt = model.txt_vocab.arrays_to_sentences(arrays=all_txt_outputs)
+                decoded_ref = model.txt_vocab.arrays_to_sentences(arrays=all_ref_texts)
+                
+                # Add debug #print after decoding
+                ##print("Sample decoded prediction:", decoded_txt[0])
+                ##print("Sample reference:", decoded_ref[0])
+                
+                # evaluate with metric on full dataset
+                join_char = " " if level in ["word"] else ""
+                # Construct text sequences for metrics
+                txt_ref = [join_char.join(t) for t in decoded_ref]
+                txt_hyp = [join_char.join(t) for t in decoded_txt]
+                # post-process
+            elif level == "bpe":
+                decoded_txt = val_dataloader.dataset.bpe_tokenizer.decode(all_txt_outputs)
+                decoded_ref = val_dataloader.dataset.bpe_tokenizer.decode(all_ref_texts)
             assert len(txt_ref) == len(txt_hyp)
             # store_outputs(model_dir, steps, "dev.hyp.txt", valid_batch['txt_input'], txt_hyp)
             # store_outputs(model_dir, steps, "references.dev.txt", valid_batch['txt_input'], txt_ref)

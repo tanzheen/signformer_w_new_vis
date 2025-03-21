@@ -109,7 +109,7 @@ class BPETokenizer:
         """
         if self.sp is None:
             raise ValueError("Tokenizer not trained. Call train() first.")
-        return self.sp.batch_decode(ids, skip_special_tokens=False)
+        return self.sp.batch_decode(ids, skip_special_tokens=True)
     
     def token_to_id(self, token):
         """
