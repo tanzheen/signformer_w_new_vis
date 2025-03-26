@@ -83,7 +83,7 @@ def validate_on_data(
 
             if do_translation:
                 all_txt_outputs.extend(batch_txt_predictions)
-                all_ref_texts.extend(valid_batch['txt_input'])
+                all_ref_texts.extend(valid_batch['txt_labels'])
                 ##print(f"valid_batch['txt_input']: {valid_batch['txt_input']}")
                 ##print(f"valid_batch['txt_input'] shape: {valid_batch['txt_input'].shape}")
                 ##print(f"batch_txt_predictions: {batch_txt_predictions}")
@@ -112,7 +112,7 @@ def validate_on_data(
             ##print("Sample prediction before decoding:", all_txt_outputs[0])
             if level == "word":
                 decoded_txt = model.txt_vocab.arrays_to_sentences(arrays=all_txt_outputs)
-                decoded_ref = model.txt_vocab.arrays_to_sentences(arrays=all_ref_texts)
+      
                 
                 # Add debug #print after decoding
                 ##print("Sample decoded prediction:", decoded_txt[0])
@@ -121,20 +121,18 @@ def validate_on_data(
                 # evaluate with metric on full dataset
                 join_char = " " if level in ["word"] else ""
                 # Construct text sequences for metrics
-                txt_ref = [join_char.join(t) for t in decoded_ref]
                 txt_hyp = [join_char.join(t) for t in decoded_txt]
                 # post-process
             elif level == "bpe":
-                decoded_txt = val_dataloader.dataset.bpe_tokenizer.decode(all_txt_outputs)
-                decoded_ref = val_dataloader.dataset.bpe_tokenizer.decode(all_ref_texts)
-            assert len(txt_ref) == len(txt_hyp)
+                txt_hyp = val_dataloader.dataset.bpe_tokenizer.decode(all_txt_outputs)
+                decoded_txt  = txt_hyp
             # store_outputs(model_dir, steps, "dev.hyp.txt", valid_batch['txt_input'], txt_hyp)
             # store_outputs(model_dir, steps, "references.dev.txt", valid_batch['txt_input'], txt_ref)
 
             # TXT Metrics
-            txt_bleu = bleu(references=txt_ref, hypotheses=txt_hyp)
-            txt_chrf = chrf(references=txt_ref, hypotheses=txt_hyp)
-            txt_rouge = rouge(references=txt_ref, hypotheses=txt_hyp)
+            txt_bleu = bleu(references=all_ref_texts, hypotheses=txt_hyp)
+            txt_chrf = chrf(references=all_ref_texts, hypotheses=txt_hyp)
+            txt_rouge = rouge(references=all_ref_texts, hypotheses=txt_hyp)
 
         valid_scores = {}
         if do_translation:
@@ -150,7 +148,7 @@ def validate_on_data(
     if do_translation:
         results["valid_translation_loss"] = valid_translation_loss
         results["decoded_txt"] = decoded_txt
-        results["txt_ref"] = txt_ref
+        results["txt_ref"] = all_ref_texts
         results["txt_hyp"] = txt_hyp
 
     return results

@@ -1,4 +1,5 @@
 # coding: utf-8
+import torch.utils.checkpoint
 from torchvision.models import resnet18
 from torch.nn.utils.rnn import pad_sequence
 import numpy as np
@@ -23,6 +24,9 @@ from torch import Tensor
 from typing import Union
 import torch 
 from accelerate import Accelerator
+from signcl import SignCL
+
+cl_criterion = SignCL()
 
 class SignModel(nn.Module):
     """
@@ -79,7 +83,7 @@ class SignModel(nn.Module):
         sgn_lengths: Tensor,
         txt_input: Tensor,
         txt_mask: Tensor = None,
-    ) -> (Tensor, Tensor):
+    ) -> (Tensor, Tensor, Tensor ):
         """
         First encodes the source sentence.
         Then produces the target one word at a time.
@@ -115,16 +119,17 @@ class SignModel(nn.Module):
         #print(txt_input[0].tolist())
         #print("============================================")
 
-        encoder_output, encoder_hidden = self.encode(
+        encoder_output, encoder_hidden, frames_features = self.encode(
             sgn=sgn, sgn_mask=sgn_mask, sgn_length=sgn_lengths
         )
+        
         # #print("encoder_output: ", encoder_output.shape)
         # #print("encoder_hidden: ", encoder_hidden.shape)
         # #print("txt_mask : ", txt_mask.shape)
         # #print("src_mask: ", sgn_mask.shape)
         if self.do_translation:
             unroll_steps = txt_input.size(1)
-            decoder_outputs = self.decode(
+            decoder_outputs, x  = self.decode(
                 encoder_output=encoder_output,
                 encoder_hidden=encoder_hidden,
                 sgn_mask=sgn_mask,
@@ -134,13 +139,13 @@ class SignModel(nn.Module):
             )
         else:
             decoder_outputs = None
-
-        return decoder_outputs
+    
+        return decoder_outputs,x,  frames_features
 
 
     def encode(
         self, sgn: Tensor, sgn_mask: Tensor, sgn_length: Tensor
-    ) -> (Tensor, Tensor):
+    ) -> (Tensor, Tensor, Tensor):
         """
         Encodes the source visuals.
 
@@ -151,11 +156,13 @@ class SignModel(nn.Module):
         """
         sgn = self.vis_extractor(sgn, sgn_length)
         #print("sgn after rearranging from resnet: ", sgn.shape)
-        return self.encoder(
+        embed_src, hidden_concat = self.encoder(
             embed_src=self.sgn_embed(src = sgn),
             src_length=sgn_length,
             mask=sgn_mask,
         )
+
+        return embed_src, hidden_concat, sgn 
 
     def decode(
         self,
@@ -212,27 +219,43 @@ class SignModel(nn.Module):
         # #print ('txt_mask shape: ', batch['txt_mask'].shape)
         # #print ('================================')
         # Do a forward pass
-        decoder_outputs, last_hidden_state = self.forward(
-            sgn=batch['video'].to(self.accelerator.device),
-            sgn_mask=batch['attention_mask'].to(self.accelerator.device),
-            sgn_lengths=batch['src_length'].to(self.accelerator.device),
-            txt_input=batch['txt_input'].to(self.accelerator.device),
-            txt_mask=batch['txt_mask'].to(self.accelerator.device),
-        )
+     
+
+        # decoder_outputs, last_hidden_state = self.forward(
+        #     sgn=batch['video'].to(self.accelerator.device),
+        #     sgn_mask=batch['attention_mask'].to(self.accelerator.device),
+        #     sgn_lengths=batch['src_length'].to(self.accelerator.device),
+        #     txt_input=batch['txt_input'].to(self.accelerator.device),
+        #     txt_mask=batch['txt_mask'].to(self.accelerator.device),
+        # )
+        decoder_outputs, last_hidden_state, frames_features = torch.utils.checkpoint.checkpoint(
+    self.forward,
+    batch['video'].to(self.accelerator.device).requires_grad_(),
+    batch['attention_mask'].to(self.accelerator.device),
+    batch['src_length'].to(self.accelerator.device),
+    batch['txt_input'].to(self.accelerator.device),
+    batch['txt_mask'].to(self.accelerator.device), 
+)
         ##print("decoder_outputs shape: ", decoder_outputs.shape)
-       
+        print(decoder_outputs.requires_grad)
         if self.do_translation:
             assert decoder_outputs is not None
             word_outputs = decoder_outputs
             ##print("word_outputs shape: ", word_outputs.shape)
             # Calculate Translation Loss
-            txt_log_probs = F.log_softmax(word_outputs, dim=-1)
+            txt_log_probs = F.log_softmax(word_outputs, dim=-1) # NOTE: the log_softmax is here so we use negative loglikelihood for the calculation of loss
             ##print("txt_log_probs shape: ", txt_log_probs.shape)
             ##print("batch['txt_input'] shape: ", batch['txt_input'].shape)
             translation_loss = (
                 translation_loss_function(txt_log_probs, batch['labels'].to(self.accelerator.device))
                 * translation_loss_weight
             )
+            # TODO: add SignCL loss 
+            margin = max(10, int((frames_features.shape[1] // batch['txt_input'].shape[1] + 1) * 2.3)) * 2
+            num_negative = 30
+            margin = min(margin, int((frames_features.shape[1] - num_negative) / 2)) #ensure num_frames margin for negative sampling
+            cl_loss = cl_criterion(frames_features, margin = margin)
+            translation_loss = translation_loss + 0.001 * cl_loss 
 
 
         return  translation_loss
@@ -259,7 +282,7 @@ class SignModel(nn.Module):
         """
     
         
-        encoder_output, encoder_hidden = self.encode(
+        encoder_output, encoder_hidden, frames_features = self.encode(
             sgn=batch['video'].to(self.accelerator.device), sgn_mask=batch['attention_mask'].to(self.accelerator.device), sgn_length=batch['src_length'].to(self.accelerator.device)
         )
 

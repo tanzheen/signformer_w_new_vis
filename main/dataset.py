@@ -159,9 +159,11 @@ class SignTranslationDataset(Dataset.Dataset):
         ##print("img_padding_mask at collating: ", img_padding_mask.shape)
 
         #Process text
-        if self.txt_field is None:
+        if self.txt_field is not None:
+            # NOTE: changing to txt_field is not None will result in word splitting 
+            # NOTE: remember to change at the decoding part too
             ##print("Original texts:", tgt_batch)
-            
+            print("USING WORD TOKENIZER")
             # Explicitly tokenize and process
             tokenized_texts = [text.split() for text in tgt_batch]  # Split into words
             ##print("After tokenization:", tokenized_texts)
@@ -194,7 +196,7 @@ class SignTranslationDataset(Dataset.Dataset):
         
         else: 
             txt_input = self.bpe_tokenizer.encode(tgt_batch)
-            print("FIGURE OUT TOKENIZER")
+            print("USING BPE TOKENIZER")
             print(txt_input)
             txt_mask = txt_input['attention_mask'][:, :-1].unsqueeze(1)
             print("txt_mask at batch collate: ", txt_mask.shape)
@@ -212,7 +214,8 @@ class SignTranslationDataset(Dataset.Dataset):
             'src_length': src_length_batch,
             'txt_input': txt_input,
             'txt_mask': txt_mask,
-            'labels': decoder_input
+            'labels': decoder_input, 
+            'txt_labels': tgt_batch
         }
     
 

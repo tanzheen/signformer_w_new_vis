@@ -55,7 +55,8 @@ class TrainManager:
         :param accelerator: Accelerator object for distributed training
         """
         self.accelerator = accelerator  # Store the accelerator
-        self.model = accelerator.prepare(model)  # Prepare the model with accelerator
+        
+        self.model = accelerator.prepare(model) # Prepare the model with accelerator
         self.args = args  # store the args for distributed checks
         self.train_config = config["training"]
 
@@ -477,11 +478,11 @@ class TrainManager:
                 if self.do_translation:
                     processed_txt_tokens = self.total_txt_tokens
                     epoch_translation_loss = 0
-                self.tb_writer.add_scalar(
-                    "learning_rate",
-                    self.scheduler.optimizer.param_groups[0]["lr"],
-                    self.steps,
-                )
+                # self.tb_writer.add_scalar(
+                #     "learning_rate",
+                #     self.scheduler.optimizers.param_groups[0]["lr"],
+                #     self.steps,
+                # )
                 
 
                 if self.do_translation:
@@ -532,13 +533,13 @@ class TrainManager:
                         new_best = True
                         self._save_checkpoint()
 
-                if (
-                    self.scheduler is not None
-                    and self.scheduler_step_at == "validation"
-                ):
-                    prev_lr = self.scheduler.optimizer.param_groups[0]["lr"]
-                    self.scheduler.step(ckpt_score)
-                    now_lr = self.scheduler.optimizer.param_groups[0]["lr"]
+                # if (
+                #     self.scheduler is not None
+                #     and self.scheduler_step_at == "validation"
+                # ):
+                #     prev_lr = self.scheduler.optimizer.param_groups[0]["lr"]
+                #     self.scheduler.step(ckpt_score)
+                #     now_lr = self.scheduler.optimizer.param_groups[0]["lr"]
 
                     '''if prev_lr != now_lr:
                         if self.last_best_lr != prev_lr:
@@ -605,22 +606,21 @@ class TrainManager:
             if self.stop:
                 break
 
-        if self.stop:
-            if (
-                self.scheduler is not None
-                and self.scheduler_step_at == "validation"
-                and self.last_best_lr != prev_lr
-            ):
-                self.logger.info(
-                    "Training ended since there were no improvements in"
-                    "the last learning rate step: %f",
-                    prev_lr,
-                )
-            else:
-                self.logger.info(
-                    "Training ended since minimum lr %f was reached.",
-                    self.learning_rate_min,
-                )
+        # if self.stop:
+        #     if (
+        #         self.scheduler is not None
+        #         and self.scheduler_step_at == "validation"
+        #     ):
+        #         self.logger.info(
+        #             "Training ended since there were no improvements in"
+        #             "the last learning rate step: %f",
+        #             prev_lr,
+        #         )
+        #     else:
+        #         self.logger.info(
+        #             "Training ended since minimum lr %f was reached.",
+        #             self.learning_rate_min,
+        #         )
 
         self.logger.info(
             "Epoch %3d: Total Training Translation Loss %.2f ",
@@ -661,6 +661,8 @@ class TrainManager:
             )
         else:
             normalized_translation_loss = 0
+        print(f"normalised loss", normalized_translation_loss)
+        print(normalized_translation_loss.requires_grad )
 
         # compute gradients
         # divide loss by gradient accumulation steps for normalized gradients
@@ -783,7 +785,7 @@ def train(cfg_file: str, args: argparse.Namespace) -> None:
 
     # build model and load parameters into it
     do_translation = cfg["training"].get("translation_loss_weight", 1.0) > 0.0
-    accelerator = Accelerator(mixed_precision='fp16', gradient_accumulation_steps=4, split_batches=False)
+    accelerator = Accelerator(mixed_precision='fp16', gradient_accumulation_steps=8, split_batches=False)
     model = build_model(
         cfg=cfg["model"],
         txt_vocab=txt_vocab,

@@ -1,0 +1,1253 @@
+2025-03-24 19:12:05,440 Hello! This is SL-CAT.
+2025-03-24 19:12:05,442 Total params: 17,541,481
+2025-03-24 19:12:05,442 Trainable parameters: ['decoder.layer_norm.bias', 'decoder.layer_norm.weight', 'decoder.layers.0.dec_layer_norm.bias', 'decoder.layers.0.dec_layer_norm.weight', 'decoder.layers.0.feed_forward.layer_norm.bias', 'decoder.layers.0.feed_forward.layer_norm.weight', 'decoder.layers.0.feed_forward.pwff_layer.0.bias', 'decoder.layers.0.feed_forward.pwff_layer.0.weight', 'decoder.layers.0.feed_forward.pwff_layer.3.bias', 'decoder.layers.0.feed_forward.pwff_layer.3.weight', 'decoder.layers.0.output_norm.bias', 'decoder.layers.0.output_norm.weight', 'decoder.layers.0.src_trg_att.k_layer.bias', 'decoder.layers.0.src_trg_att.k_layer.weight', 'decoder.layers.0.src_trg_att.output_layer.bias', 'decoder.layers.0.src_trg_att.output_layer.weight', 'decoder.layers.0.src_trg_att.q_layer.bias', 'decoder.layers.0.src_trg_att.q_layer.weight', 'decoder.layers.0.src_trg_att.v_layer.bias', 'decoder.layers.0.src_trg_att.v_layer.weight', 'decoder.layers.0.trg_trg_att.k_layer.bias', 'decoder.layers.0.trg_trg_att.k_layer.weight', 'decoder.layers.0.trg_trg_att.output_layer.bias', 'decoder.layers.0.trg_trg_att.output_layer.weight', 'decoder.layers.0.trg_trg_att.q_layer.bias', 'decoder.layers.0.trg_trg_att.q_layer.weight', 'decoder.layers.0.trg_trg_att.v_layer.bias', 'decoder.layers.0.trg_trg_att.v_layer.weight', 'decoder.layers.0.x_layer_norm.bias', 'decoder.layers.0.x_layer_norm.weight', 'decoder.output_layer.weight', 'decoder.tokenTypeEmbedding.weight', 'encoder.layer_norm.bias', 'encoder.layer_norm.weight', 'encoder.layers.0.FF2.module.layer_norm.bias', 'encoder.layers.0.FF2.module.layer_norm.weight', 'encoder.layers.0.FF2.module.pwff_layer.0.bias', 'encoder.layers.0.FF2.module.pwff_layer.0.weight', 'encoder.layers.0.FF2.module.pwff_layer.3.bias', 'encoder.layers.0.FF2.module.pwff_layer.3.weight', 'encoder.layers.0.att.module.attention.att_layer.bias', 'encoder.layers.0.att.module.attention.att_layer.weight', 'encoder.layers.0.att.module.attention.k_layer.bias', 'encoder.layers.0.att.module.attention.k_layer.weight', 'encoder.layers.0.att.module.attention.output_layer.bias', 'encoder.layers.0.att.module.attention.output_layer.weight', 'encoder.layers.0.att.module.attention.q_layer.bias', 'encoder.layers.0.att.module.attention.q_layer.weight', 'encoder.layers.0.att.module.attention.sample_offsets.bias', 'encoder.layers.0.att.module.attention.sample_offsets.weight', 'encoder.layers.0.att.module.attention.v_layer.bias', 'encoder.layers.0.att.module.attention.v_layer.weight', 'encoder.layers.0.att.module.layer_norm.bias', 'encoder.layers.0.att.module.layer_norm.weight', 'encoder.layers.0.convMod.module.dep1.conv.bias', 'encoder.layers.0.convMod.module.dep1.conv.weight', 'encoder.layers.0.convMod.module.layerNorm.bias', 'encoder.layers.0.convMod.module.layerNorm.weight', 'encoder.layers.0.convMod.module.layerNorm2.bias', 'encoder.layers.0.convMod.module.layerNorm2.weight', 'encoder.layers.0.convMod.module.point1.conv.bias', 'encoder.layers.0.convMod.module.point1.conv.weight', 'encoder.layers.0.convMod.module.point2.conv.bias', 'encoder.layers.0.convMod.module.point2.conv.weight', 'encoder.layers.0.layerNORM.bias', 'encoder.layers.0.layerNORM.weight', 'sgn_embed.bn_ac.0.bias', 'sgn_embed.bn_ac.0.weight', 'sgn_embed.src_emb.bias', 'sgn_embed.src_emb.weight', 'txt_embed.lut.weight', 'txt_embed.norm.norm.bias', 'txt_embed.norm.norm.weight', 'vis_extractor.resnet.bn1.bias', 'vis_extractor.resnet.bn1.weight', 'vis_extractor.resnet.conv1.weight', 'vis_extractor.resnet.layer1.0.bn1.bias', 'vis_extractor.resnet.layer1.0.bn1.weight', 'vis_extractor.resnet.layer1.0.bn2.bias', 'vis_extractor.resnet.layer1.0.bn2.weight', 'vis_extractor.resnet.layer1.0.conv1.weight', 'vis_extractor.resnet.layer1.0.conv2.weight', 'vis_extractor.resnet.layer1.1.bn1.bias', 'vis_extractor.resnet.layer1.1.bn1.weight', 'vis_extractor.resnet.layer1.1.bn2.bias', 'vis_extractor.resnet.layer1.1.bn2.weight', 'vis_extractor.resnet.layer1.1.conv1.weight', 'vis_extractor.resnet.layer1.1.conv2.weight', 'vis_extractor.resnet.layer2.0.bn1.bias', 'vis_extractor.resnet.layer2.0.bn1.weight', 'vis_extractor.resnet.layer2.0.bn2.bias', 'vis_extractor.resnet.layer2.0.bn2.weight', 'vis_extractor.resnet.layer2.0.conv1.weight', 'vis_extractor.resnet.layer2.0.conv2.weight', 'vis_extractor.resnet.layer2.0.downsample.0.weight', 'vis_extractor.resnet.layer2.0.downsample.1.bias', 'vis_extractor.resnet.layer2.0.downsample.1.weight', 'vis_extractor.resnet.layer2.1.bn1.bias', 'vis_extractor.resnet.layer2.1.bn1.weight', 'vis_extractor.resnet.layer2.1.bn2.bias', 'vis_extractor.resnet.layer2.1.bn2.weight', 'vis_extractor.resnet.layer2.1.conv1.weight', 'vis_extractor.resnet.layer2.1.conv2.weight', 'vis_extractor.resnet.layer3.0.bn1.bias', 'vis_extractor.resnet.layer3.0.bn1.weight', 'vis_extractor.resnet.layer3.0.bn2.bias', 'vis_extractor.resnet.layer3.0.bn2.weight', 'vis_extractor.resnet.layer3.0.conv1.weight', 'vis_extractor.resnet.layer3.0.conv2.weight', 'vis_extractor.resnet.layer3.0.downsample.0.weight', 'vis_extractor.resnet.layer3.0.downsample.1.bias', 'vis_extractor.resnet.layer3.0.downsample.1.weight', 'vis_extractor.resnet.layer3.1.bn1.bias', 'vis_extractor.resnet.layer3.1.bn1.weight', 'vis_extractor.resnet.layer3.1.bn2.bias', 'vis_extractor.resnet.layer3.1.bn2.weight', 'vis_extractor.resnet.layer3.1.conv1.weight', 'vis_extractor.resnet.layer3.1.conv2.weight', 'vis_extractor.resnet.layer4.0.bn1.bias', 'vis_extractor.resnet.layer4.0.bn1.weight', 'vis_extractor.resnet.layer4.0.bn2.bias', 'vis_extractor.resnet.layer4.0.bn2.weight', 'vis_extractor.resnet.layer4.0.conv1.weight', 'vis_extractor.resnet.layer4.0.conv2.weight', 'vis_extractor.resnet.layer4.0.downsample.0.weight', 'vis_extractor.resnet.layer4.0.downsample.1.bias', 'vis_extractor.resnet.layer4.0.downsample.1.weight', 'vis_extractor.resnet.layer4.1.bn1.bias', 'vis_extractor.resnet.layer4.1.bn1.weight', 'vis_extractor.resnet.layer4.1.bn2.bias', 'vis_extractor.resnet.layer4.1.bn2.weight', 'vis_extractor.resnet.layer4.1.conv1.weight', 'vis_extractor.resnet.layer4.1.conv2.weight']
+2025-03-24 19:12:05,449 cfg.name                           : sign_experiment
+2025-03-24 19:12:05,449 cfg.data.img_path                  : ../../PHOENIX-2014-T-release-v3/PHOENIX-2014-T/features/fullFrame-210x260px/
+2025-03-24 19:12:05,449 cfg.data.version                   : phoenix_2014_trans
+2025-03-24 19:12:05,449 cfg.data.sgn                       : sign
+2025-03-24 19:12:05,450 cfg.data.txt                       : text
+2025-03-24 19:12:05,450 cfg.data.gls                       : gloss
+2025-03-24 19:12:05,450 cfg.data.train_path                : ./data/Phonexi-2014T/labels.train
+2025-03-24 19:12:05,450 cfg.data.dev_path                  : ./data/Phonexi-2014T/labels.dev
+2025-03-24 19:12:05,450 cfg.data.test_path                 : ./data/Phonexi-2014T/labels.test
+2025-03-24 19:12:05,451 cfg.data.feature_size              : 512
+2025-03-24 19:12:05,451 cfg.data.level                     : bpe
+2025-03-24 19:12:05,451 cfg.data.txt_lowercase             : True
+2025-03-24 19:12:05,451 cfg.data.max_sent_length           : 400
+2025-03-24 19:12:05,451 cfg.data.random_train_subset       : -1
+2025-03-24 19:12:05,451 cfg.data.random_dev_subset         : -1
+2025-03-24 19:12:05,451 cfg.data.multimodal                : 0.0
+2025-03-24 19:12:05,452 cfg.data.max_length                : 500
+2025-03-24 19:12:05,452 cfg.testing.recognition_beam_sizes : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+2025-03-24 19:12:05,452 cfg.testing.translation_beam_sizes : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+2025-03-24 19:12:05,452 cfg.testing.translation_beam_alphas : [-1, 0, 1, 2, 3, 4, 5]
+2025-03-24 19:12:05,452 cfg.training.reset_best_ckpt       : False
+2025-03-24 19:12:05,452 cfg.training.reset_scheduler       : False
+2025-03-24 19:12:05,453 cfg.training.reset_optimizer       : False
+2025-03-24 19:12:05,453 cfg.training.random_seed           : 42
+2025-03-24 19:12:05,453 cfg.training.model_dir             : ./sign_sample_bpe
+2025-03-24 19:12:05,453 cfg.training.recognition_loss_weight : 0.0
+2025-03-24 19:12:05,453 cfg.training.translation_loss_weight : 1.0
+2025-03-24 19:12:05,453 cfg.training.eval_metric           : bleu
+2025-03-24 19:12:05,453 cfg.training.optimizer             : sgd
+2025-03-24 19:12:05,454 cfg.training.learning_rate         : 0.001
+2025-03-24 19:12:05,454 cfg.training.batch_size            : 2
+2025-03-24 19:12:05,454 cfg.training.num_valid_log         : 6
+2025-03-24 19:12:05,454 cfg.training.epochs                : 1000
+2025-03-24 19:12:05,454 cfg.training.early_stopping_metric : eval_metric
+2025-03-24 19:12:05,454 cfg.training.batch_type            : sentence
+2025-03-24 19:12:05,454 cfg.training.translation_normalization : batch
+2025-03-24 19:12:05,455 cfg.training.eval_translation_beam_size : 1
+2025-03-24 19:12:05,455 cfg.training.eval_translation_beam_alpha : -1
+2025-03-24 19:12:05,455 cfg.training.overwrite             : True
+2025-03-24 19:12:05,455 cfg.training.shuffle               : True
+2025-03-24 19:12:05,455 cfg.training.use_cuda              : True
+2025-03-24 19:12:05,455 cfg.training.translation_max_output_length : 30
+2025-03-24 19:12:05,455 cfg.training.keep_last_ckpts       : 1
+2025-03-24 19:12:05,455 cfg.training.batch_multiplier      : 1
+2025-03-24 19:12:05,456 cfg.training.logging_freq          : 100
+2025-03-24 19:12:05,456 cfg.training.validation_freq       : 3500
+2025-03-24 19:12:05,456 cfg.training.betas                 : [0.95, 0.998]
+2025-03-24 19:12:05,456 cfg.training.scheduling            : plateau
+2025-03-24 19:12:05,456 cfg.training.learning_rate_min     : 1e-06
+2025-03-24 19:12:05,456 cfg.training.weight_decay          : 0.003
+2025-03-24 19:12:05,457 cfg.training.patience              : 10
+2025-03-24 19:12:05,457 cfg.training.decrease_factor       : 0.8
+2025-03-24 19:12:05,457 cfg.training.label_smoothing       : 0.1
+2025-03-24 19:12:05,457 cfg.training.lr_s_dim_model        : 256
+2025-03-24 19:12:05,457 cfg.training.warmup_step           : 1000
+2025-03-24 19:12:05,457 cfg.training.K                     : 2
+2025-03-24 19:12:05,457 cfg.model.transferred_backbone     : False
+2025-03-24 19:12:05,458 cfg.model.transferred_backbone_path : signformer_trained_CNN.pth
+2025-03-24 19:12:05,458 cfg.model.initializer              : xavier
+2025-03-24 19:12:05,458 cfg.model.bias_initializer         : zeros
+2025-03-24 19:12:05,458 cfg.model.init_gain                : 1.0
+2025-03-24 19:12:05,458 cfg.model.embed_initializer        : xavier
+2025-03-24 19:12:05,458 cfg.model.embed_init_gain          : 1.0
+2025-03-24 19:12:05,458 cfg.model.tied_softmax             : False
+2025-03-24 19:12:05,459 cfg.model.cope                     : False
+2025-03-24 19:12:05,459 cfg.model.encoder.type             : transformer
+2025-03-24 19:12:05,459 cfg.model.encoder.num_layers       : 1
+2025-03-24 19:12:05,459 cfg.model.encoder.num_heads        : 8
+2025-03-24 19:12:05,459 cfg.model.encoder.embeddings.embedding_dim : 256
+2025-03-24 19:12:05,459 cfg.model.encoder.embeddings.scale : False
+2025-03-24 19:12:05,459 cfg.model.encoder.embeddings.dropout : 0.1
+2025-03-24 19:12:05,459 cfg.model.encoder.embeddings.norm_type : batch
+2025-03-24 19:12:05,460 cfg.model.encoder.embeddings.activation_type : softsign
+2025-03-24 19:12:05,460 cfg.model.encoder.hidden_size      : 256
+2025-03-24 19:12:05,460 cfg.model.encoder.ff_size          : 1024
+2025-03-24 19:12:05,460 cfg.model.encoder.dropout          : 0.1
+2025-03-24 19:12:05,460 cfg.model.decoder.type             : transformer
+2025-03-24 19:12:05,460 cfg.model.decoder.num_layers       : 1
+2025-03-24 19:12:05,460 cfg.model.decoder.num_heads        : 8
+2025-03-24 19:12:05,461 cfg.model.decoder.embeddings.embedding_dim : 256
+2025-03-24 19:12:05,461 cfg.model.decoder.embeddings.scale : False
+2025-03-24 19:12:05,461 cfg.model.decoder.embeddings.dropout : 0.1
+2025-03-24 19:12:05,461 cfg.model.decoder.embeddings.norm_type : batch
+2025-03-24 19:12:05,461 cfg.model.decoder.embeddings.activation_type : softsign
+2025-03-24 19:12:05,461 cfg.model.decoder.hidden_size      : 256
+2025-03-24 19:12:05,461 cfg.model.decoder.ff_size          : 1024
+2025-03-24 19:12:05,461 cfg.model.decoder.dropout          : 0.1
+2025-03-24 19:12:05,462 Data set sizes: 
+	train 7096,
+	valid 519,
+	test 642
+2025-03-24 19:12:05,462 First 10 words (txt): (0) <unk> (1) <pad> (2) <s> (3) </s> (4) und (5) im (6) es (7) der (8) am (9) in
+2025-03-24 19:12:05,462 Number of unique words (types): 2891
+2025-03-24 19:12:05,463 SignModel(
+	encoder=TransformerEncoder(
+  (layers): ModuleList(
+    (0): CA_TransformerEncoderLayer(
+      (att): ResidualConnectionModule(
+        (module): GlossFreeAttentionModule(
+          (layer_norm): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+          (attention): DeformableMultiHeadedAttention(
+            (k_layer): Linear(in_features=256, out_features=256, bias=True)
+            (v_layer): Linear(in_features=256, out_features=256, bias=True)
+            (q_layer): Linear(in_features=256, out_features=256, bias=True)
+            (sample_offsets): Linear(in_features=256, out_features=40, bias=True)
+            (output_layer): Linear(in_features=256, out_features=256, bias=True)
+            (softmax): Softmax(dim=-1)
+            (dropout): Dropout(p=0.1, inplace=False)
+            (att_layer): Linear(in_features=256, out_features=1, bias=True)
+          )
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+      )
+      (convMod): ResidualConnectionModule(
+        (module): ConvModule(
+          (layerNorm): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+          (layerNorm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+          (point1): PointwiseConv1d(
+            (conv): Conv1d(256, 512, kernel_size=(1,), stride=(1,))
+          )
+          (dep1): DepthwiseConv1d(
+            (conv): Conv1d(512, 512, kernel_size=(31,), stride=(1,), padding=(15,), groups=512)
+          )
+          (point2): PointwiseConv1d(
+            (conv): Conv1d(512, 256, kernel_size=(1,), stride=(1,))
+          )
+          (relu6): ReLU6()
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+      )
+      (FF2): ResidualConnectionModule(
+        (module): PositionwiseFeedForward(
+          (layer_norm): LayerNorm((256,), eps=1e-06, elementwise_affine=True)
+          (pwff_layer): Sequential(
+            (0): Linear(in_features=256, out_features=1024, bias=True)
+            (1): ReLU()
+            (2): Dropout(p=0.1, inplace=False)
+            (3): Linear(in_features=1024, out_features=256, bias=True)
+            (4): Dropout(p=0.1, inplace=False)
+          )
+        )
+      )
+      (layerNORM): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+    )
+  )
+  (layer_norm): LayerNorm((256,), eps=1e-06, elementwise_affine=True)
+  (emb_dropout): Dropout(p=0.1, inplace=False)
+  (pe): PositionalEncoding()
+),
+	decoder=TransformerDecoder(
+  (layers): ModuleList(
+    (0): TransformerDecoderLayer(
+      (trg_trg_att): MultiHeadedAttention(
+        (k_layer): Linear(in_features=256, out_features=256, bias=True)
+        (v_layer): Linear(in_features=256, out_features=256, bias=True)
+        (q_layer): Linear(in_features=256, out_features=256, bias=True)
+        (output_layer): Linear(in_features=256, out_features=256, bias=True)
+        (softmax): Softmax(dim=-1)
+        (dropout): Dropout(p=0.1, inplace=False)
+      )
+      (src_trg_att): MultiHeadedAttention(
+        (k_layer): Linear(in_features=256, out_features=256, bias=True)
+        (v_layer): Linear(in_features=256, out_features=256, bias=True)
+        (q_layer): Linear(in_features=256, out_features=256, bias=True)
+        (output_layer): Linear(in_features=256, out_features=256, bias=True)
+        (softmax): Softmax(dim=-1)
+        (dropout): Dropout(p=0.1, inplace=False)
+      )
+      (feed_forward): PositionwiseFeedForward(
+        (layer_norm): LayerNorm((256,), eps=1e-06, elementwise_affine=True)
+        (pwff_layer): Sequential(
+          (0): Linear(in_features=256, out_features=1024, bias=True)
+          (1): ReLU()
+          (2): Dropout(p=0.1, inplace=False)
+          (3): Linear(in_features=1024, out_features=256, bias=True)
+          (4): Dropout(p=0.1, inplace=False)
+        )
+      )
+      (x_layer_norm): LayerNorm((256,), eps=1e-06, elementwise_affine=True)
+      (dec_layer_norm): LayerNorm((256,), eps=1e-06, elementwise_affine=True)
+      (dropout): Dropout(p=0.1, inplace=False)
+      (dropout2): Dropout(p=0.1, inplace=False)
+      (dropout3): Dropout(p=0.1, inplace=False)
+      (output_norm): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+    )
+  )
+  (pe): PositionalEncoding()
+  (layer_norm): LayerNorm((256,), eps=1e-06, elementwise_affine=True)
+  (tokenTypeEmbedding): Embedding(2, 256)
+  (emb_dropout): Dropout(p=0.1, inplace=False)
+  (output_layer): Linear(in_features=256, out_features=8000, bias=False)
+),
+	sgn_embed=V_encoder(
+  (src_emb): Linear(in_features=512, out_features=256, bias=True)
+  (bn_ac): Sequential(
+    (0): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (1): ReLU(inplace=True)
+  )
+),
+	txt_embed=Embeddings(embedding_dim=256, vocab_size=8000))
+2025-03-24 19:12:05,472 EPOCH 1
+2025-03-24 19:13:22,364 [Epoch: 001 Step: 00000100] Batch Translation Loss:  97.339348 => Lr: 0.001000
+2025-03-24 19:15:43,117 [Epoch: 001 Step: 00000200] Batch Translation Loss:  92.297684 => Lr: 0.001000
+2025-03-24 19:18:04,296 [Epoch: 001 Step: 00000300] Batch Translation Loss: 113.334106 => Lr: 0.001000
+2025-03-24 19:20:17,616 [Epoch: 001 Step: 00000400] Batch Translation Loss:  81.956512 => Lr: 0.001000
+2025-03-24 19:22:33,009 [Epoch: 001 Step: 00000500] Batch Translation Loss:  57.199051 => Lr: 0.001000
+2025-03-24 19:24:50,296 [Epoch: 001 Step: 00000600] Batch Translation Loss: 109.506561 => Lr: 0.001000
+2025-03-24 19:27:09,296 [Epoch: 001 Step: 00000700] Batch Translation Loss:  61.650349 => Lr: 0.001000
+2025-03-24 19:29:28,639 [Epoch: 001 Step: 00000800] Batch Translation Loss:  65.865265 => Lr: 0.001000
+2025-03-24 19:31:58,740 [Epoch: 001 Step: 00000900] Batch Translation Loss:  67.151855 => Lr: 0.001000
+2025-03-24 19:34:12,480 [Epoch: 001 Step: 00001000] Batch Translation Loss:  59.155663 => Lr: 0.001000
+2025-03-24 19:36:39,209 [Epoch: 001 Step: 00001100] Batch Translation Loss: 105.562981 => Lr: 0.001000
+2025-03-24 19:38:57,805 [Epoch: 001 Step: 00001200] Batch Translation Loss:  58.407654 => Lr: 0.001000
+2025-03-24 19:41:13,694 [Epoch: 001 Step: 00001300] Batch Translation Loss: 102.314575 => Lr: 0.001000
+2025-03-24 19:43:27,425 [Epoch: 001 Step: 00001400] Batch Translation Loss:  64.022079 => Lr: 0.001000
+2025-03-24 19:45:45,394 [Epoch: 001 Step: 00001500] Batch Translation Loss:  53.085808 => Lr: 0.001000
+2025-03-24 19:47:55,364 [Epoch: 001 Step: 00001600] Batch Translation Loss:  85.565926 => Lr: 0.001000
+2025-03-24 19:50:14,191 [Epoch: 001 Step: 00001700] Batch Translation Loss:  63.166447 => Lr: 0.001000
+2025-03-24 19:52:29,880 [Epoch: 001 Step: 00001800] Batch Translation Loss:  83.201340 => Lr: 0.001000
+2025-03-24 19:54:47,751 [Epoch: 001 Step: 00001900] Batch Translation Loss:  51.371124 => Lr: 0.001000
+2025-03-24 19:56:57,754 [Epoch: 001 Step: 00002000] Batch Translation Loss:  65.540550 => Lr: 0.001000
+2025-03-24 19:59:16,437 [Epoch: 001 Step: 00002100] Batch Translation Loss:  88.924149 => Lr: 0.001000
+2025-03-24 20:01:37,555 [Epoch: 001 Step: 00002200] Batch Translation Loss:  71.044655 => Lr: 0.001000
+2025-03-24 20:03:53,602 [Epoch: 001 Step: 00002300] Batch Translation Loss:  82.208336 => Lr: 0.001000
+2025-03-24 20:06:14,392 [Epoch: 001 Step: 00002400] Batch Translation Loss:  64.962250 => Lr: 0.001000
+2025-03-24 20:08:38,660 [Epoch: 001 Step: 00002500] Batch Translation Loss:  52.159470 => Lr: 0.001000
+2025-03-24 20:10:54,543 [Epoch: 001 Step: 00002600] Batch Translation Loss:  85.588364 => Lr: 0.001000
+2025-03-24 20:13:03,219 [Epoch: 001 Step: 00002700] Batch Translation Loss:  57.542908 => Lr: 0.001000
+2025-03-24 20:15:22,025 [Epoch: 001 Step: 00002800] Batch Translation Loss:  54.528286 => Lr: 0.001000
+2025-03-24 20:17:40,921 [Epoch: 001 Step: 00002900] Batch Translation Loss:  48.407215 => Lr: 0.001000
+2025-03-24 20:19:53,047 [Epoch: 001 Step: 00003000] Batch Translation Loss:  54.612339 => Lr: 0.001000
+2025-03-24 20:22:12,834 [Epoch: 001 Step: 00003100] Batch Translation Loss:  68.766457 => Lr: 0.001000
+2025-03-24 20:24:35,239 [Epoch: 001 Step: 00003200] Batch Translation Loss:  78.124031 => Lr: 0.001000
+2025-03-24 20:26:49,003 [Epoch: 001 Step: 00003300] Batch Translation Loss:  55.433331 => Lr: 0.001000
+2025-03-24 20:29:10,879 [Epoch: 001 Step: 00003400] Batch Translation Loss:  53.603409 => Lr: 0.001000
+2025-03-24 20:31:25,062 [Epoch: 001 Step: 00003500] Batch Translation Loss:  60.023605 => Lr: 0.001000
+2025-03-24 20:37:33,482 Saved 518 text references to ./sign_sample_bpe\txt_references_3500.txt and 518 text hypotheses to ./sign_sample_bpe\txt_hypotheses_3500.txt
+2025-03-24 20:37:33,493 Hooray! New best validation result [eval_metric]!
+2025-03-24 20:37:33,493 Saving new checkpoint.
+2025-03-24 20:38:51,638 Epoch   1: Total Training Translation Loss 300562.29 
+2025-03-24 20:38:51,639 EPOCH 2
+2025-03-24 20:39:43,298 [Epoch: 002 Step: 00003600] Batch Translation Loss:  61.882011 => Lr: 0.001000
+2025-03-24 20:41:18,450 [Epoch: 002 Step: 00003700] Batch Translation Loss:  93.298584 => Lr: 0.001000
+2025-03-24 20:42:53,336 [Epoch: 002 Step: 00003800] Batch Translation Loss:  41.696835 => Lr: 0.001000
+2025-03-24 20:44:27,122 [Epoch: 002 Step: 00003900] Batch Translation Loss:  57.624977 => Lr: 0.001000
+2025-03-24 20:45:58,822 [Epoch: 002 Step: 00004000] Batch Translation Loss:  55.851486 => Lr: 0.001000
+2025-03-24 20:47:32,538 [Epoch: 002 Step: 00004100] Batch Translation Loss: 105.677834 => Lr: 0.001000
+2025-03-24 20:49:04,564 [Epoch: 002 Step: 00004200] Batch Translation Loss:  52.373787 => Lr: 0.001000
+2025-03-24 20:50:39,727 [Epoch: 002 Step: 00004300] Batch Translation Loss:  89.207504 => Lr: 0.001000
+2025-03-24 20:52:13,177 [Epoch: 002 Step: 00004400] Batch Translation Loss:  45.856087 => Lr: 0.001000
+2025-03-24 20:53:46,018 [Epoch: 002 Step: 00004500] Batch Translation Loss:  68.221405 => Lr: 0.001000
+2025-03-24 20:55:23,010 [Epoch: 002 Step: 00004600] Batch Translation Loss:  96.078186 => Lr: 0.001000
+2025-03-24 20:57:00,199 [Epoch: 002 Step: 00004700] Batch Translation Loss: 121.760086 => Lr: 0.001000
+2025-03-24 20:58:38,597 [Epoch: 002 Step: 00004800] Batch Translation Loss: 115.405914 => Lr: 0.001000
+2025-03-24 21:00:18,463 [Epoch: 002 Step: 00004900] Batch Translation Loss:  79.582214 => Lr: 0.001000
+2025-03-24 21:01:58,469 [Epoch: 002 Step: 00005000] Batch Translation Loss:  85.301582 => Lr: 0.001000
+2025-03-24 21:03:38,486 [Epoch: 002 Step: 00005100] Batch Translation Loss:  28.640684 => Lr: 0.001000
+2025-03-24 21:05:16,151 [Epoch: 002 Step: 00005200] Batch Translation Loss:  79.543861 => Lr: 0.001000
+2025-03-24 21:06:55,320 [Epoch: 002 Step: 00005300] Batch Translation Loss:  41.600147 => Lr: 0.001000
+2025-03-24 21:08:33,676 [Epoch: 002 Step: 00005400] Batch Translation Loss:  73.031868 => Lr: 0.001000
+2025-03-24 21:10:20,918 [Epoch: 002 Step: 00005500] Batch Translation Loss:  55.949936 => Lr: 0.001000
+2025-03-24 21:11:59,066 [Epoch: 002 Step: 00005600] Batch Translation Loss:  80.801804 => Lr: 0.001000
+2025-03-24 21:13:39,762 [Epoch: 002 Step: 00005700] Batch Translation Loss:  50.781250 => Lr: 0.001000
+2025-03-24 21:15:23,817 [Epoch: 002 Step: 00005800] Batch Translation Loss:  62.867435 => Lr: 0.001000
+2025-03-24 21:17:06,155 [Epoch: 002 Step: 00005900] Batch Translation Loss:  76.545746 => Lr: 0.001000
+2025-03-24 21:18:51,364 [Epoch: 002 Step: 00006000] Batch Translation Loss:  57.296249 => Lr: 0.001000
+2025-03-24 21:20:43,230 [Epoch: 002 Step: 00006100] Batch Translation Loss:  63.761852 => Lr: 0.001000
+2025-03-24 21:22:31,642 [Epoch: 002 Step: 00006200] Batch Translation Loss:  45.953880 => Lr: 0.001000
+2025-03-24 21:24:20,986 [Epoch: 002 Step: 00006300] Batch Translation Loss:  54.062260 => Lr: 0.001000
+2025-03-24 21:26:20,990 [Epoch: 002 Step: 00006400] Batch Translation Loss: 107.961433 => Lr: 0.001000
+2025-03-24 21:28:21,487 [Epoch: 002 Step: 00006500] Batch Translation Loss:  49.421974 => Lr: 0.001000
+2025-03-24 21:30:31,228 [Epoch: 002 Step: 00006600] Batch Translation Loss:  63.575817 => Lr: 0.001000
+2025-03-24 21:32:40,250 [Epoch: 002 Step: 00006700] Batch Translation Loss:  56.872856 => Lr: 0.001000
+2025-03-24 21:35:05,090 [Epoch: 002 Step: 00006800] Batch Translation Loss:  50.543297 => Lr: 0.001000
+2025-03-24 21:37:55,330 [Epoch: 002 Step: 00006900] Batch Translation Loss:  74.551170 => Lr: 0.001000
+2025-03-24 21:40:41,265 [Epoch: 002 Step: 00007000] Batch Translation Loss:  42.900955 => Lr: 0.001000
+2025-03-24 21:47:16,050 Saved 518 text references to ./sign_sample_bpe\txt_references_7000.txt and 518 text hypotheses to ./sign_sample_bpe\txt_hypotheses_7000.txt
+2025-03-24 21:47:16,052 Hooray! New best validation result [eval_metric]!
+2025-03-24 21:47:16,053 Saving new checkpoint.
+2025-03-24 21:50:19,456 Epoch   2: Total Training Translation Loss 248899.63 
+2025-03-24 21:50:19,456 EPOCH 3
+2025-03-24 21:50:24,887 [Epoch: 003 Step: 00007100] Batch Translation Loss:  96.408340 => Lr: 0.001000
+2025-03-24 21:52:15,714 [Epoch: 003 Step: 00007200] Batch Translation Loss:  64.881241 => Lr: 0.001000
+2025-03-24 21:54:00,124 [Epoch: 003 Step: 00007300] Batch Translation Loss:  54.768051 => Lr: 0.001000
+2025-03-24 21:55:38,861 [Epoch: 003 Step: 00007400] Batch Translation Loss:  49.660957 => Lr: 0.001000
+2025-03-24 21:57:14,643 [Epoch: 003 Step: 00007500] Batch Translation Loss:  93.038467 => Lr: 0.001000
+2025-03-24 21:59:17,815 [Epoch: 003 Step: 00007600] Batch Translation Loss:  51.644699 => Lr: 0.001000
+2025-03-24 22:01:11,773 [Epoch: 003 Step: 00007700] Batch Translation Loss:  91.721848 => Lr: 0.001000
+2025-03-24 22:03:03,202 [Epoch: 003 Step: 00007800] Batch Translation Loss:  96.183952 => Lr: 0.001000
+2025-03-24 22:04:52,728 [Epoch: 003 Step: 00007900] Batch Translation Loss:  59.518284 => Lr: 0.001000
+2025-03-24 22:06:45,349 [Epoch: 003 Step: 00008000] Batch Translation Loss:  45.587120 => Lr: 0.001000
+2025-03-24 22:08:35,982 [Epoch: 003 Step: 00008100] Batch Translation Loss:  77.354172 => Lr: 0.001000
+2025-03-24 22:10:22,155 [Epoch: 003 Step: 00008200] Batch Translation Loss:  41.998619 => Lr: 0.001000
+2025-03-24 22:11:54,773 [Epoch: 003 Step: 00008300] Batch Translation Loss:  49.401581 => Lr: 0.001000
+2025-03-24 22:13:34,516 [Epoch: 003 Step: 00008400] Batch Translation Loss:  86.591675 => Lr: 0.001000
+2025-03-24 22:15:17,924 [Epoch: 003 Step: 00008500] Batch Translation Loss: 144.209427 => Lr: 0.001000
+2025-03-24 22:17:03,144 [Epoch: 003 Step: 00008600] Batch Translation Loss:  94.723038 => Lr: 0.001000
+2025-03-24 22:18:48,108 [Epoch: 003 Step: 00008700] Batch Translation Loss:  52.014435 => Lr: 0.001000
+2025-03-24 22:20:24,373 [Epoch: 003 Step: 00008800] Batch Translation Loss:  40.233997 => Lr: 0.001000
+2025-03-24 22:22:04,137 [Epoch: 003 Step: 00008900] Batch Translation Loss: 100.999588 => Lr: 0.001000
+2025-03-24 22:23:42,574 [Epoch: 003 Step: 00009000] Batch Translation Loss:  94.717438 => Lr: 0.001000
+2025-03-24 22:25:27,715 [Epoch: 003 Step: 00009100] Batch Translation Loss:  90.996231 => Lr: 0.001000
+2025-03-24 22:27:10,300 [Epoch: 003 Step: 00009200] Batch Translation Loss:  52.838703 => Lr: 0.001000
+2025-03-24 22:28:55,287 [Epoch: 003 Step: 00009300] Batch Translation Loss: 103.345665 => Lr: 0.001000
+2025-03-24 22:31:00,197 [Epoch: 003 Step: 00009400] Batch Translation Loss:  87.234726 => Lr: 0.001000
+2025-03-24 22:32:56,473 [Epoch: 003 Step: 00009500] Batch Translation Loss:  94.954514 => Lr: 0.001000
+2025-03-24 22:34:58,360 [Epoch: 003 Step: 00009600] Batch Translation Loss:  62.933300 => Lr: 0.001000
+2025-03-24 22:36:55,726 [Epoch: 003 Step: 00009700] Batch Translation Loss:  33.570503 => Lr: 0.001000
+2025-03-24 22:38:54,181 [Epoch: 003 Step: 00009800] Batch Translation Loss:  44.776760 => Lr: 0.001000
+2025-03-24 22:41:02,403 [Epoch: 003 Step: 00009900] Batch Translation Loss:  77.975723 => Lr: 0.001000
+2025-03-24 22:43:14,260 [Epoch: 003 Step: 00010000] Batch Translation Loss:  53.658581 => Lr: 0.001000
+2025-03-24 22:45:37,456 [Epoch: 003 Step: 00010100] Batch Translation Loss:  86.562500 => Lr: 0.001000
+2025-03-24 22:48:02,131 [Epoch: 003 Step: 00010200] Batch Translation Loss:  75.536644 => Lr: 0.001000
+2025-03-24 22:50:39,038 [Epoch: 003 Step: 00010300] Batch Translation Loss:  40.984398 => Lr: 0.001000
+2025-03-24 22:53:19,173 [Epoch: 003 Step: 00010400] Batch Translation Loss:  51.602867 => Lr: 0.001000
+2025-03-24 22:56:04,909 [Epoch: 003 Step: 00010500] Batch Translation Loss:  26.328300 => Lr: 0.001000
+2025-03-24 23:02:22,257 Saved 518 text references to ./sign_sample_bpe\txt_references_10500.txt and 518 text hypotheses to ./sign_sample_bpe\txt_hypotheses_10500.txt
+2025-03-24 23:02:22,259 Hooray! New best validation result [eval_metric]!
+2025-03-24 23:02:22,259 Saving new checkpoint.
+2025-03-24 23:05:06,399 [Epoch: 003 Step: 00010600] Batch Translation Loss:  57.128773 => Lr: 0.001000
+2025-03-24 23:06:18,434 Epoch   3: Total Training Translation Loss 228809.29 
+2025-03-24 23:06:18,434 EPOCH 4
+2025-03-24 23:07:14,612 [Epoch: 004 Step: 00010700] Batch Translation Loss:  69.552422 => Lr: 0.001000
+2025-03-24 23:08:45,531 [Epoch: 004 Step: 00010800] Batch Translation Loss:  37.891308 => Lr: 0.001000
+2025-03-24 23:10:18,954 [Epoch: 004 Step: 00010900] Batch Translation Loss:  82.004974 => Lr: 0.001000
+2025-03-24 23:11:55,111 [Epoch: 004 Step: 00011000] Batch Translation Loss:  62.433006 => Lr: 0.001000
+2025-03-24 23:13:37,483 [Epoch: 004 Step: 00011100] Batch Translation Loss:  83.113693 => Lr: 0.001000
+2025-03-24 23:15:17,979 [Epoch: 004 Step: 00011200] Batch Translation Loss:  25.681507 => Lr: 0.001000
+2025-03-24 23:17:06,845 [Epoch: 004 Step: 00011300] Batch Translation Loss:  40.117783 => Lr: 0.001000
+2025-03-24 23:19:06,276 [Epoch: 004 Step: 00011400] Batch Translation Loss:  98.993973 => Lr: 0.001000
+2025-03-24 23:20:57,718 [Epoch: 004 Step: 00011500] Batch Translation Loss:  50.074993 => Lr: 0.001000
+2025-03-24 23:22:55,827 [Epoch: 004 Step: 00011600] Batch Translation Loss:  29.780653 => Lr: 0.001000
+2025-03-24 23:24:46,829 [Epoch: 004 Step: 00011700] Batch Translation Loss:  46.549248 => Lr: 0.001000
+2025-03-24 23:26:43,143 [Epoch: 004 Step: 00011800] Batch Translation Loss:  51.525215 => Lr: 0.001000
+2025-03-24 23:28:23,992 [Epoch: 004 Step: 00011900] Batch Translation Loss:  56.667366 => Lr: 0.001000
+2025-03-24 23:30:09,067 [Epoch: 004 Step: 00012000] Batch Translation Loss:  63.303116 => Lr: 0.001000
+2025-03-24 23:31:56,567 [Epoch: 004 Step: 00012100] Batch Translation Loss:  53.661758 => Lr: 0.001000
+2025-03-24 23:33:51,643 [Epoch: 004 Step: 00012200] Batch Translation Loss:  56.118607 => Lr: 0.001000
+2025-03-24 23:35:31,180 [Epoch: 004 Step: 00012300] Batch Translation Loss:  82.378998 => Lr: 0.001000
+2025-03-24 23:37:16,845 [Epoch: 004 Step: 00012400] Batch Translation Loss:  74.516762 => Lr: 0.001000
+2025-03-24 23:39:21,947 [Epoch: 004 Step: 00012500] Batch Translation Loss:  31.095350 => Lr: 0.001000
+2025-03-24 23:41:29,301 [Epoch: 004 Step: 00012600] Batch Translation Loss:  23.932341 => Lr: 0.001000
+2025-03-24 23:43:32,077 [Epoch: 004 Step: 00012700] Batch Translation Loss:  65.069687 => Lr: 0.001000
+2025-03-24 23:45:40,129 [Epoch: 004 Step: 00012800] Batch Translation Loss:  45.468014 => Lr: 0.001000
+2025-03-24 23:47:44,905 [Epoch: 004 Step: 00012900] Batch Translation Loss:  92.180679 => Lr: 0.001000
+2025-03-24 23:49:44,339 [Epoch: 004 Step: 00013000] Batch Translation Loss:  85.499779 => Lr: 0.001000
+2025-03-24 23:51:36,950 [Epoch: 004 Step: 00013100] Batch Translation Loss:  40.484314 => Lr: 0.001000
+2025-03-24 23:53:32,868 [Epoch: 004 Step: 00013200] Batch Translation Loss:  43.652122 => Lr: 0.001000
+2025-03-24 23:55:33,137 [Epoch: 004 Step: 00013300] Batch Translation Loss:  65.390251 => Lr: 0.001000
+2025-03-24 23:57:48,429 [Epoch: 004 Step: 00013400] Batch Translation Loss:  64.357834 => Lr: 0.001000
+2025-03-25 00:00:10,545 [Epoch: 004 Step: 00013500] Batch Translation Loss:  99.830826 => Lr: 0.001000
+2025-03-25 00:02:56,957 [Epoch: 004 Step: 00013600] Batch Translation Loss:  39.183922 => Lr: 0.001000
+2025-03-25 00:05:46,367 [Epoch: 004 Step: 00013700] Batch Translation Loss:  46.220352 => Lr: 0.001000
+2025-03-25 00:08:44,009 [Epoch: 004 Step: 00013800] Batch Translation Loss:  38.723637 => Lr: 0.001000
+2025-03-25 00:11:34,874 [Epoch: 004 Step: 00013900] Batch Translation Loss:  81.765869 => Lr: 0.001000
+2025-03-25 00:14:33,099 [Epoch: 004 Step: 00014000] Batch Translation Loss:  29.586601 => Lr: 0.001000
+2025-03-25 00:21:19,177 Saved 518 text references to ./sign_sample_bpe\txt_references_14000.txt and 518 text hypotheses to ./sign_sample_bpe\txt_hypotheses_14000.txt
+2025-03-25 00:24:12,414 [Epoch: 004 Step: 00014100] Batch Translation Loss:  20.894148 => Lr: 0.001000
+2025-03-25 00:26:51,710 Epoch   4: Total Training Translation Loss 215304.58 
+2025-03-25 00:26:51,710 EPOCH 5
+2025-03-25 00:27:00,424 [Epoch: 005 Step: 00014200] Batch Translation Loss:  68.524811 => Lr: 0.001000
+2025-03-25 00:28:35,101 [Epoch: 005 Step: 00014300] Batch Translation Loss:  22.474001 => Lr: 0.001000
+2025-03-25 00:30:16,920 [Epoch: 005 Step: 00014400] Batch Translation Loss:  14.976308 => Lr: 0.001000
+2025-03-25 00:31:57,406 [Epoch: 005 Step: 00014500] Batch Translation Loss:  57.297924 => Lr: 0.001000
+2025-03-25 00:33:39,684 [Epoch: 005 Step: 00014600] Batch Translation Loss:  50.095837 => Lr: 0.001000
+2025-03-25 00:35:28,328 [Epoch: 005 Step: 00014700] Batch Translation Loss:  93.159348 => Lr: 0.001000
+2025-03-25 00:37:08,717 [Epoch: 005 Step: 00014800] Batch Translation Loss:  51.004837 => Lr: 0.001000
+2025-03-25 00:39:01,585 [Epoch: 005 Step: 00014900] Batch Translation Loss:  59.710602 => Lr: 0.001000
+2025-03-25 00:40:44,400 [Epoch: 005 Step: 00015000] Batch Translation Loss:  59.499741 => Lr: 0.001000
+2025-03-25 00:42:24,782 [Epoch: 005 Step: 00015100] Batch Translation Loss:  56.072586 => Lr: 0.001000
+2025-03-25 00:44:15,071 [Epoch: 005 Step: 00015200] Batch Translation Loss: 100.792740 => Lr: 0.001000
+2025-03-25 00:45:58,161 [Epoch: 005 Step: 00015300] Batch Translation Loss:  60.352795 => Lr: 0.001000
+2025-03-25 00:47:55,873 [Epoch: 005 Step: 00015400] Batch Translation Loss:  79.521362 => Lr: 0.001000
+2025-03-25 00:49:51,937 [Epoch: 005 Step: 00015500] Batch Translation Loss:  36.121895 => Lr: 0.001000
+2025-03-25 00:51:45,442 [Epoch: 005 Step: 00015600] Batch Translation Loss:  32.257652 => Lr: 0.001000
+2025-03-25 00:53:49,038 [Epoch: 005 Step: 00015700] Batch Translation Loss:  64.445465 => Lr: 0.001000
+2025-03-25 00:55:57,424 [Epoch: 005 Step: 00015800] Batch Translation Loss:  47.541039 => Lr: 0.001000
+2025-03-25 00:57:59,982 [Epoch: 005 Step: 00015900] Batch Translation Loss:  42.890430 => Lr: 0.001000
+2025-03-25 01:00:16,929 [Epoch: 005 Step: 00016000] Batch Translation Loss:  48.955254 => Lr: 0.001000
+2025-03-25 01:02:30,048 [Epoch: 005 Step: 00016100] Batch Translation Loss:  45.338985 => Lr: 0.001000
+2025-03-25 01:04:37,307 [Epoch: 005 Step: 00016200] Batch Translation Loss:  80.764984 => Lr: 0.001000
+2025-03-25 01:06:34,206 [Epoch: 005 Step: 00016300] Batch Translation Loss:  29.181318 => Lr: 0.001000
+2025-03-25 01:08:40,560 [Epoch: 005 Step: 00016400] Batch Translation Loss:  30.060553 => Lr: 0.001000
+2025-03-25 01:10:49,964 [Epoch: 005 Step: 00016500] Batch Translation Loss:  26.609423 => Lr: 0.001000
+2025-03-25 01:12:57,744 [Epoch: 005 Step: 00016600] Batch Translation Loss:  17.641972 => Lr: 0.001000
+2025-03-25 01:15:14,730 [Epoch: 005 Step: 00016700] Batch Translation Loss:  25.066105 => Lr: 0.001000
+2025-03-25 01:17:25,631 [Epoch: 005 Step: 00016800] Batch Translation Loss:  72.378799 => Lr: 0.001000
+2025-03-25 01:19:43,842 [Epoch: 005 Step: 00016900] Batch Translation Loss:  47.603935 => Lr: 0.001000
+2025-03-25 01:22:12,808 [Epoch: 005 Step: 00017000] Batch Translation Loss:  62.870502 => Lr: 0.001000
+2025-03-25 01:24:39,392 [Epoch: 005 Step: 00017100] Batch Translation Loss:  73.567978 => Lr: 0.001000
+2025-03-25 01:27:09,861 [Epoch: 005 Step: 00017200] Batch Translation Loss:  70.580696 => Lr: 0.001000
+2025-03-25 01:29:45,711 [Epoch: 005 Step: 00017300] Batch Translation Loss:  79.457321 => Lr: 0.001000
+2025-03-25 01:32:32,159 [Epoch: 005 Step: 00017400] Batch Translation Loss:  73.781662 => Lr: 0.001000
+2025-03-25 01:35:28,937 [Epoch: 005 Step: 00017500] Batch Translation Loss:  94.142334 => Lr: 0.001000
+2025-03-25 01:42:12,995 Saved 518 text references to ./sign_sample_bpe\txt_references_17500.txt and 518 text hypotheses to ./sign_sample_bpe\txt_hypotheses_17500.txt
+2025-03-25 01:45:04,730 [Epoch: 005 Step: 00017600] Batch Translation Loss:  44.608032 => Lr: 0.001000
+2025-03-25 01:48:02,101 [Epoch: 005 Step: 00017700] Batch Translation Loss:  79.249893 => Lr: 0.001000
+2025-03-25 01:49:16,008 Epoch   5: Total Training Translation Loss 205518.25 
+2025-03-25 01:49:16,008 EPOCH 6
+2025-03-25 01:50:18,200 [Epoch: 006 Step: 00017800] Batch Translation Loss:  78.610291 => Lr: 0.001000
+2025-03-25 01:51:53,564 [Epoch: 006 Step: 00017900] Batch Translation Loss:   8.232701 => Lr: 0.001000
+2025-03-25 01:53:34,856 [Epoch: 006 Step: 00018000] Batch Translation Loss:  52.459206 => Lr: 0.001000
+2025-03-25 01:55:13,922 [Epoch: 006 Step: 00018100] Batch Translation Loss:  70.661613 => Lr: 0.001000
+2025-03-25 01:56:49,312 [Epoch: 006 Step: 00018200] Batch Translation Loss:  38.311543 => Lr: 0.001000
+2025-03-25 01:58:26,050 [Epoch: 006 Step: 00018300] Batch Translation Loss:  76.088432 => Lr: 0.001000
+2025-03-25 02:00:04,989 [Epoch: 006 Step: 00018400] Batch Translation Loss:  16.809528 => Lr: 0.001000
+2025-03-25 02:01:43,528 [Epoch: 006 Step: 00018500] Batch Translation Loss: 109.321976 => Lr: 0.001000
+2025-03-25 02:03:27,052 [Epoch: 006 Step: 00018600] Batch Translation Loss:  22.947060 => Lr: 0.001000
+2025-03-25 02:05:05,448 [Epoch: 006 Step: 00018700] Batch Translation Loss:  51.911953 => Lr: 0.001000
+2025-03-25 02:06:50,320 [Epoch: 006 Step: 00018800] Batch Translation Loss:  53.892944 => Lr: 0.001000
+2025-03-25 02:08:35,790 [Epoch: 006 Step: 00018900] Batch Translation Loss:  51.009178 => Lr: 0.001000
+2025-03-25 02:10:17,176 [Epoch: 006 Step: 00019000] Batch Translation Loss:  69.920280 => Lr: 0.001000
+2025-03-25 02:12:02,607 [Epoch: 006 Step: 00019100] Batch Translation Loss:  30.839340 => Lr: 0.001000
+2025-03-25 02:13:44,892 [Epoch: 006 Step: 00019200] Batch Translation Loss:  34.297127 => Lr: 0.001000
+2025-03-25 02:15:31,848 [Epoch: 006 Step: 00019300] Batch Translation Loss:  54.755535 => Lr: 0.001000
+2025-03-25 02:17:17,526 [Epoch: 006 Step: 00019400] Batch Translation Loss:  46.077621 => Lr: 0.001000
+2025-03-25 02:19:07,153 [Epoch: 006 Step: 00019500] Batch Translation Loss:  47.612534 => Lr: 0.001000
+2025-03-25 02:20:57,985 [Epoch: 006 Step: 00019600] Batch Translation Loss:  60.903244 => Lr: 0.001000
+2025-03-25 02:22:47,305 [Epoch: 006 Step: 00019700] Batch Translation Loss:  63.460518 => Lr: 0.001000
+2025-03-25 02:24:39,097 [Epoch: 006 Step: 00019800] Batch Translation Loss:  42.978661 => Lr: 0.001000
+2025-03-25 02:26:31,607 [Epoch: 006 Step: 00019900] Batch Translation Loss:  35.459198 => Lr: 0.001000
+2025-03-25 02:28:29,263 [Epoch: 006 Step: 00020000] Batch Translation Loss:  52.348396 => Lr: 0.001000
+2025-03-25 02:30:24,689 [Epoch: 006 Step: 00020100] Batch Translation Loss: 111.027222 => Lr: 0.001000
+2025-03-25 02:32:25,547 [Epoch: 006 Step: 00020200] Batch Translation Loss:  48.880405 => Lr: 0.001000
+2025-03-25 02:34:29,544 [Epoch: 006 Step: 00020300] Batch Translation Loss:  62.383015 => Lr: 0.001000
+2025-03-25 02:36:33,217 [Epoch: 006 Step: 00020400] Batch Translation Loss:  61.143551 => Lr: 0.001000
+2025-03-25 02:38:44,389 [Epoch: 006 Step: 00020500] Batch Translation Loss:  16.380325 => Lr: 0.001000
+2025-03-25 02:40:59,009 [Epoch: 006 Step: 00020600] Batch Translation Loss:  40.629745 => Lr: 0.001000
+2025-03-25 02:43:24,648 [Epoch: 006 Step: 00020700] Batch Translation Loss:  29.903267 => Lr: 0.001000
+2025-03-25 02:46:10,687 [Epoch: 006 Step: 00020800] Batch Translation Loss:  53.779663 => Lr: 0.001000
+2025-03-25 02:48:51,358 [Epoch: 006 Step: 00020900] Batch Translation Loss:  40.260815 => Lr: 0.001000
+2025-03-25 02:51:36,688 [Epoch: 006 Step: 00021000] Batch Translation Loss:  49.972351 => Lr: 0.001000
+2025-03-25 02:58:24,820 Saved 518 text references to ./sign_sample_bpe\txt_references_21000.txt and 518 text hypotheses to ./sign_sample_bpe\txt_hypotheses_21000.txt
+2025-03-25 03:01:21,734 [Epoch: 006 Step: 00021100] Batch Translation Loss:  97.980698 => Lr: 0.001000
+2025-03-25 03:04:15,979 [Epoch: 006 Step: 00021200] Batch Translation Loss:  52.033352 => Lr: 0.001000
+2025-03-25 03:06:52,757 Epoch   6: Total Training Translation Loss 197710.79 
+2025-03-25 03:06:52,757 EPOCH 7
+2025-03-25 03:07:03,799 [Epoch: 007 Step: 00021300] Batch Translation Loss:  41.991562 => Lr: 0.001000
+2025-03-25 03:08:49,640 [Epoch: 007 Step: 00021400] Batch Translation Loss:  39.313026 => Lr: 0.001000
+2025-03-25 03:10:41,417 [Epoch: 007 Step: 00021500] Batch Translation Loss:  84.446045 => Lr: 0.001000
+2025-03-25 03:12:25,631 [Epoch: 007 Step: 00021600] Batch Translation Loss:  43.114620 => Lr: 0.001000
+2025-03-25 03:14:11,397 [Epoch: 007 Step: 00021700] Batch Translation Loss:  27.814461 => Lr: 0.001000
+2025-03-25 03:16:01,624 [Epoch: 007 Step: 00021800] Batch Translation Loss:  42.850853 => Lr: 0.001000
+2025-03-25 03:17:46,440 [Epoch: 007 Step: 00021900] Batch Translation Loss:  57.537926 => Lr: 0.001000
+2025-03-25 03:19:32,946 [Epoch: 007 Step: 00022000] Batch Translation Loss:  86.568192 => Lr: 0.001000
+2025-03-25 03:21:22,490 [Epoch: 007 Step: 00022100] Batch Translation Loss:  35.170727 => Lr: 0.001000
+2025-03-25 03:23:06,958 [Epoch: 007 Step: 00022200] Batch Translation Loss:  39.647503 => Lr: 0.001000
+2025-03-25 03:24:55,565 [Epoch: 007 Step: 00022300] Batch Translation Loss:  25.567846 => Lr: 0.001000
+2025-03-25 03:26:49,055 [Epoch: 007 Step: 00022400] Batch Translation Loss:  13.769512 => Lr: 0.001000
+2025-03-25 03:28:42,468 [Epoch: 007 Step: 00022500] Batch Translation Loss:  60.577888 => Lr: 0.001000
+2025-03-25 03:30:42,219 [Epoch: 007 Step: 00022600] Batch Translation Loss:  47.346691 => Lr: 0.001000
+2025-03-25 03:32:32,077 [Epoch: 007 Step: 00022700] Batch Translation Loss:  28.054752 => Lr: 0.001000
+2025-03-25 03:34:20,715 [Epoch: 007 Step: 00022800] Batch Translation Loss:  61.664207 => Lr: 0.001000
+2025-03-25 03:36:12,803 [Epoch: 007 Step: 00022900] Batch Translation Loss:  98.405220 => Lr: 0.001000
+2025-03-25 03:38:02,483 [Epoch: 007 Step: 00023000] Batch Translation Loss:  83.592102 => Lr: 0.001000
+2025-03-25 03:40:02,015 [Epoch: 007 Step: 00023100] Batch Translation Loss:  51.356182 => Lr: 0.001000
+2025-03-25 03:42:09,585 [Epoch: 007 Step: 00023200] Batch Translation Loss:  62.600685 => Lr: 0.001000
+2025-03-25 03:44:14,093 [Epoch: 007 Step: 00023300] Batch Translation Loss:  25.498539 => Lr: 0.001000
+2025-03-25 03:46:19,574 [Epoch: 007 Step: 00023400] Batch Translation Loss:  54.736927 => Lr: 0.001000
+2025-03-25 03:48:33,127 [Epoch: 007 Step: 00023500] Batch Translation Loss:  30.227415 => Lr: 0.001000
+2025-03-25 03:50:42,164 [Epoch: 007 Step: 00023600] Batch Translation Loss:  50.253883 => Lr: 0.001000
+2025-03-25 03:53:03,556 [Epoch: 007 Step: 00023700] Batch Translation Loss:  39.282955 => Lr: 0.001000
+2025-03-25 03:55:18,416 [Epoch: 007 Step: 00023800] Batch Translation Loss:  52.758240 => Lr: 0.001000
+2025-03-25 03:57:45,958 [Epoch: 007 Step: 00023900] Batch Translation Loss:  47.563148 => Lr: 0.001000
+2025-03-25 04:00:25,238 [Epoch: 007 Step: 00024000] Batch Translation Loss:  55.904942 => Lr: 0.001000
+2025-03-25 04:03:01,795 [Epoch: 007 Step: 00024100] Batch Translation Loss:  36.666069 => Lr: 0.001000
+2025-03-25 04:05:39,631 [Epoch: 007 Step: 00024200] Batch Translation Loss:  27.786724 => Lr: 0.001000
+2025-03-25 04:08:32,127 [Epoch: 007 Step: 00024300] Batch Translation Loss:  47.384438 => Lr: 0.001000
+2025-03-25 04:11:18,149 [Epoch: 007 Step: 00024400] Batch Translation Loss:  59.677685 => Lr: 0.001000
+2025-03-25 04:14:06,192 [Epoch: 007 Step: 00024500] Batch Translation Loss:  30.073488 => Lr: 0.001000
+2025-03-25 04:20:26,340 Saved 518 text references to ./sign_sample_bpe\txt_references_24500.txt and 518 text hypotheses to ./sign_sample_bpe\txt_hypotheses_24500.txt
+2025-03-25 04:23:20,097 [Epoch: 007 Step: 00024600] Batch Translation Loss:  26.660927 => Lr: 0.001000
+2025-03-25 04:26:08,553 [Epoch: 007 Step: 00024700] Batch Translation Loss:  41.991089 => Lr: 0.001000
+2025-03-25 04:28:59,899 [Epoch: 007 Step: 00024800] Batch Translation Loss: 113.980515 => Lr: 0.001000
+2025-03-25 04:29:56,603 Epoch   7: Total Training Translation Loss 191375.18 
+2025-03-25 04:29:56,603 EPOCH 8
+2025-03-25 04:31:05,475 [Epoch: 008 Step: 00024900] Batch Translation Loss:  59.181999 => Lr: 0.001000
+2025-03-25 04:32:51,741 [Epoch: 008 Step: 00025000] Batch Translation Loss:  83.101067 => Lr: 0.001000
+2025-03-25 04:34:36,249 [Epoch: 008 Step: 00025100] Batch Translation Loss:  51.208935 => Lr: 0.001000
+2025-03-25 04:36:17,148 [Epoch: 008 Step: 00025200] Batch Translation Loss: 119.472229 => Lr: 0.001000
+2025-03-25 04:38:09,378 [Epoch: 008 Step: 00025300] Batch Translation Loss:  73.473724 => Lr: 0.001000
+2025-03-25 04:39:59,129 [Epoch: 008 Step: 00025400] Batch Translation Loss:  25.618111 => Lr: 0.001000
+2025-03-25 04:41:47,487 [Epoch: 008 Step: 00025500] Batch Translation Loss:  41.275627 => Lr: 0.001000
+2025-03-25 04:43:37,881 [Epoch: 008 Step: 00025600] Batch Translation Loss:  55.154903 => Lr: 0.001000
+2025-03-25 04:45:20,808 [Epoch: 008 Step: 00025700] Batch Translation Loss:  46.793598 => Lr: 0.001000
+2025-03-25 04:47:14,222 [Epoch: 008 Step: 00025800] Batch Translation Loss:  41.368481 => Lr: 0.001000
+2025-03-25 04:49:02,754 [Epoch: 008 Step: 00025900] Batch Translation Loss:  73.719604 => Lr: 0.001000
+2025-03-25 04:50:48,937 [Epoch: 008 Step: 00026000] Batch Translation Loss:  48.519024 => Lr: 0.001000
+2025-03-25 04:52:47,703 [Epoch: 008 Step: 00026100] Batch Translation Loss:  81.159088 => Lr: 0.001000
+2025-03-25 04:54:46,470 [Epoch: 008 Step: 00026200] Batch Translation Loss:  54.652431 => Lr: 0.001000
+2025-03-25 04:56:42,826 [Epoch: 008 Step: 00026300] Batch Translation Loss:  34.122253 => Lr: 0.001000
+2025-03-25 04:58:37,151 [Epoch: 008 Step: 00026400] Batch Translation Loss:  65.204376 => Lr: 0.001000
+2025-03-25 05:00:27,186 [Epoch: 008 Step: 00026500] Batch Translation Loss:  40.394344 => Lr: 0.001000
+2025-03-25 05:02:25,576 [Epoch: 008 Step: 00026600] Batch Translation Loss:  37.383240 => Lr: 0.001000
+2025-03-25 05:04:27,006 [Epoch: 008 Step: 00026700] Batch Translation Loss:  30.370186 => Lr: 0.001000
+2025-03-25 05:06:31,651 [Epoch: 008 Step: 00026800] Batch Translation Loss:  69.252731 => Lr: 0.001000
+2025-03-25 05:08:36,453 [Epoch: 008 Step: 00026900] Batch Translation Loss:  53.563744 => Lr: 0.001000
+2025-03-25 05:10:47,114 [Epoch: 008 Step: 00027000] Batch Translation Loss:  12.487535 => Lr: 0.001000
+2025-03-25 05:13:00,901 [Epoch: 008 Step: 00027100] Batch Translation Loss:  40.769196 => Lr: 0.001000
+2025-03-25 05:15:14,954 [Epoch: 008 Step: 00027200] Batch Translation Loss:  69.181770 => Lr: 0.001000
+2025-03-25 05:17:40,478 [Epoch: 008 Step: 00027300] Batch Translation Loss:  41.255112 => Lr: 0.001000
+2025-03-25 05:20:03,433 [Epoch: 008 Step: 00027400] Batch Translation Loss:  22.031155 => Lr: 0.001000
+2025-03-25 05:22:27,802 [Epoch: 008 Step: 00027500] Batch Translation Loss:  31.028336 => Lr: 0.001000
+2025-03-25 05:24:57,973 [Epoch: 008 Step: 00027600] Batch Translation Loss:  34.678616 => Lr: 0.001000
+2025-03-25 05:27:42,029 [Epoch: 008 Step: 00027700] Batch Translation Loss:  51.209892 => Lr: 0.001000
+2025-03-25 05:30:20,042 [Epoch: 008 Step: 00027800] Batch Translation Loss:  82.106995 => Lr: 0.001000
+2025-03-25 05:33:03,714 [Epoch: 008 Step: 00027900] Batch Translation Loss:  43.779182 => Lr: 0.001000
+2025-03-25 05:36:00,493 [Epoch: 008 Step: 00028000] Batch Translation Loss:  32.007339 => Lr: 0.001000
+2025-03-25 05:42:21,695 Saved 518 text references to ./sign_sample_bpe\txt_references_28000.txt and 518 text hypotheses to ./sign_sample_bpe\txt_hypotheses_28000.txt
+2025-03-25 05:45:10,785 [Epoch: 008 Step: 00028100] Batch Translation Loss:  43.927353 => Lr: 0.001000
+2025-03-25 05:48:05,467 [Epoch: 008 Step: 00028200] Batch Translation Loss:  40.628807 => Lr: 0.001000
+2025-03-25 05:51:10,655 [Epoch: 008 Step: 00028300] Batch Translation Loss:  41.072128 => Lr: 0.001000
+2025-03-25 05:53:27,037 Epoch   8: Total Training Translation Loss 185977.15 
+2025-03-25 05:53:27,037 EPOCH 9
+2025-03-25 05:53:43,832 [Epoch: 009 Step: 00028400] Batch Translation Loss:  17.621382 => Lr: 0.001000
+2025-03-25 05:55:29,409 [Epoch: 009 Step: 00028500] Batch Translation Loss:  93.684242 => Lr: 0.001000
+2025-03-25 05:57:14,704 [Epoch: 009 Step: 00028600] Batch Translation Loss:  23.749874 => Lr: 0.001000
+2025-03-25 05:59:02,382 [Epoch: 009 Step: 00028700] Batch Translation Loss:  24.457827 => Lr: 0.001000
+2025-03-25 06:00:49,100 [Epoch: 009 Step: 00028800] Batch Translation Loss:  80.930595 => Lr: 0.001000
+2025-03-25 06:02:36,655 [Epoch: 009 Step: 00028900] Batch Translation Loss:  70.196732 => Lr: 0.001000
+2025-03-25 06:04:31,680 [Epoch: 009 Step: 00029000] Batch Translation Loss:  58.897350 => Lr: 0.001000
+2025-03-25 06:06:24,192 [Epoch: 009 Step: 00029100] Batch Translation Loss:  24.658333 => Lr: 0.001000
+2025-03-25 06:08:17,604 [Epoch: 009 Step: 00029200] Batch Translation Loss:  22.663025 => Lr: 0.001000
+2025-03-25 06:10:15,084 [Epoch: 009 Step: 00029300] Batch Translation Loss:  66.128036 => Lr: 0.001000
+2025-03-25 06:12:15,912 [Epoch: 009 Step: 00029400] Batch Translation Loss:  46.284492 => Lr: 0.001000
+2025-03-25 06:14:20,209 [Epoch: 009 Step: 00029500] Batch Translation Loss:  86.639534 => Lr: 0.001000
+2025-03-25 06:16:12,501 [Epoch: 009 Step: 00029600] Batch Translation Loss:  52.701881 => Lr: 0.001000
+2025-03-25 06:18:11,751 [Epoch: 009 Step: 00029700] Batch Translation Loss:  59.804779 => Lr: 0.001000
+2025-03-25 06:20:12,086 [Epoch: 009 Step: 00029800] Batch Translation Loss:  57.215580 => Lr: 0.001000
+2025-03-25 06:22:24,754 [Epoch: 009 Step: 00029900] Batch Translation Loss:  44.081612 => Lr: 0.001000
+2025-03-25 06:24:22,128 [Epoch: 009 Step: 00030000] Batch Translation Loss:  36.646080 => Lr: 0.001000
+2025-03-25 06:26:26,967 [Epoch: 009 Step: 00030100] Batch Translation Loss:  72.981140 => Lr: 0.001000
+2025-03-25 06:28:33,311 [Epoch: 009 Step: 00030200] Batch Translation Loss:  60.061775 => Lr: 0.001000
+2025-03-25 06:30:47,954 [Epoch: 009 Step: 00030300] Batch Translation Loss:  31.035139 => Lr: 0.001000
+2025-03-25 06:33:14,627 [Epoch: 009 Step: 00030400] Batch Translation Loss:  34.163433 => Lr: 0.001000
+2025-03-25 06:35:33,697 [Epoch: 009 Step: 00030500] Batch Translation Loss:  43.362495 => Lr: 0.001000
+2025-03-25 06:37:53,896 [Epoch: 009 Step: 00030600] Batch Translation Loss:  42.583076 => Lr: 0.001000
+2025-03-25 06:40:17,244 [Epoch: 009 Step: 00030700] Batch Translation Loss:  25.353025 => Lr: 0.001000
+2025-03-25 06:42:44,950 [Epoch: 009 Step: 00030800] Batch Translation Loss:  49.155396 => Lr: 0.001000
+2025-03-25 06:45:14,590 [Epoch: 009 Step: 00030900] Batch Translation Loss:  21.330530 => Lr: 0.001000
+2025-03-25 06:47:58,626 [Epoch: 009 Step: 00031000] Batch Translation Loss:  64.904694 => Lr: 0.001000
+2025-03-25 06:50:39,323 [Epoch: 009 Step: 00031100] Batch Translation Loss:  38.720608 => Lr: 0.001000
+2025-03-25 06:53:18,942 [Epoch: 009 Step: 00031200] Batch Translation Loss:  78.496269 => Lr: 0.001000
+2025-03-25 06:56:02,283 [Epoch: 009 Step: 00031300] Batch Translation Loss:  39.232971 => Lr: 0.001000
+2025-03-25 06:58:49,097 [Epoch: 009 Step: 00031400] Batch Translation Loss:  34.353252 => Lr: 0.001000
+2025-03-25 07:01:33,330 [Epoch: 009 Step: 00031500] Batch Translation Loss:  49.468769 => Lr: 0.001000
+2025-03-25 07:07:49,252 Saved 518 text references to ./sign_sample_bpe\txt_references_31500.txt and 518 text hypotheses to ./sign_sample_bpe\txt_hypotheses_31500.txt
+2025-03-25 07:10:37,708 [Epoch: 009 Step: 00031600] Batch Translation Loss:  79.570099 => Lr: 0.001000
+2025-03-25 07:13:35,157 [Epoch: 009 Step: 00031700] Batch Translation Loss:  26.797758 => Lr: 0.001000
+2025-03-25 07:16:12,022 [Epoch: 009 Step: 00031800] Batch Translation Loss:  65.526375 => Lr: 0.001000
+2025-03-25 07:19:00,867 [Epoch: 009 Step: 00031900] Batch Translation Loss:  77.290276 => Lr: 0.001000
+2025-03-25 07:19:53,775 Epoch   9: Total Training Translation Loss 181343.15 
+2025-03-25 07:19:53,776 EPOCH 10
+2025-03-25 07:21:11,373 [Epoch: 010 Step: 00032000] Batch Translation Loss:  48.771225 => Lr: 0.001000
+2025-03-25 07:22:57,252 [Epoch: 010 Step: 00032100] Batch Translation Loss: 101.677132 => Lr: 0.001000
+2025-03-25 07:24:45,651 [Epoch: 010 Step: 00032200] Batch Translation Loss:  51.415546 => Lr: 0.001000
+2025-03-25 07:26:30,681 [Epoch: 010 Step: 00032300] Batch Translation Loss:  45.773651 => Lr: 0.001000
+2025-03-25 07:28:18,829 [Epoch: 010 Step: 00032400] Batch Translation Loss:  24.113579 => Lr: 0.001000
+2025-03-25 07:30:03,368 [Epoch: 010 Step: 00032500] Batch Translation Loss:  33.674637 => Lr: 0.001000
+2025-03-25 07:31:51,050 [Epoch: 010 Step: 00032600] Batch Translation Loss:  54.144810 => Lr: 0.001000
+2025-03-25 07:33:47,127 [Epoch: 010 Step: 00032700] Batch Translation Loss:  69.955688 => Lr: 0.001000
+2025-03-25 07:35:44,653 [Epoch: 010 Step: 00032800] Batch Translation Loss:  15.529147 => Lr: 0.001000
+2025-03-25 07:37:44,115 [Epoch: 010 Step: 00032900] Batch Translation Loss:  39.301319 => Lr: 0.001000
+2025-03-25 07:39:36,100 [Epoch: 010 Step: 00033000] Batch Translation Loss:  62.934494 => Lr: 0.001000
+2025-03-25 07:41:37,712 [Epoch: 010 Step: 00033100] Batch Translation Loss:  34.122177 => Lr: 0.001000
+2025-03-25 07:43:40,384 [Epoch: 010 Step: 00033200] Batch Translation Loss:  72.289230 => Lr: 0.001000
+2025-03-25 07:45:31,633 [Epoch: 010 Step: 00033300] Batch Translation Loss:  53.749016 => Lr: 0.001000
+2025-03-25 07:47:26,326 [Epoch: 010 Step: 00033400] Batch Translation Loss:  82.586983 => Lr: 0.001000
+2025-03-25 07:49:26,066 [Epoch: 010 Step: 00033500] Batch Translation Loss:  20.716122 => Lr: 0.001000
+2025-03-25 07:51:39,206 [Epoch: 010 Step: 00033600] Batch Translation Loss:  41.152733 => Lr: 0.001000
+2025-03-25 07:53:46,919 [Epoch: 010 Step: 00033700] Batch Translation Loss:  47.577396 => Lr: 0.001000
+2025-03-25 07:55:54,519 [Epoch: 010 Step: 00033800] Batch Translation Loss:  64.828545 => Lr: 0.001000
+2025-03-25 07:58:11,499 [Epoch: 010 Step: 00033900] Batch Translation Loss:  43.087181 => Lr: 0.001000
+2025-03-25 08:00:24,738 [Epoch: 010 Step: 00034000] Batch Translation Loss:  45.630646 => Lr: 0.001000
+2025-03-25 08:02:43,096 [Epoch: 010 Step: 00034100] Batch Translation Loss:  74.851402 => Lr: 0.001000
+2025-03-25 08:05:17,753 [Epoch: 010 Step: 00034200] Batch Translation Loss: 101.103355 => Lr: 0.001000
+2025-03-25 08:07:49,451 [Epoch: 010 Step: 00034300] Batch Translation Loss:  39.279968 => Lr: 0.001000
+2025-03-25 08:10:32,362 [Epoch: 010 Step: 00034400] Batch Translation Loss:  72.695366 => Lr: 0.001000
+2025-03-25 08:13:12,504 [Epoch: 010 Step: 00034500] Batch Translation Loss:  28.033827 => Lr: 0.001000
+2025-03-25 08:16:04,837 [Epoch: 010 Step: 00034600] Batch Translation Loss:  27.358261 => Lr: 0.001000
+2025-03-25 08:18:54,852 [Epoch: 010 Step: 00034700] Batch Translation Loss:  52.149086 => Lr: 0.001000
+2025-03-25 08:22:08,267 [Epoch: 010 Step: 00034800] Batch Translation Loss:  42.737343 => Lr: 0.001000
+2025-03-25 08:25:04,733 [Epoch: 010 Step: 00034900] Batch Translation Loss:  71.195999 => Lr: 0.001000
+2025-03-25 08:27:57,289 [Epoch: 010 Step: 00035000] Batch Translation Loss:  46.188240 => Lr: 0.001000
+2025-03-25 08:34:17,851 Saved 518 text references to ./sign_sample_bpe\txt_references_35000.txt and 518 text hypotheses to ./sign_sample_bpe\txt_hypotheses_35000.txt
+2025-03-25 08:36:57,271 [Epoch: 010 Step: 00035100] Batch Translation Loss:  31.941223 => Lr: 0.001000
+2025-03-25 08:39:46,156 [Epoch: 010 Step: 00035200] Batch Translation Loss:  57.896725 => Lr: 0.001000
+2025-03-25 08:42:32,605 [Epoch: 010 Step: 00035300] Batch Translation Loss:  42.884514 => Lr: 0.001000
+2025-03-25 08:45:19,397 [Epoch: 010 Step: 00035400] Batch Translation Loss:  32.841320 => Lr: 0.001000
+2025-03-25 08:47:38,229 Epoch  10: Total Training Translation Loss 177227.62 
+2025-03-25 08:47:38,229 EPOCH 11
+2025-03-25 08:48:03,363 [Epoch: 011 Step: 00035500] Batch Translation Loss:  47.770390 => Lr: 0.001000
+2025-03-25 08:49:49,206 [Epoch: 011 Step: 00035600] Batch Translation Loss:  40.551399 => Lr: 0.001000
+2025-03-25 08:51:36,215 [Epoch: 011 Step: 00035700] Batch Translation Loss:  32.028618 => Lr: 0.001000
+2025-03-25 08:53:27,152 [Epoch: 011 Step: 00035800] Batch Translation Loss:  44.045910 => Lr: 0.001000
+2025-03-25 08:55:13,142 [Epoch: 011 Step: 00035900] Batch Translation Loss:  36.385746 => Lr: 0.001000
+2025-03-25 08:57:04,649 [Epoch: 011 Step: 00036000] Batch Translation Loss:  63.989822 => Lr: 0.001000
+2025-03-25 08:58:54,875 [Epoch: 011 Step: 00036100] Batch Translation Loss:  59.064857 => Lr: 0.001000
+2025-03-25 09:00:39,223 [Epoch: 011 Step: 00036200] Batch Translation Loss:  15.451609 => Lr: 0.001000
+2025-03-25 09:02:27,719 [Epoch: 011 Step: 00036300] Batch Translation Loss:  33.965309 => Lr: 0.001000
+2025-03-25 09:04:17,972 [Epoch: 011 Step: 00036400] Batch Translation Loss:  51.070660 => Lr: 0.001000
+2025-03-25 09:06:08,657 [Epoch: 011 Step: 00036500] Batch Translation Loss:  76.531548 => Lr: 0.001000
+2025-03-25 09:08:00,240 [Epoch: 011 Step: 00036600] Batch Translation Loss:  34.426815 => Lr: 0.001000
+2025-03-25 09:10:01,350 [Epoch: 011 Step: 00036700] Batch Translation Loss:  59.971840 => Lr: 0.001000
+2025-03-25 09:11:57,363 [Epoch: 011 Step: 00036800] Batch Translation Loss:  44.544785 => Lr: 0.001000
+2025-03-25 09:13:56,686 [Epoch: 011 Step: 00036900] Batch Translation Loss:  99.567780 => Lr: 0.001000
+2025-03-25 09:15:50,355 [Epoch: 011 Step: 00037000] Batch Translation Loss:  41.880516 => Lr: 0.001000
+2025-03-25 09:17:43,381 [Epoch: 011 Step: 00037100] Batch Translation Loss:  63.478523 => Lr: 0.001000
+2025-03-25 09:19:51,092 [Epoch: 011 Step: 00037200] Batch Translation Loss:  31.678017 => Lr: 0.001000
+2025-03-25 09:21:50,460 [Epoch: 011 Step: 00037300] Batch Translation Loss:  61.189156 => Lr: 0.001000
+2025-03-25 09:23:55,304 [Epoch: 011 Step: 00037400] Batch Translation Loss:  76.234650 => Lr: 0.001000
+2025-03-25 09:26:04,387 [Epoch: 011 Step: 00037500] Batch Translation Loss:  65.215721 => Lr: 0.001000
+2025-03-25 09:28:10,114 [Epoch: 011 Step: 00037600] Batch Translation Loss:  47.660835 => Lr: 0.001000
+2025-03-25 09:30:28,365 [Epoch: 011 Step: 00037700] Batch Translation Loss:  36.226112 => Lr: 0.001000
+2025-03-25 09:32:40,266 [Epoch: 011 Step: 00037800] Batch Translation Loss:  78.276321 => Lr: 0.001000
+2025-03-25 09:35:00,329 [Epoch: 011 Step: 00037900] Batch Translation Loss:  26.110620 => Lr: 0.001000
+2025-03-25 09:37:34,815 [Epoch: 011 Step: 00038000] Batch Translation Loss:  77.063217 => Lr: 0.001000
+2025-03-25 09:40:08,809 [Epoch: 011 Step: 00038100] Batch Translation Loss:  40.308590 => Lr: 0.001000
+2025-03-25 09:42:45,002 [Epoch: 011 Step: 00038200] Batch Translation Loss:  34.792267 => Lr: 0.001000
+2025-03-25 09:45:20,715 [Epoch: 011 Step: 00038300] Batch Translation Loss:  27.218224 => Lr: 0.001000
+2025-03-25 09:47:54,841 [Epoch: 011 Step: 00038400] Batch Translation Loss:  12.299288 => Lr: 0.001000
+2025-03-25 09:50:31,739 [Epoch: 011 Step: 00038500] Batch Translation Loss:  17.533901 => Lr: 0.001000
+2025-03-25 09:56:48,689 Saved 518 text references to ./sign_sample_bpe\txt_references_38500.txt and 518 text hypotheses to ./sign_sample_bpe\txt_hypotheses_38500.txt
+2025-03-25 09:59:42,140 [Epoch: 011 Step: 00038600] Batch Translation Loss:  73.055702 => Lr: 0.001000
+2025-03-25 10:02:27,443 [Epoch: 011 Step: 00038700] Batch Translation Loss:  31.777695 => Lr: 0.001000
+2025-03-25 10:05:18,453 [Epoch: 011 Step: 00038800] Batch Translation Loss:  28.851515 => Lr: 0.001000
+2025-03-25 10:08:06,357 [Epoch: 011 Step: 00038900] Batch Translation Loss:  36.296844 => Lr: 0.001000
+2025-03-25 10:10:53,182 [Epoch: 011 Step: 00039000] Batch Translation Loss:  31.804222 => Lr: 0.001000
+2025-03-25 10:11:42,321 Epoch  11: Total Training Translation Loss 173705.58 
+2025-03-25 10:11:42,321 EPOCH 12
+2025-03-25 10:13:01,362 [Epoch: 012 Step: 00039100] Batch Translation Loss:  21.080219 => Lr: 0.001000
+2025-03-25 10:14:46,770 [Epoch: 012 Step: 00039200] Batch Translation Loss:  25.917919 => Lr: 0.001000
+2025-03-25 10:16:25,197 [Epoch: 012 Step: 00039300] Batch Translation Loss:  63.125450 => Lr: 0.001000
+2025-03-25 10:18:09,993 [Epoch: 012 Step: 00039400] Batch Translation Loss:  63.172821 => Lr: 0.001000
+2025-03-25 10:19:57,068 [Epoch: 012 Step: 00039500] Batch Translation Loss:  58.931015 => Lr: 0.001000
+2025-03-25 10:21:41,043 [Epoch: 012 Step: 00039600] Batch Translation Loss:  37.987335 => Lr: 0.001000
+2025-03-25 10:23:23,416 [Epoch: 012 Step: 00039700] Batch Translation Loss:  29.471527 => Lr: 0.001000
+2025-03-25 10:25:19,543 [Epoch: 012 Step: 00039800] Batch Translation Loss:  32.727600 => Lr: 0.001000
+2025-03-25 10:27:05,334 [Epoch: 012 Step: 00039900] Batch Translation Loss:  30.122082 => Lr: 0.001000
+2025-03-25 10:28:50,632 [Epoch: 012 Step: 00040000] Batch Translation Loss:  72.074249 => Lr: 0.001000
+2025-03-25 10:30:38,981 [Epoch: 012 Step: 00040100] Batch Translation Loss:  42.699425 => Lr: 0.001000
+2025-03-25 10:32:31,379 [Epoch: 012 Step: 00040200] Batch Translation Loss:  61.406124 => Lr: 0.001000
+2025-03-25 10:34:16,042 [Epoch: 012 Step: 00040300] Batch Translation Loss:  46.224167 => Lr: 0.001000
+2025-03-25 10:36:17,317 [Epoch: 012 Step: 00040400] Batch Translation Loss:  61.153404 => Lr: 0.001000
+2025-03-25 10:38:16,104 [Epoch: 012 Step: 00040500] Batch Translation Loss:  48.958595 => Lr: 0.001000
+2025-03-25 10:40:08,877 [Epoch: 012 Step: 00040600] Batch Translation Loss:  31.586357 => Lr: 0.001000
+2025-03-25 10:42:09,490 [Epoch: 012 Step: 00040700] Batch Translation Loss:  26.047367 => Lr: 0.001000
+2025-03-25 10:44:19,668 [Epoch: 012 Step: 00040800] Batch Translation Loss:  31.215437 => Lr: 0.001000
+2025-03-25 10:46:23,378 [Epoch: 012 Step: 00040900] Batch Translation Loss:  85.809578 => Lr: 0.001000
+2025-03-25 10:48:26,806 [Epoch: 012 Step: 00041000] Batch Translation Loss:  68.381653 => Lr: 0.001000
+2025-03-25 10:50:39,859 [Epoch: 012 Step: 00041100] Batch Translation Loss:  57.224495 => Lr: 0.001000
+2025-03-25 10:52:50,937 [Epoch: 012 Step: 00041200] Batch Translation Loss:  56.379494 => Lr: 0.001000
+2025-03-25 10:54:59,180 [Epoch: 012 Step: 00041300] Batch Translation Loss:  67.359848 => Lr: 0.001000
+2025-03-25 10:57:15,233 [Epoch: 012 Step: 00041400] Batch Translation Loss:  45.492752 => Lr: 0.001000
+2025-03-25 10:59:31,785 [Epoch: 012 Step: 00041500] Batch Translation Loss:  25.158455 => Lr: 0.001000
+2025-03-25 11:02:00,320 [Epoch: 012 Step: 00041600] Batch Translation Loss:  33.698799 => Lr: 0.001000
+2025-03-25 11:04:41,396 [Epoch: 012 Step: 00041700] Batch Translation Loss:  62.490696 => Lr: 0.001000
+2025-03-25 11:07:15,068 [Epoch: 012 Step: 00041800] Batch Translation Loss:  66.662003 => Lr: 0.001000
+2025-03-25 11:09:55,755 [Epoch: 012 Step: 00041900] Batch Translation Loss:  51.877712 => Lr: 0.001000
+2025-03-25 11:12:38,139 [Epoch: 012 Step: 00042000] Batch Translation Loss:  29.319141 => Lr: 0.001000
+2025-03-25 11:18:56,731 Saved 518 text references to ./sign_sample_bpe\txt_references_42000.txt and 518 text hypotheses to ./sign_sample_bpe\txt_hypotheses_42000.txt
+2025-03-25 11:21:47,626 [Epoch: 012 Step: 00042100] Batch Translation Loss:  10.688068 => Lr: 0.001000
+2025-03-25 11:24:31,223 [Epoch: 012 Step: 00042200] Batch Translation Loss:  36.818932 => Lr: 0.001000
+2025-03-25 11:27:28,580 [Epoch: 012 Step: 00042300] Batch Translation Loss:  50.063828 => Lr: 0.001000
+2025-03-25 11:30:16,589 [Epoch: 012 Step: 00042400] Batch Translation Loss:  55.887474 => Lr: 0.001000
+2025-03-25 11:33:11,113 [Epoch: 012 Step: 00042500] Batch Translation Loss:  39.714329 => Lr: 0.001000
+2025-03-25 11:35:20,368 Epoch  12: Total Training Translation Loss 170395.04 
+2025-03-25 11:35:20,368 EPOCH 13
+2025-03-25 11:35:50,063 [Epoch: 013 Step: 00042600] Batch Translation Loss:  37.741028 => Lr: 0.001000
+2025-03-25 11:37:40,738 [Epoch: 013 Step: 00042700] Batch Translation Loss:  48.687370 => Lr: 0.001000
+2025-03-25 11:39:33,026 [Epoch: 013 Step: 00042800] Batch Translation Loss:  81.414894 => Lr: 0.001000
+2025-03-25 11:41:22,022 [Epoch: 013 Step: 00042900] Batch Translation Loss:  39.402382 => Lr: 0.001000
+2025-03-25 11:43:08,448 [Epoch: 013 Step: 00043000] Batch Translation Loss:  52.617649 => Lr: 0.001000
+2025-03-25 11:44:55,024 [Epoch: 013 Step: 00043100] Batch Translation Loss:  28.997156 => Lr: 0.001000
+2025-03-25 11:46:44,863 [Epoch: 013 Step: 00043200] Batch Translation Loss:  39.187229 => Lr: 0.001000
+2025-03-25 11:48:33,243 [Epoch: 013 Step: 00043300] Batch Translation Loss:  29.480467 => Lr: 0.001000
+2025-03-25 11:50:20,848 [Epoch: 013 Step: 00043400] Batch Translation Loss:  53.511700 => Lr: 0.001000
+2025-03-25 11:52:12,747 [Epoch: 013 Step: 00043500] Batch Translation Loss:  31.465405 => Lr: 0.001000
+2025-03-25 11:54:00,622 [Epoch: 013 Step: 00043600] Batch Translation Loss:  44.961929 => Lr: 0.001000
+2025-03-25 11:55:49,214 [Epoch: 013 Step: 00043700] Batch Translation Loss:  73.223618 => Lr: 0.001000
+2025-03-25 11:57:48,473 [Epoch: 013 Step: 00043800] Batch Translation Loss:  97.991844 => Lr: 0.001000
+2025-03-25 11:59:50,986 [Epoch: 013 Step: 00043900] Batch Translation Loss:  37.935268 => Lr: 0.001000
+2025-03-25 12:01:52,979 [Epoch: 013 Step: 00044000] Batch Translation Loss:  34.509056 => Lr: 0.001000
+2025-03-25 12:03:52,035 [Epoch: 013 Step: 00044100] Batch Translation Loss:  71.176743 => Lr: 0.001000
+2025-03-25 12:05:55,972 [Epoch: 013 Step: 00044200] Batch Translation Loss:  24.589573 => Lr: 0.001000
+2025-03-25 12:07:58,208 [Epoch: 013 Step: 00044300] Batch Translation Loss:  69.824272 => Lr: 0.001000
+2025-03-25 12:09:58,904 [Epoch: 013 Step: 00044400] Batch Translation Loss:  26.324440 => Lr: 0.001000
+2025-03-25 12:12:04,800 [Epoch: 013 Step: 00044500] Batch Translation Loss:  44.333187 => Lr: 0.001000
+2025-03-25 12:14:12,021 [Epoch: 013 Step: 00044600] Batch Translation Loss:  52.317451 => Lr: 0.001000
+2025-03-25 12:16:22,997 [Epoch: 013 Step: 00044700] Batch Translation Loss:  50.586899 => Lr: 0.001000
+2025-03-25 12:18:36,615 [Epoch: 013 Step: 00044800] Batch Translation Loss:  52.021957 => Lr: 0.001000
+2025-03-25 12:21:01,391 [Epoch: 013 Step: 00044900] Batch Translation Loss:  15.211721 => Lr: 0.001000
+2025-03-25 12:23:37,833 [Epoch: 013 Step: 00045000] Batch Translation Loss:  35.927422 => Lr: 0.001000
+2025-03-25 12:26:08,369 [Epoch: 013 Step: 00045100] Batch Translation Loss:  44.388542 => Lr: 0.001000
+2025-03-25 12:28:44,328 [Epoch: 013 Step: 00045200] Batch Translation Loss:  59.839436 => Lr: 0.001000
+2025-03-25 12:31:11,379 [Epoch: 013 Step: 00045300] Batch Translation Loss:  88.491829 => Lr: 0.001000
+2025-03-25 12:33:53,410 [Epoch: 013 Step: 00045400] Batch Translation Loss:  23.703697 => Lr: 0.001000
+2025-03-25 12:36:53,215 [Epoch: 013 Step: 00045500] Batch Translation Loss:  52.062817 => Lr: 0.001000
+2025-03-25 12:43:43,065 Saved 518 text references to ./sign_sample_bpe\txt_references_45500.txt and 518 text hypotheses to ./sign_sample_bpe\txt_hypotheses_45500.txt
+2025-03-25 12:46:51,848 [Epoch: 013 Step: 00045600] Batch Translation Loss:  28.642958 => Lr: 0.001000
+2025-03-25 12:49:57,317 [Epoch: 013 Step: 00045700] Batch Translation Loss:  43.785011 => Lr: 0.001000
+2025-03-25 12:53:01,721 [Epoch: 013 Step: 00045800] Batch Translation Loss:  64.870277 => Lr: 0.001000
+2025-03-25 12:55:54,535 [Epoch: 013 Step: 00045900] Batch Translation Loss:  20.404585 => Lr: 0.001000
+2025-03-25 12:58:52,605 [Epoch: 013 Step: 00046000] Batch Translation Loss:  45.432384 => Lr: 0.001000
+2025-03-25 13:01:38,727 [Epoch: 013 Step: 00046100] Batch Translation Loss:  22.734726 => Lr: 0.001000
+2025-03-25 13:02:22,367 Epoch  13: Total Training Translation Loss 167345.66 
+2025-03-25 13:02:22,368 EPOCH 14
+2025-03-25 13:03:52,508 [Epoch: 014 Step: 00046200] Batch Translation Loss:  30.037151 => Lr: 0.001000
+2025-03-25 13:05:41,903 [Epoch: 014 Step: 00046300] Batch Translation Loss:  52.139675 => Lr: 0.001000
+2025-03-25 13:07:34,473 [Epoch: 014 Step: 00046400] Batch Translation Loss:  40.204575 => Lr: 0.001000
+2025-03-25 13:09:31,748 [Epoch: 014 Step: 00046500] Batch Translation Loss:  38.628036 => Lr: 0.001000
+2025-03-25 13:11:30,699 [Epoch: 014 Step: 00046600] Batch Translation Loss: 116.280197 => Lr: 0.001000
+2025-03-25 13:13:27,999 [Epoch: 014 Step: 00046700] Batch Translation Loss:  24.375402 => Lr: 0.001000
+2025-03-25 13:15:18,923 [Epoch: 014 Step: 00046800] Batch Translation Loss:  49.910217 => Lr: 0.001000
+2025-03-25 13:17:17,342 [Epoch: 014 Step: 00046900] Batch Translation Loss:  42.465374 => Lr: 0.001000
+2025-03-25 13:19:20,358 [Epoch: 014 Step: 00047000] Batch Translation Loss:  41.095741 => Lr: 0.001000
+2025-03-25 13:21:19,906 [Epoch: 014 Step: 00047100] Batch Translation Loss:  25.643349 => Lr: 0.001000
+2025-03-25 13:23:12,173 [Epoch: 014 Step: 00047200] Batch Translation Loss:  20.460976 => Lr: 0.001000
+2025-03-25 13:25:20,842 [Epoch: 014 Step: 00047300] Batch Translation Loss:  53.300533 => Lr: 0.001000
+2025-03-25 13:27:31,946 [Epoch: 014 Step: 00047400] Batch Translation Loss:  87.129593 => Lr: 0.001000
+2025-03-25 13:29:41,694 [Epoch: 014 Step: 00047500] Batch Translation Loss:  58.446274 => Lr: 0.001000
+2025-03-25 13:31:54,466 [Epoch: 014 Step: 00047600] Batch Translation Loss:  54.560013 => Lr: 0.001000
+2025-03-25 13:34:02,233 [Epoch: 014 Step: 00047700] Batch Translation Loss:  33.047188 => Lr: 0.001000
+2025-03-25 13:36:11,277 [Epoch: 014 Step: 00047800] Batch Translation Loss:  36.404045 => Lr: 0.001000
+2025-03-25 13:38:21,675 [Epoch: 014 Step: 00047900] Batch Translation Loss:  29.668690 => Lr: 0.001000
+2025-03-25 13:40:34,743 [Epoch: 014 Step: 00048000] Batch Translation Loss:  53.287369 => Lr: 0.001000
+2025-03-25 13:42:56,334 [Epoch: 014 Step: 00048100] Batch Translation Loss:  23.658657 => Lr: 0.001000
+2025-03-25 13:45:20,967 [Epoch: 014 Step: 00048200] Batch Translation Loss:  36.782959 => Lr: 0.001000
+2025-03-25 13:47:38,676 [Epoch: 014 Step: 00048300] Batch Translation Loss:  45.130890 => Lr: 0.001000
+2025-03-25 13:49:58,343 [Epoch: 014 Step: 00048400] Batch Translation Loss:  71.785919 => Lr: 0.001000
+2025-03-25 13:52:24,820 [Epoch: 014 Step: 00048500] Batch Translation Loss:  45.621849 => Lr: 0.001000
+2025-03-25 13:54:41,785 [Epoch: 014 Step: 00048600] Batch Translation Loss:  14.517234 => Lr: 0.001000
+2025-03-25 13:57:14,975 [Epoch: 014 Step: 00048700] Batch Translation Loss:  57.049889 => Lr: 0.001000
+2025-03-25 13:59:54,828 [Epoch: 014 Step: 00048800] Batch Translation Loss:  27.436827 => Lr: 0.001000
+2025-03-25 14:02:34,152 [Epoch: 014 Step: 00048900] Batch Translation Loss:  72.747353 => Lr: 0.001000
+2025-03-25 14:05:07,682 [Epoch: 014 Step: 00049000] Batch Translation Loss:  30.616398 => Lr: 0.001000
+2025-03-25 14:11:27,210 Saved 518 text references to ./sign_sample_bpe\txt_references_49000.txt and 518 text hypotheses to ./sign_sample_bpe\txt_hypotheses_49000.txt
+2025-03-25 14:11:27,212 Hooray! New best validation result [eval_metric]!
+2025-03-25 14:11:27,212 Saving new checkpoint.
+2025-03-25 14:14:10,809 [Epoch: 014 Step: 00049100] Batch Translation Loss:  52.999069 => Lr: 0.001000
+2025-03-25 14:17:00,922 [Epoch: 014 Step: 00049200] Batch Translation Loss:  47.352119 => Lr: 0.001000
+2025-03-25 14:19:55,275 [Epoch: 014 Step: 00049300] Batch Translation Loss:  39.610767 => Lr: 0.001000
+2025-03-25 14:22:35,146 [Epoch: 014 Step: 00049400] Batch Translation Loss:  51.745499 => Lr: 0.001000
+2025-03-25 14:25:27,851 [Epoch: 014 Step: 00049500] Batch Translation Loss:  70.660614 => Lr: 0.001000
+2025-03-25 14:28:17,364 [Epoch: 014 Step: 00049600] Batch Translation Loss:  35.431969 => Lr: 0.001000
+2025-03-25 14:30:14,548 Epoch  14: Total Training Translation Loss 164774.83 
+2025-03-25 14:30:14,549 EPOCH 15
+2025-03-25 14:30:43,979 [Epoch: 015 Step: 00049700] Batch Translation Loss: 107.115265 => Lr: 0.001000
+2025-03-25 14:32:29,927 [Epoch: 015 Step: 00049800] Batch Translation Loss:  91.243019 => Lr: 0.001000
+2025-03-25 14:34:15,467 [Epoch: 015 Step: 00049900] Batch Translation Loss:  77.448624 => Lr: 0.001000
+2025-03-25 14:36:09,196 [Epoch: 015 Step: 00050000] Batch Translation Loss:  24.071266 => Lr: 0.001000
+2025-03-25 14:37:56,667 [Epoch: 015 Step: 00050100] Batch Translation Loss:  33.263142 => Lr: 0.001000
+2025-03-25 14:39:49,654 [Epoch: 015 Step: 00050200] Batch Translation Loss:  41.271637 => Lr: 0.001000
+2025-03-25 14:41:45,999 [Epoch: 015 Step: 00050300] Batch Translation Loss:  38.490040 => Lr: 0.001000
+2025-03-25 14:43:40,911 [Epoch: 015 Step: 00050400] Batch Translation Loss:  44.667248 => Lr: 0.001000
+2025-03-25 14:45:32,089 [Epoch: 015 Step: 00050500] Batch Translation Loss:  32.123024 => Lr: 0.001000
+2025-03-25 14:47:20,833 [Epoch: 015 Step: 00050600] Batch Translation Loss:  40.503040 => Lr: 0.001000
+2025-03-25 14:49:10,196 [Epoch: 015 Step: 00050700] Batch Translation Loss:  31.287416 => Lr: 0.001000
+2025-03-25 14:51:07,451 [Epoch: 015 Step: 00050800] Batch Translation Loss:  44.561474 => Lr: 0.001000
+2025-03-25 14:53:01,369 [Epoch: 015 Step: 00050900] Batch Translation Loss:  72.707657 => Lr: 0.001000
+2025-03-25 14:55:00,559 [Epoch: 015 Step: 00051000] Batch Translation Loss:  55.136848 => Lr: 0.001000
+2025-03-25 14:57:01,267 [Epoch: 015 Step: 00051100] Batch Translation Loss:  35.982544 => Lr: 0.001000
+2025-03-25 14:58:53,869 [Epoch: 015 Step: 00051200] Batch Translation Loss:  50.372932 => Lr: 0.001000
+2025-03-25 15:00:56,960 [Epoch: 015 Step: 00051300] Batch Translation Loss:  92.615524 => Lr: 0.001000
+2025-03-25 15:03:02,542 [Epoch: 015 Step: 00051400] Batch Translation Loss:  42.757652 => Lr: 0.001000
+2025-03-25 15:04:58,502 [Epoch: 015 Step: 00051500] Batch Translation Loss:  47.806122 => Lr: 0.001000
+2025-03-25 15:07:08,182 [Epoch: 015 Step: 00051600] Batch Translation Loss:  15.839613 => Lr: 0.001000
+2025-03-25 15:09:09,379 [Epoch: 015 Step: 00051700] Batch Translation Loss:  33.440281 => Lr: 0.001000
+2025-03-25 15:11:24,190 [Epoch: 015 Step: 00051800] Batch Translation Loss:  42.633572 => Lr: 0.001000
+2025-03-25 15:13:48,371 [Epoch: 015 Step: 00051900] Batch Translation Loss:  65.667908 => Lr: 0.001000
+2025-03-25 15:16:03,502 [Epoch: 015 Step: 00052000] Batch Translation Loss:  51.331562 => Lr: 0.001000
+2025-03-25 15:18:26,376 [Epoch: 015 Step: 00052100] Batch Translation Loss:  26.240814 => Lr: 0.001000
+2025-03-25 15:20:53,241 [Epoch: 015 Step: 00052200] Batch Translation Loss:  17.987255 => Lr: 0.001000
+2025-03-25 15:23:27,726 [Epoch: 015 Step: 00052300] Batch Translation Loss:  16.798050 => Lr: 0.001000
+2025-03-25 15:25:57,982 [Epoch: 015 Step: 00052400] Batch Translation Loss:  60.616402 => Lr: 0.001000
+2025-03-25 15:28:28,685 [Epoch: 015 Step: 00052500] Batch Translation Loss:  86.817284 => Lr: 0.001000
+2025-03-25 15:34:47,999 Saved 518 text references to ./sign_sample_bpe\txt_references_52500.txt and 518 text hypotheses to ./sign_sample_bpe\txt_hypotheses_52500.txt
+2025-03-25 15:37:41,723 [Epoch: 015 Step: 00052600] Batch Translation Loss:  37.357212 => Lr: 0.001000
+2025-03-25 15:40:27,420 [Epoch: 015 Step: 00052700] Batch Translation Loss:  53.225407 => Lr: 0.001000
+2025-03-25 15:43:25,792 [Epoch: 015 Step: 00052800] Batch Translation Loss:  41.111919 => Lr: 0.001000
+2025-03-25 15:46:15,088 [Epoch: 015 Step: 00052900] Batch Translation Loss:  91.030121 => Lr: 0.001000
+2025-03-25 15:49:08,858 [Epoch: 015 Step: 00053000] Batch Translation Loss:  67.320244 => Lr: 0.001000
+2025-03-25 15:51:54,216 [Epoch: 015 Step: 00053100] Batch Translation Loss:  35.892742 => Lr: 0.001000
+2025-03-25 15:54:42,643 [Epoch: 015 Step: 00053200] Batch Translation Loss:  45.763729 => Lr: 0.001000
+2025-03-25 15:55:14,485 Epoch  15: Total Training Translation Loss 162232.00 
+2025-03-25 15:55:14,485 EPOCH 16
+2025-03-25 15:56:45,291 [Epoch: 016 Step: 00053300] Batch Translation Loss:  22.841391 => Lr: 0.001000
+2025-03-25 15:58:31,635 [Epoch: 016 Step: 00053400] Batch Translation Loss:  11.824411 => Lr: 0.001000
+2025-03-25 16:00:19,146 [Epoch: 016 Step: 00053500] Batch Translation Loss:  33.799286 => Lr: 0.001000
+2025-03-25 16:02:06,086 [Epoch: 016 Step: 00053600] Batch Translation Loss:   6.666228 => Lr: 0.001000
+2025-03-25 16:04:01,443 [Epoch: 016 Step: 00053700] Batch Translation Loss:  66.692673 => Lr: 0.001000
+2025-03-25 16:05:49,626 [Epoch: 016 Step: 00053800] Batch Translation Loss:  31.431585 => Lr: 0.001000
+2025-03-25 16:07:39,950 [Epoch: 016 Step: 00053900] Batch Translation Loss:  47.698757 => Lr: 0.001000
+2025-03-25 16:09:32,418 [Epoch: 016 Step: 00054000] Batch Translation Loss: 128.018387 => Lr: 0.001000
+2025-03-25 16:11:30,788 [Epoch: 016 Step: 00054100] Batch Translation Loss:  25.501987 => Lr: 0.001000
+2025-03-25 16:13:23,345 [Epoch: 016 Step: 00054200] Batch Translation Loss:  90.860573 => Lr: 0.001000
+2025-03-25 16:15:16,580 [Epoch: 016 Step: 00054300] Batch Translation Loss:  22.209799 => Lr: 0.001000
+2025-03-25 16:17:10,164 [Epoch: 016 Step: 00054400] Batch Translation Loss:  72.292824 => Lr: 0.001000
+2025-03-25 16:19:13,789 [Epoch: 016 Step: 00054500] Batch Translation Loss:  19.178326 => Lr: 0.001000
+2025-03-25 16:21:13,580 [Epoch: 016 Step: 00054600] Batch Translation Loss:  49.526947 => Lr: 0.001000
+2025-03-25 16:23:08,030 [Epoch: 016 Step: 00054700] Batch Translation Loss:  35.240269 => Lr: 0.001000
+2025-03-25 16:25:08,343 [Epoch: 016 Step: 00054800] Batch Translation Loss:  37.490715 => Lr: 0.001000
+2025-03-25 16:27:09,524 [Epoch: 016 Step: 00054900] Batch Translation Loss:  27.396942 => Lr: 0.001000
+2025-03-25 16:29:14,998 [Epoch: 016 Step: 00055000] Batch Translation Loss:  48.722656 => Lr: 0.001000
+2025-03-25 16:31:20,316 [Epoch: 016 Step: 00055100] Batch Translation Loss:  85.597427 => Lr: 0.001000
+2025-03-25 16:33:26,780 [Epoch: 016 Step: 00055200] Batch Translation Loss:  84.680336 => Lr: 0.001000
+2025-03-25 16:35:44,095 [Epoch: 016 Step: 00055300] Batch Translation Loss:  35.594139 => Lr: 0.001000
+2025-03-25 16:37:56,380 [Epoch: 016 Step: 00055400] Batch Translation Loss:  27.503981 => Lr: 0.001000
+2025-03-25 16:40:23,790 [Epoch: 016 Step: 00055500] Batch Translation Loss:  41.047302 => Lr: 0.001000
+2025-03-25 16:42:40,594 [Epoch: 016 Step: 00055600] Batch Translation Loss:  41.653393 => Lr: 0.001000
+2025-03-25 16:45:12,091 [Epoch: 016 Step: 00055700] Batch Translation Loss:  66.067566 => Lr: 0.001000
+2025-03-25 16:47:46,433 [Epoch: 016 Step: 00055800] Batch Translation Loss:  30.094843 => Lr: 0.001000
+2025-03-25 16:50:19,991 [Epoch: 016 Step: 00055900] Batch Translation Loss:  32.271229 => Lr: 0.001000
+2025-03-25 16:52:55,951 [Epoch: 016 Step: 00056000] Batch Translation Loss:  51.854908 => Lr: 0.001000
+2025-03-25 16:59:15,382 Saved 518 text references to ./sign_sample_bpe\txt_references_56000.txt and 518 text hypotheses to ./sign_sample_bpe\txt_hypotheses_56000.txt
+2025-03-25 17:02:04,224 [Epoch: 016 Step: 00056100] Batch Translation Loss:  23.963072 => Lr: 0.001000
+2025-03-25 17:04:56,940 [Epoch: 016 Step: 00056200] Batch Translation Loss:  58.280357 => Lr: 0.001000
+2025-03-25 17:07:47,987 [Epoch: 016 Step: 00056300] Batch Translation Loss:  31.043098 => Lr: 0.001000
+2025-03-25 17:10:38,446 [Epoch: 016 Step: 00056400] Batch Translation Loss:  51.594528 => Lr: 0.001000
+2025-03-25 17:13:22,251 [Epoch: 016 Step: 00056500] Batch Translation Loss:  72.239311 => Lr: 0.001000
+2025-03-25 17:16:03,372 [Epoch: 016 Step: 00056600] Batch Translation Loss:  75.489227 => Lr: 0.001000
+2025-03-25 17:18:53,483 [Epoch: 016 Step: 00056700] Batch Translation Loss:  30.544350 => Lr: 0.001000
+2025-03-25 17:20:44,788 Epoch  16: Total Training Translation Loss 159971.24 
+2025-03-25 17:20:44,789 EPOCH 17
+2025-03-25 17:21:22,915 [Epoch: 017 Step: 00056800] Batch Translation Loss:  29.223904 => Lr: 0.001000
+2025-03-25 17:23:06,057 [Epoch: 017 Step: 00056900] Batch Translation Loss:  34.978409 => Lr: 0.001000
+2025-03-25 17:24:59,027 [Epoch: 017 Step: 00057000] Batch Translation Loss:  60.336697 => Lr: 0.001000
+2025-03-25 17:26:42,794 [Epoch: 017 Step: 00057100] Batch Translation Loss:  62.646118 => Lr: 0.001000
+2025-03-25 17:28:37,644 [Epoch: 017 Step: 00057200] Batch Translation Loss:  71.681160 => Lr: 0.001000
+2025-03-25 17:30:27,985 [Epoch: 017 Step: 00057300] Batch Translation Loss:  42.513748 => Lr: 0.001000
+2025-03-25 17:32:18,651 [Epoch: 017 Step: 00057400] Batch Translation Loss:  17.314720 => Lr: 0.001000
+2025-03-25 17:34:07,413 [Epoch: 017 Step: 00057500] Batch Translation Loss:  39.112240 => Lr: 0.001000
+2025-03-25 17:35:59,920 [Epoch: 017 Step: 00057600] Batch Translation Loss:  67.992157 => Lr: 0.001000
+2025-03-25 17:37:58,761 [Epoch: 017 Step: 00057700] Batch Translation Loss:  84.321487 => Lr: 0.001000
+2025-03-25 17:39:59,031 [Epoch: 017 Step: 00057800] Batch Translation Loss:  67.739090 => Lr: 0.001000
+2025-03-25 17:41:59,088 [Epoch: 017 Step: 00057900] Batch Translation Loss:  58.115860 => Lr: 0.001000
+2025-03-25 17:43:57,199 [Epoch: 017 Step: 00058000] Batch Translation Loss:  61.053017 => Lr: 0.001000
+2025-03-25 17:45:55,227 [Epoch: 017 Step: 00058100] Batch Translation Loss:  43.675591 => Lr: 0.001000
+2025-03-25 17:47:51,852 [Epoch: 017 Step: 00058200] Batch Translation Loss:  25.189400 => Lr: 0.001000
+2025-03-25 17:49:52,909 [Epoch: 017 Step: 00058300] Batch Translation Loss:  13.925350 => Lr: 0.001000
+2025-03-25 17:51:57,980 [Epoch: 017 Step: 00058400] Batch Translation Loss:  52.459976 => Lr: 0.001000
+2025-03-25 17:54:07,286 [Epoch: 017 Step: 00058500] Batch Translation Loss:  44.226692 => Lr: 0.001000
+2025-03-25 17:56:11,739 [Epoch: 017 Step: 00058600] Batch Translation Loss:  37.983589 => Lr: 0.001000
+2025-03-25 17:58:23,740 [Epoch: 017 Step: 00058700] Batch Translation Loss:  43.652973 => Lr: 0.001000
+2025-03-25 18:00:43,625 [Epoch: 017 Step: 00058800] Batch Translation Loss:  48.936871 => Lr: 0.001000
+2025-03-25 18:03:03,121 [Epoch: 017 Step: 00058900] Batch Translation Loss:  39.011322 => Lr: 0.001000
+2025-03-25 18:05:20,856 [Epoch: 017 Step: 00059000] Batch Translation Loss:  22.025221 => Lr: 0.001000
+2025-03-25 18:07:53,138 [Epoch: 017 Step: 00059100] Batch Translation Loss:  43.563259 => Lr: 0.001000
+2025-03-25 18:10:17,495 [Epoch: 017 Step: 00059200] Batch Translation Loss:  44.024284 => Lr: 0.001000
+2025-03-25 18:12:54,544 [Epoch: 017 Step: 00059300] Batch Translation Loss:  52.507179 => Lr: 0.001000
+2025-03-25 18:15:29,186 [Epoch: 017 Step: 00059400] Batch Translation Loss:  49.921997 => Lr: 0.001000
+2025-03-25 18:18:00,966 [Epoch: 017 Step: 00059500] Batch Translation Loss:  75.190002 => Lr: 0.001000
+2025-03-25 18:24:23,177 Saved 518 text references to ./sign_sample_bpe\txt_references_59500.txt and 518 text hypotheses to ./sign_sample_bpe\txt_hypotheses_59500.txt
+2025-03-25 18:27:22,819 [Epoch: 017 Step: 00059600] Batch Translation Loss:  47.866562 => Lr: 0.001000
+2025-03-25 18:30:17,886 [Epoch: 017 Step: 00059700] Batch Translation Loss:  48.267712 => Lr: 0.001000
+2025-03-25 18:33:16,903 [Epoch: 017 Step: 00059800] Batch Translation Loss:  80.248093 => Lr: 0.001000
+2025-03-25 18:36:09,276 [Epoch: 017 Step: 00059900] Batch Translation Loss:  48.307072 => Lr: 0.001000
+2025-03-25 18:39:06,067 [Epoch: 017 Step: 00060000] Batch Translation Loss:  25.325092 => Lr: 0.001000
+2025-03-25 18:41:53,125 [Epoch: 017 Step: 00060100] Batch Translation Loss:  35.989777 => Lr: 0.001000
+2025-03-25 18:44:48,836 [Epoch: 017 Step: 00060200] Batch Translation Loss:  15.395691 => Lr: 0.001000
+2025-03-25 18:47:41,318 [Epoch: 017 Step: 00060300] Batch Translation Loss:  37.737152 => Lr: 0.001000
+2025-03-25 18:48:10,563 Epoch  17: Total Training Translation Loss 157932.51 
+2025-03-25 18:48:10,564 EPOCH 18
+2025-03-25 18:49:41,287 [Epoch: 018 Step: 00060400] Batch Translation Loss:  28.974426 => Lr: 0.001000
+2025-03-25 18:51:39,258 [Epoch: 018 Step: 00060500] Batch Translation Loss:  35.742867 => Lr: 0.001000
+2025-03-25 18:53:32,774 [Epoch: 018 Step: 00060600] Batch Translation Loss:  83.343674 => Lr: 0.001000
+2025-03-25 18:55:23,825 [Epoch: 018 Step: 00060700] Batch Translation Loss:  35.719055 => Lr: 0.001000
+2025-03-25 18:57:21,327 [Epoch: 018 Step: 00060800] Batch Translation Loss:  34.793339 => Lr: 0.001000
+2025-03-25 18:59:18,360 [Epoch: 018 Step: 00060900] Batch Translation Loss:  67.917770 => Lr: 0.001000
+2025-03-25 19:01:13,879 [Epoch: 018 Step: 00061000] Batch Translation Loss:  30.864605 => Lr: 0.001000
+2025-03-25 19:03:19,338 [Epoch: 018 Step: 00061100] Batch Translation Loss:  28.830294 => Lr: 0.001000
+2025-03-25 19:05:15,876 [Epoch: 018 Step: 00061200] Batch Translation Loss:  14.919182 => Lr: 0.001000
+2025-03-25 19:07:15,450 [Epoch: 018 Step: 00061300] Batch Translation Loss:  22.380157 => Lr: 0.001000
+2025-03-25 19:09:16,546 [Epoch: 018 Step: 00061400] Batch Translation Loss:  36.830334 => Lr: 0.001000
+2025-03-25 19:11:17,549 [Epoch: 018 Step: 00061500] Batch Translation Loss:  28.652348 => Lr: 0.001000
+2025-03-25 19:13:15,957 [Epoch: 018 Step: 00061600] Batch Translation Loss:  39.806435 => Lr: 0.001000
+2025-03-25 19:15:23,816 [Epoch: 018 Step: 00061700] Batch Translation Loss:  17.145018 => Lr: 0.001000
+2025-03-25 19:17:28,619 [Epoch: 018 Step: 00061800] Batch Translation Loss:  54.191330 => Lr: 0.001000
+2025-03-25 19:19:46,576 [Epoch: 018 Step: 00061900] Batch Translation Loss:  61.645836 => Lr: 0.001000
+2025-03-25 19:22:07,640 [Epoch: 018 Step: 00062000] Batch Translation Loss:  36.864838 => Lr: 0.001000
+2025-03-25 19:24:19,187 [Epoch: 018 Step: 00062100] Batch Translation Loss:  40.527870 => Lr: 0.001000
+2025-03-25 19:26:33,653 [Epoch: 018 Step: 00062200] Batch Translation Loss:  17.943632 => Lr: 0.001000
+2025-03-25 19:28:51,932 [Epoch: 018 Step: 00062300] Batch Translation Loss:  38.285812 => Lr: 0.001000
+2025-03-25 19:31:09,591 [Epoch: 018 Step: 00062400] Batch Translation Loss:  83.567398 => Lr: 0.001000
+2025-03-25 19:33:32,152 [Epoch: 018 Step: 00062500] Batch Translation Loss:  13.726154 => Lr: 0.001000
+2025-03-25 19:36:08,458 [Epoch: 018 Step: 00062600] Batch Translation Loss:  36.505363 => Lr: 0.001000
+2025-03-25 19:38:36,134 [Epoch: 018 Step: 00062700] Batch Translation Loss:  34.152359 => Lr: 0.001000
+2025-03-25 19:41:08,331 [Epoch: 018 Step: 00062800] Batch Translation Loss:  25.797760 => Lr: 0.001000
+2025-03-25 19:43:39,861 [Epoch: 018 Step: 00062900] Batch Translation Loss:  44.753632 => Lr: 0.001000
+2025-03-25 19:46:12,027 [Epoch: 018 Step: 00063000] Batch Translation Loss: 114.816391 => Lr: 0.001000
+2025-03-25 19:52:31,263 Saved 518 text references to ./sign_sample_bpe\txt_references_63000.txt and 518 text hypotheses to ./sign_sample_bpe\txt_hypotheses_63000.txt
+2025-03-25 19:52:31,265 Hooray! New best validation result [eval_metric]!
+2025-03-25 19:52:31,266 Saving new checkpoint.
+2025-03-25 19:55:34,329 [Epoch: 018 Step: 00063100] Batch Translation Loss:  52.791039 => Lr: 0.001000
+2025-03-25 19:58:22,280 [Epoch: 018 Step: 00063200] Batch Translation Loss:  46.238976 => Lr: 0.001000
+2025-03-25 20:01:15,396 [Epoch: 018 Step: 00063300] Batch Translation Loss:  15.908617 => Lr: 0.001000
+2025-03-25 20:04:04,979 [Epoch: 018 Step: 00063400] Batch Translation Loss:  13.447299 => Lr: 0.001000
+2025-03-25 20:07:01,575 [Epoch: 018 Step: 00063500] Batch Translation Loss:  65.999191 => Lr: 0.001000
+2025-03-25 20:10:00,193 [Epoch: 018 Step: 00063600] Batch Translation Loss:  70.755394 => Lr: 0.001000
+2025-03-25 20:12:49,069 [Epoch: 018 Step: 00063700] Batch Translation Loss:  79.104813 => Lr: 0.001000
+2025-03-25 20:15:38,494 [Epoch: 018 Step: 00063800] Batch Translation Loss:  29.990471 => Lr: 0.001000
+2025-03-25 20:17:24,789 Epoch  18: Total Training Translation Loss 155717.05 
+2025-03-25 20:17:24,790 EPOCH 19
+2025-03-25 20:18:07,961 [Epoch: 019 Step: 00063900] Batch Translation Loss:  14.262300 => Lr: 0.001000
+2025-03-25 20:19:55,103 [Epoch: 019 Step: 00064000] Batch Translation Loss:  28.357368 => Lr: 0.001000
+2025-03-25 20:21:50,551 [Epoch: 019 Step: 00064100] Batch Translation Loss:  32.625668 => Lr: 0.001000
+2025-03-25 20:23:37,800 [Epoch: 019 Step: 00064200] Batch Translation Loss:  61.557594 => Lr: 0.001000
+2025-03-25 20:25:29,641 [Epoch: 019 Step: 00064300] Batch Translation Loss:  18.823278 => Lr: 0.001000
+2025-03-25 20:27:26,062 [Epoch: 019 Step: 00064400] Batch Translation Loss:  43.570740 => Lr: 0.001000
+2025-03-25 20:29:15,406 [Epoch: 019 Step: 00064500] Batch Translation Loss:  32.702251 => Lr: 0.001000
+2025-03-25 20:31:04,451 [Epoch: 019 Step: 00064600] Batch Translation Loss:  45.044548 => Lr: 0.001000
+2025-03-25 20:33:01,611 [Epoch: 019 Step: 00064700] Batch Translation Loss:  20.928047 => Lr: 0.001000
+2025-03-25 20:34:49,811 [Epoch: 019 Step: 00064800] Batch Translation Loss:  73.797905 => Lr: 0.001000
+2025-03-25 20:36:46,464 [Epoch: 019 Step: 00064900] Batch Translation Loss:  41.167366 => Lr: 0.001000
+2025-03-25 20:38:43,411 [Epoch: 019 Step: 00065000] Batch Translation Loss:  53.427711 => Lr: 0.001000
+2025-03-25 20:40:46,585 [Epoch: 019 Step: 00065100] Batch Translation Loss:  34.031708 => Lr: 0.001000
+2025-03-25 20:42:36,295 [Epoch: 019 Step: 00065200] Batch Translation Loss:  20.105753 => Lr: 0.001000
+2025-03-25 20:44:53,053 [Epoch: 019 Step: 00065300] Batch Translation Loss:  15.532307 => Lr: 0.001000
+2025-03-25 20:46:55,615 [Epoch: 019 Step: 00065400] Batch Translation Loss:  48.034012 => Lr: 0.001000
+2025-03-25 20:49:10,027 [Epoch: 019 Step: 00065500] Batch Translation Loss:  51.008614 => Lr: 0.001000
+2025-03-25 20:51:54,251 [Epoch: 019 Step: 00065600] Batch Translation Loss:  56.799137 => Lr: 0.001000
+2025-03-25 20:54:42,430 [Epoch: 019 Step: 00065700] Batch Translation Loss:  30.939302 => Lr: 0.001000
+2025-03-25 20:57:29,781 [Epoch: 019 Step: 00065800] Batch Translation Loss:  36.487549 => Lr: 0.001000
+2025-03-25 21:00:13,180 [Epoch: 019 Step: 00065900] Batch Translation Loss:  54.499817 => Lr: 0.001000
+2025-03-25 21:03:04,287 [Epoch: 019 Step: 00066000] Batch Translation Loss:  30.777512 => Lr: 0.001000
+2025-03-25 21:05:55,575 [Epoch: 019 Step: 00066100] Batch Translation Loss:  82.106415 => Lr: 0.001000
+2025-03-25 21:08:50,750 [Epoch: 019 Step: 00066200] Batch Translation Loss:  29.127504 => Lr: 0.001000
+2025-03-25 21:11:38,876 [Epoch: 019 Step: 00066300] Batch Translation Loss:  46.976570 => Lr: 0.001000
+2025-03-25 21:14:22,160 [Epoch: 019 Step: 00066400] Batch Translation Loss:  36.416321 => Lr: 0.001000
+2025-03-25 21:17:07,952 [Epoch: 019 Step: 00066500] Batch Translation Loss:  52.358635 => Lr: 0.001000
+2025-03-25 21:23:27,301 Saved 518 text references to ./sign_sample_bpe\txt_references_66500.txt and 518 text hypotheses to ./sign_sample_bpe\txt_hypotheses_66500.txt
+2025-03-25 21:26:13,614 [Epoch: 019 Step: 00066600] Batch Translation Loss:  33.861362 => Lr: 0.001000
+2025-03-25 21:29:05,095 [Epoch: 019 Step: 00066700] Batch Translation Loss:  26.772598 => Lr: 0.001000
+2025-03-25 21:32:07,466 [Epoch: 019 Step: 00066800] Batch Translation Loss:  12.187489 => Lr: 0.001000
+2025-03-25 21:34:58,903 [Epoch: 019 Step: 00066900] Batch Translation Loss:  33.947762 => Lr: 0.001000
+2025-03-25 21:37:52,378 [Epoch: 019 Step: 00067000] Batch Translation Loss:  59.942848 => Lr: 0.001000
+2025-03-25 21:40:36,476 [Epoch: 019 Step: 00067100] Batch Translation Loss:  59.521656 => Lr: 0.001000
+2025-03-25 21:43:29,060 [Epoch: 019 Step: 00067200] Batch Translation Loss:  72.302200 => Lr: 0.001000
+2025-03-25 21:46:21,416 [Epoch: 019 Step: 00067300] Batch Translation Loss:  11.685884 => Lr: 0.001000
+2025-03-25 21:49:12,274 [Epoch: 019 Step: 00067400] Batch Translation Loss:  23.610241 => Lr: 0.001000
+2025-03-25 21:49:33,812 Epoch  19: Total Training Translation Loss 154049.60 
+2025-03-25 21:49:33,812 EPOCH 20
+2025-03-25 21:51:22,370 [Epoch: 020 Step: 00067500] Batch Translation Loss:  37.109035 => Lr: 0.001000
+2025-03-25 21:53:24,162 [Epoch: 020 Step: 00067600] Batch Translation Loss:  29.965277 => Lr: 0.001000
+2025-03-25 21:55:27,652 [Epoch: 020 Step: 00067700] Batch Translation Loss:  20.441742 => Lr: 0.001000
+2025-03-25 21:57:33,317 [Epoch: 020 Step: 00067800] Batch Translation Loss:  70.695633 => Lr: 0.001000
+2025-03-25 21:59:39,884 [Epoch: 020 Step: 00067900] Batch Translation Loss:  32.661171 => Lr: 0.001000
+2025-03-25 22:01:48,646 [Epoch: 020 Step: 00068000] Batch Translation Loss:  56.562092 => Lr: 0.001000
+2025-03-25 22:03:53,514 [Epoch: 020 Step: 00068100] Batch Translation Loss:  48.459244 => Lr: 0.001000
+2025-03-25 22:05:57,133 [Epoch: 020 Step: 00068200] Batch Translation Loss:  34.046577 => Lr: 0.001000
+2025-03-25 22:08:01,206 [Epoch: 020 Step: 00068300] Batch Translation Loss:  21.057476 => Lr: 0.001000
+2025-03-25 22:10:01,842 [Epoch: 020 Step: 00068400] Batch Translation Loss:  62.322414 => Lr: 0.001000
+2025-03-25 22:12:14,749 [Epoch: 020 Step: 00068500] Batch Translation Loss:  50.657982 => Lr: 0.001000
+2025-03-25 22:14:29,540 [Epoch: 020 Step: 00068600] Batch Translation Loss:  20.508745 => Lr: 0.001000
+2025-03-25 22:16:31,238 [Epoch: 020 Step: 00068700] Batch Translation Loss:  26.145069 => Lr: 0.001000
+2025-03-25 22:18:50,327 [Epoch: 020 Step: 00068800] Batch Translation Loss:  35.062836 => Lr: 0.001000
+2025-03-25 22:21:02,537 [Epoch: 020 Step: 00068900] Batch Translation Loss:  17.021418 => Lr: 0.001000
+2025-03-25 22:23:22,185 [Epoch: 020 Step: 00069000] Batch Translation Loss:  36.810528 => Lr: 0.001000
+2025-03-25 22:25:46,680 [Epoch: 020 Step: 00069100] Batch Translation Loss:  40.732025 => Lr: 0.001000
+2025-03-25 22:28:08,164 [Epoch: 020 Step: 00069200] Batch Translation Loss:  80.759438 => Lr: 0.001000
+2025-03-25 22:30:38,934 [Epoch: 020 Step: 00069300] Batch Translation Loss:  28.410454 => Lr: 0.001000
+2025-03-25 22:33:14,598 [Epoch: 020 Step: 00069400] Batch Translation Loss:  63.179512 => Lr: 0.001000
+2025-03-25 22:36:05,623 [Epoch: 020 Step: 00069500] Batch Translation Loss:  24.837410 => Lr: 0.001000
+2025-03-25 22:38:40,512 [Epoch: 020 Step: 00069600] Batch Translation Loss:  31.697655 => Lr: 0.001000
+2025-03-25 22:41:20,421 [Epoch: 020 Step: 00069700] Batch Translation Loss:  54.996811 => Lr: 0.001000
+2025-03-25 22:44:00,282 [Epoch: 020 Step: 00069800] Batch Translation Loss:  23.829519 => Lr: 0.001000
+2025-03-25 22:46:37,934 [Epoch: 020 Step: 00069900] Batch Translation Loss:  30.090591 => Lr: 0.001000
+2025-03-25 22:49:22,376 [Epoch: 020 Step: 00070000] Batch Translation Loss:  82.782715 => Lr: 0.001000
+2025-03-25 22:55:39,770 Saved 518 text references to ./sign_sample_bpe\txt_references_70000.txt and 518 text hypotheses to ./sign_sample_bpe\txt_hypotheses_70000.txt
+2025-03-25 22:58:21,828 [Epoch: 020 Step: 00070100] Batch Translation Loss:  18.534706 => Lr: 0.001000
+2025-03-25 23:01:08,371 [Epoch: 020 Step: 00070200] Batch Translation Loss:  40.174110 => Lr: 0.001000
+2025-03-25 23:03:57,824 [Epoch: 020 Step: 00070300] Batch Translation Loss:  50.308456 => Lr: 0.001000
+2025-03-25 23:06:48,968 [Epoch: 020 Step: 00070400] Batch Translation Loss:  17.176844 => Lr: 0.001000
+2025-03-25 23:09:44,742 [Epoch: 020 Step: 00070500] Batch Translation Loss:  44.859417 => Lr: 0.001000
+2025-03-25 23:12:33,870 [Epoch: 020 Step: 00070600] Batch Translation Loss:  48.584137 => Lr: 0.001000
+2025-03-25 23:15:31,572 [Epoch: 020 Step: 00070700] Batch Translation Loss:  46.422367 => Lr: 0.001000
+2025-03-25 23:18:21,936 [Epoch: 020 Step: 00070800] Batch Translation Loss:  44.560734 => Lr: 0.001000
+2025-03-25 23:21:24,160 [Epoch: 020 Step: 00070900] Batch Translation Loss:  28.059525 => Lr: 0.001000
+2025-03-25 23:23:07,797 Epoch  20: Total Training Translation Loss 152284.39 
+2025-03-25 23:23:07,797 EPOCH 21
+2025-03-25 23:23:57,221 [Epoch: 021 Step: 00071000] Batch Translation Loss:  34.327969 => Lr: 0.001000
+2025-03-25 23:25:55,454 [Epoch: 021 Step: 00071100] Batch Translation Loss:  31.634884 => Lr: 0.001000
+2025-03-25 23:27:51,233 [Epoch: 021 Step: 00071200] Batch Translation Loss:  25.109215 => Lr: 0.001000
+2025-03-25 23:29:49,459 [Epoch: 021 Step: 00071300] Batch Translation Loss:  60.689247 => Lr: 0.001000
+2025-03-25 23:31:42,662 [Epoch: 021 Step: 00071400] Batch Translation Loss:  41.033566 => Lr: 0.001000
+2025-03-25 23:33:44,971 [Epoch: 021 Step: 00071500] Batch Translation Loss:  41.043274 => Lr: 0.001000
+2025-03-25 23:35:47,418 [Epoch: 021 Step: 00071600] Batch Translation Loss:  23.301819 => Lr: 0.001000
+2025-03-25 23:37:49,037 [Epoch: 021 Step: 00071700] Batch Translation Loss:  21.805523 => Lr: 0.001000
+2025-03-25 23:39:59,397 [Epoch: 021 Step: 00071800] Batch Translation Loss:  46.814201 => Lr: 0.001000
+2025-03-25 23:42:12,891 [Epoch: 021 Step: 00071900] Batch Translation Loss:  73.535149 => Lr: 0.001000
+2025-03-25 23:44:15,600 [Epoch: 021 Step: 00072000] Batch Translation Loss:  47.947426 => Lr: 0.001000
+2025-03-25 23:46:17,934 [Epoch: 021 Step: 00072100] Batch Translation Loss:  40.087360 => Lr: 0.001000
+2025-03-25 23:48:31,323 [Epoch: 021 Step: 00072200] Batch Translation Loss:  70.128540 => Lr: 0.001000
+2025-03-25 23:50:43,542 [Epoch: 021 Step: 00072300] Batch Translation Loss:  47.685349 => Lr: 0.001000
+2025-03-25 23:53:03,574 [Epoch: 021 Step: 00072400] Batch Translation Loss:  26.887278 => Lr: 0.001000
+2025-03-25 23:55:32,549 [Epoch: 021 Step: 00072500] Batch Translation Loss:  28.380974 => Lr: 0.001000
+2025-03-25 23:57:55,567 [Epoch: 021 Step: 00072600] Batch Translation Loss:  97.521721 => Lr: 0.001000
+2025-03-26 00:00:13,088 [Epoch: 021 Step: 00072700] Batch Translation Loss:  17.361813 => Lr: 0.001000
+2025-03-26 00:02:31,753 [Epoch: 021 Step: 00072800] Batch Translation Loss:  70.814713 => Lr: 0.001000
+2025-03-26 00:05:12,274 [Epoch: 021 Step: 00072900] Batch Translation Loss:  32.622978 => Lr: 0.001000
+2025-03-26 00:07:34,797 [Epoch: 021 Step: 00073000] Batch Translation Loss:  53.847778 => Lr: 0.001000
+2025-03-26 00:09:59,715 [Epoch: 021 Step: 00073100] Batch Translation Loss:  75.839119 => Lr: 0.001000
+2025-03-26 00:12:28,353 [Epoch: 021 Step: 00073200] Batch Translation Loss:  43.683266 => Lr: 0.001000
+2025-03-26 00:15:03,319 [Epoch: 021 Step: 00073300] Batch Translation Loss:  50.636574 => Lr: 0.001000
+2025-03-26 00:17:43,490 [Epoch: 021 Step: 00073400] Batch Translation Loss:  43.311935 => Lr: 0.001000
+2025-03-26 00:20:23,166 [Epoch: 021 Step: 00073500] Batch Translation Loss:  18.231110 => Lr: 0.001000
+2025-03-26 00:26:41,111 Saved 518 text references to ./sign_sample_bpe\txt_references_73500.txt and 518 text hypotheses to ./sign_sample_bpe\txt_hypotheses_73500.txt
+2025-03-26 00:29:36,788 [Epoch: 021 Step: 00073600] Batch Translation Loss:  47.703529 => Lr: 0.001000
+2025-03-26 00:32:49,868 [Epoch: 021 Step: 00073700] Batch Translation Loss:  44.530537 => Lr: 0.001000
+2025-03-26 00:35:53,171 [Epoch: 021 Step: 00073800] Batch Translation Loss:   5.997816 => Lr: 0.001000
+2025-03-26 00:39:00,394 [Epoch: 021 Step: 00073900] Batch Translation Loss:  55.821831 => Lr: 0.001000
+2025-03-26 00:41:49,704 [Epoch: 021 Step: 00074000] Batch Translation Loss: 111.254105 => Lr: 0.001000
+2025-03-26 00:44:37,977 [Epoch: 021 Step: 00074100] Batch Translation Loss:  21.277031 => Lr: 0.001000
+2025-03-26 00:47:26,217 [Epoch: 021 Step: 00074200] Batch Translation Loss:  33.536652 => Lr: 0.001000
+2025-03-26 00:50:16,043 [Epoch: 021 Step: 00074300] Batch Translation Loss:  33.068150 => Lr: 0.001000
+2025-03-26 00:53:19,964 [Epoch: 021 Step: 00074400] Batch Translation Loss:  16.165291 => Lr: 0.001000
+2025-03-26 00:56:23,021 [Epoch: 021 Step: 00074500] Batch Translation Loss:  69.279060 => Lr: 0.001000
+2025-03-26 00:56:38,210 Epoch  21: Total Training Translation Loss 150650.60 
+2025-03-26 00:56:38,211 EPOCH 22
+2025-03-26 00:58:44,341 [Epoch: 022 Step: 00074600] Batch Translation Loss:  44.074703 => Lr: 0.001000
+2025-03-26 01:01:02,987 [Epoch: 022 Step: 00074700] Batch Translation Loss:  47.541946 => Lr: 0.001000
+2025-03-26 01:03:08,449 [Epoch: 022 Step: 00074800] Batch Translation Loss:  36.208660 => Lr: 0.001000
+2025-03-26 01:05:05,280 [Epoch: 022 Step: 00074900] Batch Translation Loss:  57.778236 => Lr: 0.001000
+2025-03-26 01:07:07,847 [Epoch: 022 Step: 00075000] Batch Translation Loss:  62.564781 => Lr: 0.001000
+2025-03-26 01:09:08,712 [Epoch: 022 Step: 00075100] Batch Translation Loss:  52.144737 => Lr: 0.001000
+2025-03-26 01:11:10,397 [Epoch: 022 Step: 00075200] Batch Translation Loss:  81.516708 => Lr: 0.001000
+2025-03-26 01:13:21,308 [Epoch: 022 Step: 00075300] Batch Translation Loss:  10.499497 => Lr: 0.001000
+2025-03-26 01:15:25,175 [Epoch: 022 Step: 00075400] Batch Translation Loss:  38.356918 => Lr: 0.001000
+2025-03-26 01:17:37,841 [Epoch: 022 Step: 00075500] Batch Translation Loss:  48.347206 => Lr: 0.001000
+2025-03-26 01:19:44,628 [Epoch: 022 Step: 00075600] Batch Translation Loss:  84.928764 => Lr: 0.001000
+2025-03-26 01:21:58,858 [Epoch: 022 Step: 00075700] Batch Translation Loss:  46.689747 => Lr: 0.001000
+2025-03-26 01:24:07,274 [Epoch: 022 Step: 00075800] Batch Translation Loss:  46.720818 => Lr: 0.001000
+2025-03-26 01:26:17,876 [Epoch: 022 Step: 00075900] Batch Translation Loss:  49.317783 => Lr: 0.001000
+2025-03-26 01:28:40,045 [Epoch: 022 Step: 00076000] Batch Translation Loss:  36.517876 => Lr: 0.001000
+2025-03-26 01:31:06,887 [Epoch: 022 Step: 00076100] Batch Translation Loss: 101.703560 => Lr: 0.001000
+2025-03-26 01:33:27,497 [Epoch: 022 Step: 00076200] Batch Translation Loss:  76.014687 => Lr: 0.001000
+2025-03-26 01:35:57,460 [Epoch: 022 Step: 00076300] Batch Translation Loss:  42.180119 => Lr: 0.001000
+2025-03-26 01:38:31,766 [Epoch: 022 Step: 00076400] Batch Translation Loss:  34.773335 => Lr: 0.001000
+2025-03-26 01:41:01,048 [Epoch: 022 Step: 00076500] Batch Translation Loss:  66.034225 => Lr: 0.001000
+2025-03-26 01:43:29,626 [Epoch: 022 Step: 00076600] Batch Translation Loss:  48.599464 => Lr: 0.001000
+2025-03-26 01:45:56,690 [Epoch: 022 Step: 00076700] Batch Translation Loss:  40.440369 => Lr: 0.001000
+2025-03-26 01:48:44,964 [Epoch: 022 Step: 00076800] Batch Translation Loss:  53.355743 => Lr: 0.001000
+2025-03-26 01:51:29,561 [Epoch: 022 Step: 00076900] Batch Translation Loss:  16.043020 => Lr: 0.001000
+2025-03-26 01:54:03,344 [Epoch: 022 Step: 00077000] Batch Translation Loss:  14.347789 => Lr: 0.001000
+2025-03-26 02:00:21,794 Saved 518 text references to ./sign_sample_bpe\txt_references_77000.txt and 518 text hypotheses to ./sign_sample_bpe\txt_hypotheses_77000.txt
+2025-03-26 02:00:21,796 Hooray! New best validation result [eval_metric]!
+2025-03-26 02:00:21,797 Saving new checkpoint.
+2025-03-26 02:03:17,725 [Epoch: 022 Step: 00077100] Batch Translation Loss:  52.877312 => Lr: 0.001000
+2025-03-26 02:06:15,948 [Epoch: 022 Step: 00077200] Batch Translation Loss:  46.797890 => Lr: 0.001000
+2025-03-26 02:09:22,206 [Epoch: 022 Step: 00077300] Batch Translation Loss:  40.378296 => Lr: 0.001000
+2025-03-26 02:12:13,959 [Epoch: 022 Step: 00077400] Batch Translation Loss:  27.082624 => Lr: 0.001000
+2025-03-26 02:14:58,823 [Epoch: 022 Step: 00077500] Batch Translation Loss: 156.225677 => Lr: 0.001000
+2025-03-26 02:17:51,638 [Epoch: 022 Step: 00077600] Batch Translation Loss:  34.868965 => Lr: 0.001000
+2025-03-26 02:20:41,335 [Epoch: 022 Step: 00077700] Batch Translation Loss:  30.051620 => Lr: 0.001000
+2025-03-26 02:23:22,645 [Epoch: 022 Step: 00077800] Batch Translation Loss:  32.702961 => Lr: 0.001000
+2025-03-26 02:26:13,906 [Epoch: 022 Step: 00077900] Batch Translation Loss:  93.962585 => Lr: 0.001000
+2025-03-26 02:29:06,482 [Epoch: 022 Step: 00078000] Batch Translation Loss: 110.946793 => Lr: 0.001000
+2025-03-26 02:30:47,523 Epoch  22: Total Training Translation Loss 148958.65 
+2025-03-26 02:30:47,523 EPOCH 23
+2025-03-26 02:31:40,028 [Epoch: 023 Step: 00078100] Batch Translation Loss:  77.941879 => Lr: 0.001000
+2025-03-26 02:33:43,702 [Epoch: 023 Step: 00078200] Batch Translation Loss:  79.574631 => Lr: 0.001000
+2025-03-26 02:35:40,134 [Epoch: 023 Step: 00078300] Batch Translation Loss:  56.442879 => Lr: 0.001000
+2025-03-26 02:37:37,495 [Epoch: 023 Step: 00078400] Batch Translation Loss:  55.783443 => Lr: 0.001000
+2025-03-26 02:39:37,558 [Epoch: 023 Step: 00078500] Batch Translation Loss:  35.839176 => Lr: 0.001000
+2025-03-26 02:41:41,182 [Epoch: 023 Step: 00078600] Batch Translation Loss:  19.426434 => Lr: 0.001000
+2025-03-26 02:43:41,787 [Epoch: 023 Step: 00078700] Batch Translation Loss:  28.280441 => Lr: 0.001000
+2025-03-26 02:45:44,246 [Epoch: 023 Step: 00078800] Batch Translation Loss:  30.142282 => Lr: 0.001000
+2025-03-26 02:47:40,952 [Epoch: 023 Step: 00078900] Batch Translation Loss:  38.831764 => Lr: 0.001000
+2025-03-26 02:49:43,242 [Epoch: 023 Step: 00079000] Batch Translation Loss:  30.639956 => Lr: 0.001000
+2025-03-26 02:51:55,480 [Epoch: 023 Step: 00079100] Batch Translation Loss:  39.194958 => Lr: 0.001000
+2025-03-26 02:54:13,892 [Epoch: 023 Step: 00079200] Batch Translation Loss:   8.403732 => Lr: 0.001000
+2025-03-26 02:56:31,136 [Epoch: 023 Step: 00079300] Batch Translation Loss:  48.912827 => Lr: 0.001000
+2025-03-26 02:58:41,338 [Epoch: 023 Step: 00079400] Batch Translation Loss:  22.512032 => Lr: 0.001000
+2025-03-26 03:00:50,995 [Epoch: 023 Step: 00079500] Batch Translation Loss:  40.825478 => Lr: 0.001000
+2025-03-26 03:03:05,201 [Epoch: 023 Step: 00079600] Batch Translation Loss:   9.734114 => Lr: 0.001000
+2025-03-26 03:05:26,666 [Epoch: 023 Step: 00079700] Batch Translation Loss:  48.513313 => Lr: 0.001000
+2025-03-26 03:07:43,474 [Epoch: 023 Step: 00079800] Batch Translation Loss:  41.881706 => Lr: 0.001000
+2025-03-26 03:10:04,559 [Epoch: 023 Step: 00079900] Batch Translation Loss:  18.634501 => Lr: 0.001000
+2025-03-26 03:12:33,076 [Epoch: 023 Step: 00080000] Batch Translation Loss:  51.707954 => Lr: 0.001000
+2025-03-26 03:14:54,539 [Epoch: 023 Step: 00080100] Batch Translation Loss:  31.218006 => Lr: 0.001000
+2025-03-26 03:17:26,356 [Epoch: 023 Step: 00080200] Batch Translation Loss:  43.307678 => Lr: 0.001000
+2025-03-26 03:19:48,372 [Epoch: 023 Step: 00080300] Batch Translation Loss:  56.856422 => Lr: 0.001000
+2025-03-26 03:22:21,550 [Epoch: 023 Step: 00080400] Batch Translation Loss:  52.206348 => Lr: 0.001000
+2025-03-26 03:25:05,463 [Epoch: 023 Step: 00080500] Batch Translation Loss:  21.933975 => Lr: 0.001000
+2025-03-26 03:31:24,586 Saved 518 text references to ./sign_sample_bpe\txt_references_80500.txt and 518 text hypotheses to ./sign_sample_bpe\txt_hypotheses_80500.txt
+2025-03-26 03:34:20,516 [Epoch: 023 Step: 00080600] Batch Translation Loss:  37.628979 => Lr: 0.001000
+2025-03-26 03:37:06,969 [Epoch: 023 Step: 00080700] Batch Translation Loss:  23.874960 => Lr: 0.001000
+2025-03-26 03:39:56,384 [Epoch: 023 Step: 00080800] Batch Translation Loss:  21.902056 => Lr: 0.001000
+2025-03-26 03:42:51,191 [Epoch: 023 Step: 00080900] Batch Translation Loss:  52.668083 => Lr: 0.001000
+2025-03-26 03:45:47,736 [Epoch: 023 Step: 00081000] Batch Translation Loss:  42.192062 => Lr: 0.001000
+2025-03-26 03:48:37,447 [Epoch: 023 Step: 00081100] Batch Translation Loss:  41.469719 => Lr: 0.001000
+2025-03-26 03:51:35,716 [Epoch: 023 Step: 00081200] Batch Translation Loss:   9.048132 => Lr: 0.001000
+2025-03-26 03:54:24,002 [Epoch: 023 Step: 00081300] Batch Translation Loss:  26.687456 => Lr: 0.001000
+2025-03-26 03:57:21,982 [Epoch: 023 Step: 00081400] Batch Translation Loss:  25.179895 => Lr: 0.001000
+2025-03-26 04:00:13,286 [Epoch: 023 Step: 00081500] Batch Translation Loss:  66.684158 => Lr: 0.001000
+2025-03-26 04:03:03,566 [Epoch: 023 Step: 00081600] Batch Translation Loss:  52.967579 => Lr: 0.001000
+2025-03-26 04:03:08,672 Epoch  23: Total Training Translation Loss 147527.52 
+2025-03-26 04:03:08,672 EPOCH 24
+2025-03-26 04:05:04,958 [Epoch: 024 Step: 00081700] Batch Translation Loss:  65.348503 => Lr: 0.001000
+2025-03-26 04:07:10,521 [Epoch: 024 Step: 00081800] Batch Translation Loss:  39.008060 => Lr: 0.001000
+2025-03-26 04:09:04,617 [Epoch: 024 Step: 00081900] Batch Translation Loss:  50.381058 => Lr: 0.001000
+2025-03-26 04:11:13,085 [Epoch: 024 Step: 00082000] Batch Translation Loss:  52.202068 => Lr: 0.001000
+2025-03-26 04:13:08,748 [Epoch: 024 Step: 00082100] Batch Translation Loss:  67.282578 => Lr: 0.001000
+2025-03-26 04:15:10,544 [Epoch: 024 Step: 00082200] Batch Translation Loss:  34.802265 => Lr: 0.001000
+2025-03-26 04:17:21,383 [Epoch: 024 Step: 00082300] Batch Translation Loss:  53.562004 => Lr: 0.001000
+2025-03-26 04:19:29,017 [Epoch: 024 Step: 00082400] Batch Translation Loss:  67.663116 => Lr: 0.001000
+2025-03-26 04:21:30,582 [Epoch: 024 Step: 00082500] Batch Translation Loss:  50.091599 => Lr: 0.001000
+2025-03-26 04:23:39,744 [Epoch: 024 Step: 00082600] Batch Translation Loss:  26.348724 => Lr: 0.001000
+2025-03-26 04:25:53,294 [Epoch: 024 Step: 00082700] Batch Translation Loss:  41.876205 => Lr: 0.001000
+2025-03-26 04:28:03,870 [Epoch: 024 Step: 00082800] Batch Translation Loss:  26.103035 => Lr: 0.001000
+2025-03-26 04:30:17,994 [Epoch: 024 Step: 00082900] Batch Translation Loss:  32.826809 => Lr: 0.001000
+2025-03-26 04:32:35,943 [Epoch: 024 Step: 00083000] Batch Translation Loss:  65.343613 => Lr: 0.001000
+2025-03-26 04:34:50,962 [Epoch: 024 Step: 00083100] Batch Translation Loss:  36.643677 => Lr: 0.001000
+2025-03-26 04:37:08,644 [Epoch: 024 Step: 00083200] Batch Translation Loss:  59.759155 => Lr: 0.001000
+2025-03-26 04:39:37,559 [Epoch: 024 Step: 00083300] Batch Translation Loss:  34.991844 => Lr: 0.001000
+2025-03-26 04:42:06,668 [Epoch: 024 Step: 00083400] Batch Translation Loss:  24.968412 => Lr: 0.001000
+2025-03-26 04:44:30,168 [Epoch: 024 Step: 00083500] Batch Translation Loss:  60.038017 => Lr: 0.001000
+2025-03-26 04:47:00,110 [Epoch: 024 Step: 00083600] Batch Translation Loss:  29.410057 => Lr: 0.001000
+2025-03-26 04:49:27,365 [Epoch: 024 Step: 00083700] Batch Translation Loss:  38.555222 => Lr: 0.001000
+2025-03-26 04:51:51,832 [Epoch: 024 Step: 00083800] Batch Translation Loss:  64.329681 => Lr: 0.001000
+2025-03-26 04:54:24,206 [Epoch: 024 Step: 00083900] Batch Translation Loss:  14.087352 => Lr: 0.001000
+2025-03-26 04:56:54,456 [Epoch: 024 Step: 00084000] Batch Translation Loss:  24.431652 => Lr: 0.001000
+2025-03-26 05:03:11,551 Saved 518 text references to ./sign_sample_bpe\txt_references_84000.txt and 518 text hypotheses to ./sign_sample_bpe\txt_hypotheses_84000.txt
+2025-03-26 05:06:05,988 [Epoch: 024 Step: 00084100] Batch Translation Loss:  40.742313 => Lr: 0.001000
+2025-03-26 05:08:52,724 [Epoch: 024 Step: 00084200] Batch Translation Loss:  76.530762 => Lr: 0.001000
+2025-03-26 05:11:43,654 [Epoch: 024 Step: 00084300] Batch Translation Loss:  27.279846 => Lr: 0.001000
+2025-03-26 05:14:29,938 [Epoch: 024 Step: 00084400] Batch Translation Loss:  19.997013 => Lr: 0.001000
+2025-03-26 05:17:18,246 [Epoch: 024 Step: 00084500] Batch Translation Loss:  12.960388 => Lr: 0.001000
+2025-03-26 05:20:25,547 [Epoch: 024 Step: 00084600] Batch Translation Loss:  54.412464 => Lr: 0.001000
+2025-03-26 05:23:21,599 [Epoch: 024 Step: 00084700] Batch Translation Loss:  68.495827 => Lr: 0.001000
+2025-03-26 05:26:12,531 [Epoch: 024 Step: 00084800] Batch Translation Loss:  65.015846 => Lr: 0.001000
+2025-03-26 05:29:17,920 [Epoch: 024 Step: 00084900] Batch Translation Loss:  38.795277 => Lr: 0.001000
+2025-03-26 05:32:05,345 [Epoch: 024 Step: 00085000] Batch Translation Loss:  19.645321 => Lr: 0.001000
+2025-03-26 05:34:56,617 [Epoch: 024 Step: 00085100] Batch Translation Loss:  53.616402 => Lr: 0.001000
+2025-03-26 05:36:20,832 Epoch  24: Total Training Translation Loss 146156.57 
+2025-03-26 05:36:20,833 EPOCH 25
+2025-03-26 05:37:18,417 [Epoch: 025 Step: 00085200] Batch Translation Loss:  18.600151 => Lr: 0.001000
+2025-03-26 05:39:14,194 [Epoch: 025 Step: 00085300] Batch Translation Loss:  11.030867 => Lr: 0.001000
+2025-03-26 05:41:13,778 [Epoch: 025 Step: 00085400] Batch Translation Loss:  46.878483 => Lr: 0.001000
+2025-03-26 05:43:04,834 [Epoch: 025 Step: 00085500] Batch Translation Loss:  50.366600 => Lr: 0.001000
+2025-03-26 05:45:06,642 [Epoch: 025 Step: 00085600] Batch Translation Loss:  30.663519 => Lr: 0.001000
+2025-03-26 05:47:10,929 [Epoch: 025 Step: 00085700] Batch Translation Loss:  20.538906 => Lr: 0.001000
+2025-03-26 05:49:07,475 [Epoch: 025 Step: 00085800] Batch Translation Loss:  64.362282 => Lr: 0.001000
+2025-03-26 05:51:17,938 [Epoch: 025 Step: 00085900] Batch Translation Loss:  17.648071 => Lr: 0.001000
+2025-03-26 05:53:24,126 [Epoch: 025 Step: 00086000] Batch Translation Loss:  43.277412 => Lr: 0.001000
+2025-03-26 05:55:29,742 [Epoch: 025 Step: 00086100] Batch Translation Loss:  11.072326 => Lr: 0.001000
+2025-03-26 05:57:53,723 [Epoch: 025 Step: 00086200] Batch Translation Loss:  31.047308 => Lr: 0.001000
+2025-03-26 06:00:11,140 [Epoch: 025 Step: 00086300] Batch Translation Loss:  73.297363 => Lr: 0.001000
+2025-03-26 06:02:18,974 [Epoch: 025 Step: 00086400] Batch Translation Loss:  53.106842 => Lr: 0.001000
+2025-03-26 06:04:39,674 [Epoch: 025 Step: 00086500] Batch Translation Loss:  59.205418 => Lr: 0.001000
+2025-03-26 06:06:51,992 [Epoch: 025 Step: 00086600] Batch Translation Loss:  78.986694 => Lr: 0.001000
+2025-03-26 06:09:17,230 [Epoch: 025 Step: 00086700] Batch Translation Loss:  32.197479 => Lr: 0.001000
+2025-03-26 06:11:41,714 [Epoch: 025 Step: 00086800] Batch Translation Loss:  26.932354 => Lr: 0.001000
+2025-03-26 06:14:04,988 [Epoch: 025 Step: 00086900] Batch Translation Loss:  40.786942 => Lr: 0.001000
+2025-03-26 06:16:40,917 [Epoch: 025 Step: 00087000] Batch Translation Loss:  36.751148 => Lr: 0.001000
+2025-03-26 06:19:08,273 [Epoch: 025 Step: 00087100] Batch Translation Loss:  26.908436 => Lr: 0.001000
+2025-03-26 06:21:44,822 [Epoch: 025 Step: 00087200] Batch Translation Loss:  70.742767 => Lr: 0.001000
+2025-03-26 06:24:14,726 [Epoch: 025 Step: 00087300] Batch Translation Loss:  64.193459 => Lr: 0.001000
+2025-03-26 06:26:39,982 [Epoch: 025 Step: 00087400] Batch Translation Loss:  24.053261 => Lr: 0.001000
+2025-03-26 06:29:27,245 [Epoch: 025 Step: 00087500] Batch Translation Loss:  30.462990 => Lr: 0.001000
+2025-03-26 06:35:47,418 Saved 518 text references to ./sign_sample_bpe\txt_references_87500.txt and 518 text hypotheses to ./sign_sample_bpe\txt_hypotheses_87500.txt
+2025-03-26 06:38:42,989 [Epoch: 025 Step: 00087600] Batch Translation Loss:  19.974735 => Lr: 0.001000
+2025-03-26 06:41:48,141 [Epoch: 025 Step: 00087700] Batch Translation Loss: 101.356766 => Lr: 0.001000
+2025-03-26 06:44:44,961 [Epoch: 025 Step: 00087800] Batch Translation Loss:  45.365280 => Lr: 0.001000
+2025-03-26 06:47:37,450 [Epoch: 025 Step: 00087900] Batch Translation Loss:  15.982336 => Lr: 0.001000
+2025-03-26 06:50:33,731 [Epoch: 025 Step: 00088000] Batch Translation Loss:  33.332104 => Lr: 0.001000
+2025-03-26 06:53:33,803 [Epoch: 025 Step: 00088100] Batch Translation Loss: 109.151947 => Lr: 0.001000
+2025-03-26 06:56:21,222 [Epoch: 025 Step: 00088200] Batch Translation Loss:  31.349384 => Lr: 0.001000
+2025-03-26 06:59:28,450 [Epoch: 025 Step: 00088300] Batch Translation Loss:  17.110760 => Lr: 0.001000
+2025-03-26 07:02:30,473 [Epoch: 025 Step: 00088400] Batch Translation Loss:  14.805523 => Lr: 0.001000
+2025-03-26 07:05:33,794 [Epoch: 025 Step: 00088500] Batch Translation Loss:  40.312569 => Lr: 0.001000
+2025-03-26 07:08:27,160 [Epoch: 025 Step: 00088600] Batch Translation Loss:  43.122124 => Lr: 0.001000
+2025-03-26 07:11:22,579 [Epoch: 025 Step: 00088700] Batch Translation Loss:  39.279037 => Lr: 0.001000
+2025-03-26 07:11:22,612 Epoch  25: Total Training Translation Loss 144924.80 
+2025-03-26 07:11:22,613 EPOCH 26
+2025-03-26 07:13:23,790 [Epoch: 026 Step: 00088800] Batch Translation Loss:  17.733212 => Lr: 0.001000
+2025-03-26 07:15:20,654 [Epoch: 026 Step: 00088900] Batch Translation Loss:  46.683506 => Lr: 0.001000
+2025-03-26 07:17:23,822 [Epoch: 026 Step: 00089000] Batch Translation Loss:  31.235308 => Lr: 0.001000
+2025-03-26 07:19:30,002 [Epoch: 026 Step: 00089100] Batch Translation Loss:  56.672497 => Lr: 0.001000
+2025-03-26 07:21:43,645 [Epoch: 026 Step: 00089200] Batch Translation Loss:  29.590004 => Lr: 0.001000
+2025-03-26 07:23:52,727 [Epoch: 026 Step: 00089300] Batch Translation Loss: 118.036354 => Lr: 0.001000
+2025-03-26 07:26:03,656 [Epoch: 026 Step: 00089400] Batch Translation Loss:  24.922852 => Lr: 0.001000
+2025-03-26 07:28:12,419 [Epoch: 026 Step: 00089500] Batch Translation Loss:  20.585844 => Lr: 0.001000
+2025-03-26 07:30:23,005 [Epoch: 026 Step: 00089600] Batch Translation Loss:  41.318787 => Lr: 0.001000
+2025-03-26 07:32:47,840 [Epoch: 026 Step: 00089700] Batch Translation Loss:  32.776035 => Lr: 0.001000
+2025-03-26 07:35:08,406 [Epoch: 026 Step: 00089800] Batch Translation Loss:  20.076441 => Lr: 0.001000
+2025-03-26 07:37:36,869 [Epoch: 026 Step: 00089900] Batch Translation Loss:  48.603939 => Lr: 0.001000
+2025-03-26 07:40:00,688 [Epoch: 026 Step: 00090000] Batch Translation Loss:  38.538353 => Lr: 0.001000
+2025-03-26 07:42:22,290 [Epoch: 026 Step: 00090100] Batch Translation Loss:  11.493432 => Lr: 0.001000
+2025-03-26 07:44:50,551 [Epoch: 026 Step: 00090200] Batch Translation Loss:   7.645683 => Lr: 0.001000
+2025-03-26 07:47:21,870 [Epoch: 026 Step: 00090300] Batch Translation Loss:  29.074821 => Lr: 0.001000
+2025-03-26 07:49:46,468 [Epoch: 026 Step: 00090400] Batch Translation Loss:  35.293934 => Lr: 0.001000
+2025-03-26 07:52:18,098 [Epoch: 026 Step: 00090500] Batch Translation Loss:  22.248407 => Lr: 0.001000
+2025-03-26 07:54:44,758 [Epoch: 026 Step: 00090600] Batch Translation Loss:  49.425888 => Lr: 0.001000
+2025-03-26 07:57:15,114 [Epoch: 026 Step: 00090700] Batch Translation Loss:  79.176071 => Lr: 0.001000
+2025-03-26 07:59:58,992 [Epoch: 026 Step: 00090800] Batch Translation Loss: 109.724113 => Lr: 0.001000
+2025-03-26 08:02:24,733 [Epoch: 026 Step: 00090900] Batch Translation Loss:  61.447704 => Lr: 0.001000
+2025-03-26 08:04:57,883 [Epoch: 026 Step: 00091000] Batch Translation Loss:  12.399638 => Lr: 0.001000
+2025-03-26 08:11:18,024 Saved 518 text references to ./sign_sample_bpe\txt_references_91000.txt and 518 text hypotheses to ./sign_sample_bpe\txt_hypotheses_91000.txt
+2025-03-26 08:14:18,410 [Epoch: 026 Step: 00091100] Batch Translation Loss:  37.519089 => Lr: 0.001000
+2025-03-26 08:17:08,294 [Epoch: 026 Step: 00091200] Batch Translation Loss:  63.729988 => Lr: 0.001000
+2025-03-26 08:20:05,395 [Epoch: 026 Step: 00091300] Batch Translation Loss:  20.801485 => Lr: 0.001000
+2025-03-26 08:23:07,868 [Epoch: 026 Step: 00091400] Batch Translation Loss:  65.188400 => Lr: 0.001000
+2025-03-26 08:26:03,781 [Epoch: 026 Step: 00091500] Batch Translation Loss:  24.448240 => Lr: 0.001000
+2025-03-26 08:28:55,141 [Epoch: 026 Step: 00091600] Batch Translation Loss:  45.454018 => Lr: 0.001000
+2025-03-26 08:31:57,615 [Epoch: 026 Step: 00091700] Batch Translation Loss:  64.354553 => Lr: 0.001000
+2025-03-26 08:35:00,374 [Epoch: 026 Step: 00091800] Batch Translation Loss:  81.604897 => Lr: 0.001000
+2025-03-26 08:38:00,713 [Epoch: 026 Step: 00091900] Batch Translation Loss: 101.935654 => Lr: 0.001000
+2025-03-26 08:40:56,406 [Epoch: 026 Step: 00092000] Batch Translation Loss:  34.481369 => Lr: 0.001000
+2025-03-26 08:43:53,988 [Epoch: 026 Step: 00092100] Batch Translation Loss:  92.694855 => Lr: 0.001000
+2025-03-26 08:46:54,575 [Epoch: 026 Step: 00092200] Batch Translation Loss: 122.458527 => Lr: 0.001000
+2025-03-26 08:48:16,246 Epoch  26: Total Training Translation Loss 143668.67 
+2025-03-26 08:48:16,246 EPOCH 27
+2025-03-26 08:49:20,539 [Epoch: 027 Step: 00092300] Batch Translation Loss:  46.722893 => Lr: 0.001000
+2025-03-26 08:51:24,707 [Epoch: 027 Step: 00092400] Batch Translation Loss:  39.274883 => Lr: 0.001000
+2025-03-26 08:53:25,161 [Epoch: 027 Step: 00092500] Batch Translation Loss:  39.089417 => Lr: 0.001000
+2025-03-26 08:55:28,451 [Epoch: 027 Step: 00092600] Batch Translation Loss:  29.426050 => Lr: 0.001000
+2025-03-26 08:57:40,545 [Epoch: 027 Step: 00092700] Batch Translation Loss:  59.492271 => Lr: 0.001000
+2025-03-26 08:59:52,587 [Epoch: 027 Step: 00092800] Batch Translation Loss:  35.322205 => Lr: 0.001000
+2025-03-26 09:02:02,337 [Epoch: 027 Step: 00092900] Batch Translation Loss:  76.304550 => Lr: 0.001000
+2025-03-26 09:04:09,726 [Epoch: 027 Step: 00093000] Batch Translation Loss:  29.366299 => Lr: 0.001000
+2025-03-26 09:06:19,947 [Epoch: 027 Step: 00093100] Batch Translation Loss:   5.591807 => Lr: 0.001000
+2025-03-26 09:08:23,977 [Epoch: 027 Step: 00093200] Batch Translation Loss:  96.301216 => Lr: 0.001000
+2025-03-26 09:10:36,117 [Epoch: 027 Step: 00093300] Batch Translation Loss:  13.531017 => Lr: 0.001000
+2025-03-26 09:12:49,554 [Epoch: 027 Step: 00093400] Batch Translation Loss:  24.190432 => Lr: 0.001000
+2025-03-26 09:15:07,972 [Epoch: 027 Step: 00093500] Batch Translation Loss:  30.381464 => Lr: 0.001000
+2025-03-26 09:17:22,325 [Epoch: 027 Step: 00093600] Batch Translation Loss: 113.873413 => Lr: 0.001000
+2025-03-26 09:19:48,576 [Epoch: 027 Step: 00093700] Batch Translation Loss:  49.482517 => Lr: 0.001000
+2025-03-26 09:22:09,567 [Epoch: 027 Step: 00093800] Batch Translation Loss:  16.751211 => Lr: 0.001000
+2025-03-26 09:24:38,552 [Epoch: 027 Step: 00093900] Batch Translation Loss:  40.228966 => Lr: 0.001000
+2025-03-26 09:26:53,971 [Epoch: 027 Step: 00094000] Batch Translation Loss:  25.483835 => Lr: 0.001000
+2025-03-26 09:29:21,805 [Epoch: 027 Step: 00094100] Batch Translation Loss:  47.201431 => Lr: 0.001000
+2025-03-26 09:31:46,684 [Epoch: 027 Step: 00094200] Batch Translation Loss:  43.921108 => Lr: 0.001000
+2025-03-26 09:34:02,783 [Epoch: 027 Step: 00094300] Batch Translation Loss:  54.642845 => Lr: 0.001000
+2025-03-26 09:36:34,110 [Epoch: 027 Step: 00094400] Batch Translation Loss:  65.668831 => Lr: 0.001000
+2025-03-26 09:39:16,282 [Epoch: 027 Step: 00094500] Batch Translation Loss:  43.041836 => Lr: 0.001000
+2025-03-26 09:45:35,913 Saved 518 text references to ./sign_sample_bpe\txt_references_94500.txt and 518 text hypotheses to ./sign_sample_bpe\txt_hypotheses_94500.txt
+2025-03-26 09:45:35,915 Hooray! New best validation result [eval_metric]!
+2025-03-26 09:45:35,915 Saving new checkpoint.
+2025-03-26 09:48:30,869 [Epoch: 027 Step: 00094600] Batch Translation Loss:  42.605644 => Lr: 0.001000
+2025-03-26 09:51:42,571 [Epoch: 027 Step: 00094700] Batch Translation Loss:  32.428741 => Lr: 0.001000
+2025-03-26 09:54:48,690 [Epoch: 027 Step: 00094800] Batch Translation Loss:  51.548286 => Lr: 0.001000
+2025-03-26 09:58:08,577 [Epoch: 027 Step: 00094900] Batch Translation Loss:  38.490753 => Lr: 0.001000
+2025-03-26 10:01:21,864 [Epoch: 027 Step: 00095000] Batch Translation Loss:  40.000854 => Lr: 0.001000
+2025-03-26 10:04:34,900 [Epoch: 027 Step: 00095100] Batch Translation Loss:  11.635582 => Lr: 0.001000
+2025-03-26 10:07:47,186 [Epoch: 027 Step: 00095200] Batch Translation Loss:  17.582033 => Lr: 0.001000
+2025-03-26 10:13:41,131 [Epoch: 027 Step: 00095300] Batch Translation Loss:  58.357433 => Lr: 0.001000
+2025-03-26 10:17:38,523 [Epoch: 027 Step: 00095400] Batch Translation Loss:  34.019176 => Lr: 0.001000
+2025-03-26 10:21:39,620 [Epoch: 027 Step: 00095500] Batch Translation Loss:  57.039173 => Lr: 0.001000
+2025-03-26 10:25:18,574 [Epoch: 027 Step: 00095600] Batch Translation Loss:  23.557272 => Lr: 0.001000
