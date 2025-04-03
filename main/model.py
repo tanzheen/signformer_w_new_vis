@@ -243,7 +243,9 @@ class SignModel(nn.Module):
             word_outputs = decoder_outputs
             ##print("word_outputs shape: ", word_outputs.shape)
             # Calculate Translation Loss
-            txt_log_probs = F.log_softmax(word_outputs, dim=-1) # NOTE: the log_softmax is here so we use negative loglikelihood for the calculation of loss
+            txt_log_probs = F.log_softmax(word_outputs, dim=-1) 
+            # NOTE: the log_softmax is here so we use negative loglikelihood for the calculation of loss
+            # NOTE: adding log softmax before KLdiv or NLLloss is simply cross entropy
             ##print("txt_log_probs shape: ", txt_log_probs.shape)
             ##print("batch['txt_input'] shape: ", batch['txt_input'].shape)
             translation_loss = (
