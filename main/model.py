@@ -375,7 +375,47 @@ class resnet(nn.Module):
         x = pad_sequence(x_batch,padding_value=0,batch_first=True)
         return x
 
+from transformers import AutoModel, AutoImageProcessor
+from peft import LoraConfig, TaskType, get_peft_model
+def make_dinov2(freeze=False):
+    
+    model = AutoModel.from_pretrained('/Users/tannicholas/Downloads/dinov2_hf')
+    # LORA the model 
+    peft_config = LoraConfig(task_type=TaskType.FEATURE_EXTRACTION, inference_mode=False,
+                         r=8, lora_alpha=16, lora_dropout=0.1, target_modules=["query", "key", "value"])
+    model = get_peft_model(model, peft_config)
 
+    return model
+
+
+
+
+class dinov2(nn.Module):
+    def __init__(self):
+        super(dinov2, self).__init__()
+        self.dinov2= make_dinov2()
+
+    def forward(self, x, lengths):
+        x = self.dinov2(x)[1] # get pooler output
+        print(f"dino pooler output shape: {x.shape}")
+        x_batch = []
+        start = 0
+        for length in lengths:
+            end = start + length
+            x_batch.append(x[start:end])
+            start = end
+        x = pad_sequence(x_batch,padding_value=0,batch_first=True)
+        return x
+    
+
+# class yolo(nn.Module):
+#     def __init__(self):
+#         super(yolo, self).__init__()
+#         self.yolo = YOLO()
+
+#     def forward(self, x):
+#         return self.yolo(x)
+    
 def build_model(
     cfg: dict,
     sgn_dim: int,
@@ -398,7 +438,7 @@ def build_model(
     txt_padding_idx = txt_vocab.stoi[PAD_TOKEN]
 
     # build visual encoder 
-    vis_extractor = resnet()
+    vis_extractor = dinov2() # dinov2 or resnet 
 
     # Multimodal MLP for sign embeddings to match hidden size of text transformer
     sgn_embed: V_encoder = V_encoder(
@@ -406,7 +446,6 @@ def build_model(
         input_size=sgn_dim,
         config=cfg
     )
-
 
     # build text encoder
     enc_dropout = cfg["encoder"].get("dropout", 0.0)
